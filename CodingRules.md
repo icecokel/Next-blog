@@ -6,16 +6,13 @@ pages/home.tsx
 pages/post/[id].tsx
 
 public
-public/resource
-public/resource/images
+public/resources
+public/resources/images
 ...
 
 src
 src/components
 src/components/common
-src/components/common/button.tsx
-src/components/common/input.tsx
-src/components/common/select.tsx
 src/components/common/modal.tsx
 
 src/hooks
