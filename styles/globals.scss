@@ -1,0 +1,31 @@
+/* font */
+@import url("https://fonts.googleapis.com/css2?family=Bangers&family=Do+Hyeon&display=swap");
+
+/* color */
+$color-green1: #e6f0ef;
+$color-green2: #dae9e7;
+$color-green3: #c5dcd5;
+$color-green4: #a9c5b9;
+
+$color-brown1: #b6abab;
+$color-brown2: #dbd2d1;
+
+$color-red: #d23203;
+$color-gary: #4b4b4b;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Do Hyeon", sans-serif;
+  background-color: $color-green1;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}

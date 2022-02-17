@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Bangers&family=Do+Hyeon&display=swap");
+
+.wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  height: 100px;
+}
+
+.logo {
+  font-size: 50px;
+  font-family: "Bangers", cursive;
+  background-color: #a9c5b9;
+  padding: 3px 7px;
+  border-bottom: 1px solid black;
+  color: #4b4b4b;
+  line-height: 50px;
+
+  i {
+    font-size: 40px;
+    margin-left: 5px;
+  }
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  width: 8%;
+  justify-content: space-between;
+  background-color: #fff;
+  border-radius: 12.5px;
+  padding: 0px 10px;
+
+  div {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.category {
+  background-color: #dbd2d1;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 50px;
+
+  span {
+    font-family: "Bangers", cursive;
+    font-size: 1.2em;
+    margin-right: 15px;
+    padding-right: 15px;
+    border-right: 1px solid black;
+    &:last-child {
+      border: none;
+    }
+
+    &:hover {
+      color: #fff;
+      cursor: pointer;
+    }
+  }
+}
