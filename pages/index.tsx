@@ -12,7 +12,7 @@ const item = {
 const Home: NextPage = () => {
   return (
     <div>
-      <div className={styles.thumbnail}></div>
+      <div className={"thumbnail"}></div>
 
       <div>
         <h1>TEST</h1>

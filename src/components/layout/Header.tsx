@@ -5,12 +5,12 @@ import CategoryBar from "./CategoryBar";
 const Header = () => {
   return (
     <>
-      <header className={styles.wrap}>
+      <header className={"wrap"}>
         <div>NickName</div>
-        <div className={styles.logo}>
+        <div className={"logo"}>
           Eucalyptus<i className="material-icons">spa</i>
         </div>
-        <div className={styles.search}>
+        <div className={"search"}>
           <span>Search</span>
           <div>
             <i className="material-icons">search</i>
