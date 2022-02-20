@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "../../../styles/Header.module.scss";
 import CategoryBar from "./CategoryBar";
 
 const Header = () => {
