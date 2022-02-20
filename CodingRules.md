@@ -19,5 +19,18 @@ src/hooks
 src/hooks/apiHooks
 src/hooks/redux
 
-/styles
-/styles/common.scss
+styles
+styles/common.scss
+
+store
+store/modules
+store/modules/blog.ts
+....
+store/modules/index.ts
+store/index.ts
+
+# Naming
+
+css - kebab
+type , index - pascal
+base - camel
