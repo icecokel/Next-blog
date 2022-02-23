@@ -34,3 +34,7 @@ store/index.ts
 css - kebab
 type , index - pascal
 base - camel
+
+# Pattern
+
+redux - ducks
