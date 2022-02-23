@@ -1,6 +1,8 @@
 import { AnyAction, CombinedState, combineReducers } from "redux";
 import { HYDRATE } from "next-redux-wrapper";
 import blog, { Blog } from "./blog";
+import category, { Category } from "./category";
+import user, { User } from "./user";
 
 const rootReducer = (
   state: IndexState | undefined,
@@ -13,6 +15,8 @@ const rootReducer = (
     default: {
       const combineReducer = combineReducers({
         blog,
+        category,
+        user,
       });
       return combineReducer(state as any, action as any);
     }
@@ -24,4 +28,6 @@ export default rootReducer;
 
 export interface IndexState {
   blog: Blog;
+  category: Array<Category>;
+  user: User;
 }
