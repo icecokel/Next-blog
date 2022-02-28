@@ -1,12 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/modules";
 
 const CategoryBar = () => {
-  const tempList: Array<any> = ["test1", "test2"];
-  tempList.push("management");
+  const category = useSelector((state: RootState) => state.category);
+
   return (
     <div className="category">
-      {tempList.map((item) => {
-        return <span key={item}>{item}</span>;
+      {category.map((item) => {
+        return <span key={item.categoryNo}>{item.categoryName}</span>;
       })}
     </div>
   );
