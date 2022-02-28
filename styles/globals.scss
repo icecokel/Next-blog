@@ -78,8 +78,10 @@ a {
   align-items: center;
   justify-content: flex-end;
   padding-right: 50px;
+  list-style: none;
+  padding-left: 0px;
 
-  span {
+  li {
     font-size: 1.2em;
     margin-right: 15px;
     padding-right: 15px;
