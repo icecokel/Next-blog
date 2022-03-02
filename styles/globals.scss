@@ -33,6 +33,10 @@ a {
   box-sizing: border-box;
 }
 
+ul {
+  list-style: none;
+  padding-left: 0px;
+}
 .wrap {
   display: flex;
   justify-content: space-between;
@@ -78,8 +82,6 @@ a {
   align-items: center;
   justify-content: flex-end;
   padding-right: 50px;
-  list-style: none;
-  padding-left: 0px;
 
   li {
     font-size: 1.2em;
