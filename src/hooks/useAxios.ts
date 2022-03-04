@@ -1,14 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const BASE_URL = "";
-
-export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
-
-export type ApiOption = {
-  url: string;
-  method: HttpMethod;
-};
+const BASE_URL = "/api";
 
 type AxiosState = {
   isLoading: boolean;
@@ -37,8 +30,10 @@ const useAxios = (option: any, params?: any) => {
       axiosBody["data"] = params;
   }
 
+  axiosBody["url"] = BASE_URL + option.url;
+
   useEffect(() => {
-    axios(option)
+    axios(axiosBody)
       .then((res) => {
         setState({ ...state, isLoading: false, data: res.data });
       })
