@@ -37,6 +37,31 @@ ul {
   list-style: none;
   padding-left: 0px;
 }
+
+/* component */
+.main-page {
+  text-align: center;
+
+  ul {
+    margin: 0 auto;
+    width: 50vw;
+    background-color: $color-white;
+    padding: 0.5em;
+
+    li {
+      border: 1px solid $color-green4;
+      margin: 1em 1em;
+      padding: 0.5em;
+      font-size: 1.5em;
+
+      &:hover {
+        background-color: $color-green4;
+        color: $color-white;
+      }
+    }
+  }
+}
+
 .wrap {
   display: flex;
   justify-content: space-between;
