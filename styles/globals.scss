@@ -15,6 +15,7 @@ $color-gary: #4b4b4b;
 
 $color-black: #000;
 $color-white: #fff;
+$color-active: #f78c27;
 
 html,
 body {
@@ -33,14 +34,102 @@ a {
   box-sizing: border-box;
 }
 
+/* base stlye*/
+
 ul {
   list-style: none;
   padding-left: 0px;
 }
 
+button {
+  border: 1px solid $color-gary;
+  background-color: $color-white;
+  padding: 0.5em 1em;
+  margin: 0.2em;
+  border-radius: 5px;
+  font-size: 1.05em;
+  color: $color-gary;
+  font-family: "Do Hyeon", sans-serif;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-green2;
+    color: $color-black;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    background-color: $color-gary;
+    color: $color-white;
+    font-weight: normal;
+  }
+}
+
+input[type="radio"] {
+  $size: 0.9rem;
+  appearance: none;
+  width: $size;
+  height: $size;
+  border-radius: 100%;
+  margin: $size * 0.2;
+  background-color: $color-white;
+  box-shadow: 0 0 0 1.5px $color-gary;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  &:checked {
+    background-color: $color-active;
+    box-shadow: 0 0 0 1.5px $color-active;
+    border: 0.2rem solid $color-white;
+  }
+}
+
+input[type="checkbox"] {
+  $size: 1rem;
+  width: $size;
+  height: $size;
+  background-color: $color-white;
+  box-shadow: 0 0 0 1px $color-gary;
+  border-radius: 2px;
+  margin: $size * 0.2;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  &:checked {
+    box-shadow: 0 0 0 1px $color-active;
+    background-color: $color-active;
+
+    &::after {
+      border-radius: 1px;
+      $color: $color-white;
+      content: "";
+      position: relative;
+      padding-top: $size * 0.4;
+      left: $size * 0.25;
+      top: -1px;
+      width: $size * 0.3;
+      height: $size * 0.3;
+      border-bottom: $size * 0.15 solid $color;
+      border-right: $size * 0.15 solid $color;
+      transform: rotate(45deg);
+      display: block;
+    }
+  }
+
+  &:disabled {
+    pointer-events: none;
+    background-color: $color-gary;
+    box-shadow: 0 0 0 1px $color-gary;
+  }
+}
 /* component */
 .main-page {
   text-align: center;
+  div {
+    margin-top: 2em;
+  }
 
   ul {
     margin: 0 auto;
@@ -78,6 +167,7 @@ ul {
   border-bottom: 1px solid $color-black;
   color: $color-gary;
   line-height: 50px;
+  cursor: pointer;
 
   i {
     font-size: 40px;
