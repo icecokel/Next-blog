@@ -27,10 +27,10 @@ const Category = () => {
   };
 
   return (
-    <div>
+    <div className="category-wrap">
       <h2>{currentCategory?.categoryName}</h2>
       <hr />
-      게시글 리스트
+      <label>게시글 리스트</label>
       <Loader isLoading={postList.length === 0}>
         <ul>
           {postList.map((post, index) => {
