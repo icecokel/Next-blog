@@ -1,14 +1,11 @@
-import type { NextPage } from "next";
-import { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import PostCard from "../src/components/PostCard";
+import type {} from "next";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { setBlog } from "../store/modules/blog";
 import { setCategory } from "../store/modules/category";
 import { setUser } from "../store/modules/user";
-import { RootState } from "../store/modules";
-import Loader from "../src/components/common/Loader";
 import useAxios from "../src/hooks/useAxios";
-import ApiOptions, { ApiOption } from "../src/common/ApiOptions";
+import ApiOptions from "../src/common/ApiOptions";
 const item = {
   title: "제목",
   hits: 11,
