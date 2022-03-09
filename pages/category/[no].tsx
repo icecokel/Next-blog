@@ -3,15 +3,15 @@ import Loader from "../../src/components/common/Loader";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/modules";
 import { useEffect, useState } from "react";
-import { Category } from "../../store/modules/category";
-import { Post } from "../../src/components/PostCard";
+import { CategoryVO } from "../../store/modules/category";
+import { PostVO } from "../../src/components/PostCard";
 
-const Category = () => {
+const CategoryPage = () => {
   const router = useRouter();
   const categoryNo = router.query.no;
   const category = useSelector((state: RootState) => state.category);
-  const [currentCategory, setCurrentCategory] = useState<Category>();
-  const [postList, setPostList] = useState<Array<Post>>([]);
+  const [currentCategory, setCurrentCategory] = useState<CategoryVO>();
+  const [postList, setPostList] = useState<Array<PostVO>>([]);
 
   useEffect(() => {
     getCurrentCategory();
@@ -42,4 +42,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default CategoryPage;

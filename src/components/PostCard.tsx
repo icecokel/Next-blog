@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-export type post = {
+export type PostVO = {
   boardNo: string;
   categoryNo: string;
   title: string;
