@@ -3,6 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import CategoryBar from "./CategoryBar";
+import { UserVO } from "../../../store/modules/user";
 
 const Header = () => {
   const userInfo = useSelector((state: RootState) => state.user);
@@ -16,19 +17,33 @@ const Header = () => {
   return (
     <>
       <header className={"wrap"}>
-        <div>{userInfo.userNickName ?? "UnknownUser"}</div>
+        <UserInfoBox userInfo={userInfo} />
         <div className={"logo"} onClick={onClickLogo}>
           Eucalyptus<i className="material-icons">spa</i>
         </div>
-        <div className={"search"}>
-          <span>Search</span>
-          <div>
-            <i className="material-icons">search</i>
-          </div>
-        </div>
+        <SearchBox />
       </header>
       <CategoryBar></CategoryBar>
     </>
+  );
+};
+
+const UserInfoBox = ({ userInfo }: { userInfo: UserVO }) => {
+  const UNKNOWN = "알 수 없음";
+
+  return (
+    <div className="header-user-info">{userInfo.userNickName ?? UNKNOWN}</div>
+  );
+};
+
+const SearchBox = () => {
+  return (
+    <div className={"search"}>
+      <span>Search</span>
+      <div>
+        <i className="material-icons">search</i>
+      </div>
+    </div>
   );
 };
 
