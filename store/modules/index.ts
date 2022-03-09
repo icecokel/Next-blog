@@ -1,8 +1,8 @@
 import { AnyAction, CombinedState, combineReducers } from "redux";
 import { HYDRATE } from "next-redux-wrapper";
-import blog, { Blog } from "./blog";
-import category, { Category } from "./category";
-import user, { User } from "./user";
+import blog, { BlogVO } from "./blog";
+import category, { CategoryVO } from "./category";
+import user, { UserVO } from "./user";
 
 const rootReducer = (
   state: IndexState | undefined,
@@ -27,7 +27,7 @@ export type RootState = ReturnType<typeof rootReducer>;
 export default rootReducer;
 
 export interface IndexState {
-  blog: Blog;
-  category: Array<Category>;
-  user: User;
+  blog: BlogVO;
+  category: Array<CategoryVO>;
+  user: UserVO;
 }

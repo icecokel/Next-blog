@@ -10,7 +10,7 @@
 export const SET_USER = "user/SET_USER" as const;
 
 // 액션 함수 선언
-export const setUser = (user: User) => ({
+export const setUser = (user: UserVO) => ({
   type: SET_USER,
   payload: user,
 });
@@ -19,7 +19,7 @@ export const setUser = (user: User) => ({
 export type UserAction = ReturnType<typeof setUser>;
 
 // 유저정보 타입
-export type User = {
+export type UserVO = {
   userNo: string;
   email: string;
   userName: string;
@@ -30,7 +30,7 @@ export type User = {
 };
 
 // 초기 값 선언
-const initialState: User = {
+const initialState: UserVO = {
   userNo: "",
   email: "",
   userName: "",
@@ -42,7 +42,7 @@ const initialState: User = {
 
 // 리듀서 반환
 // eslint-disable-next-line import/no-anonymous-default-export
-export default (state: User = initialState, action: UserAction) => {
+export default (state: UserVO = initialState, action: UserAction) => {
   switch (action.type) {
     case SET_USER:
       state = action.payload;

@@ -10,7 +10,7 @@
 export const SET_BLOG = "blog/SET_BLOG" as const;
 
 // 액션 함수 선언
-export const setBlog = (blog: Blog) => ({
+export const setBlog = (blog: BlogVO) => ({
   type: SET_BLOG,
   payload: blog,
 });
@@ -19,7 +19,7 @@ export const setBlog = (blog: Blog) => ({
 export type BlogAction = ReturnType<typeof setBlog>;
 
 // 블로그 타입
-export type Blog = {
+export type BlogVO = {
   blogNo: string;
   blogName: string;
   blogDescription: string;
@@ -27,7 +27,7 @@ export type Blog = {
 };
 
 // 초기 값 선언
-const initialState: Blog = {
+const initialState: BlogVO = {
   blogNo: "",
   blogName: "",
   blogDescription: "",
@@ -36,7 +36,7 @@ const initialState: Blog = {
 
 // 리듀서 반환
 // eslint-disable-next-line import/no-anonymous-default-export
-export default (state: Blog = initialState, action: BlogAction) => {
+export default (state: BlogVO = initialState, action: BlogAction) => {
   switch (action.type) {
     case SET_BLOG:
       state = action.payload;
