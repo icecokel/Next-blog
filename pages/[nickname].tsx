@@ -6,12 +6,6 @@ import { setCategory } from "../store/modules/category";
 import { setUser } from "../store/modules/user";
 import useAxios from "../src/hooks/useAxios";
 import ApiOptions from "../src/common/ApiOptions";
-const item = {
-  title: "제목",
-  hits: 11,
-  registerDate: "2022/01/22",
-  thumbnailPath: "/resources/images/test.jpg",
-};
 
 const Main = () => {
   const dispatch = useDispatch();
