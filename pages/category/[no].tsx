@@ -8,6 +8,8 @@ import { PostVO } from "../../src/components/PostCard";
 import useAxios from "../../src/hooks/useAxios";
 import ApiOptions from "../../src/common/ApiOptions";
 
+const TITLE_MAX_LENGTH = 20;
+
 const CategoryPage = () => {
   const router = useRouter();
   const categoryNo = router.query.no;
@@ -25,7 +27,7 @@ const CategoryPage = () => {
     setPosts();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentCategory, isLoading]);
+  }, [categoryNo, currentCategory, isLoading]);
 
   const setPosts = () => {
     if (!data) {
@@ -52,7 +54,23 @@ const CategoryPage = () => {
       <Loader isLoading={isLoading}>
         <ul>
           {postList.map((post, index) => {
-            return <li key={"post_" + index}>ㅇㅇ</li>;
+            const hits = !post.hits ? 0 : Number.parseInt(post.hits);
+
+            let title = post.title;
+            if (TITLE_MAX_LENGTH < post.title.length) {
+              title = post.title.substring(20) + " . . .";
+            }
+
+            return (
+              <li key={"post_" + index}>
+                <div>
+                  <span className="post-no">{post.boardNo}</span>
+                  <span className="post-title">{title}</span>
+                  <span className="post-hits">{hits}</span>
+                </div>
+                <span className="post-registDate">{post.registDate}</span>
+              </li>
+            );
           })}
         </ul>
       </Loader>
