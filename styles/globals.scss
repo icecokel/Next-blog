@@ -232,6 +232,10 @@ input[type="checkbox"] {
     padding: 0px 10px;
     box-shadow: 2px 3px gray;
 
+    &:hover {
+      transform: rotate(5deg);
+    }
+
     &::before {
       content: "search";
     }
