@@ -37,8 +37,8 @@ export default function handler(
           boardNo: "0",
           categoryNo: "0",
           title: "0 0",
-          hits: "",
-          registDate: "",
+          hits: "0",
+          registDate: "2022-01-22",
           registId: "",
         },
         {
@@ -76,7 +76,8 @@ export default function handler(
         {
           boardNo: "5",
           categoryNo: "2",
-          title: "5 2",
+          title:
+            "무지하게 긴 제목 무지하게 긴 제목 무지하게 긴 제목 무지하게 긴 제목 무지하게 긴 제목 무지하게 긴 제목",
           hits: "",
           registDate: "",
           registId: "",
