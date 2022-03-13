@@ -16,10 +16,9 @@ const CategoryPage = () => {
   const category = useSelector((state: RootState) => state.category);
   const [currentCategory, setCurrentCategory] = useState<CategoryVO>();
   const [postList, setPostList] = useState<Array<PostVO>>([]);
-  const { isLoading, data, error } = useAxios(
-    ApiOptions.getPostsByCategoryNo,
-    categoryNo
-  );
+  const { isLoading, data, error } = useAxios(ApiOptions.getPostsByCategoryNo, {
+    categoryNo,
+  });
 
   useEffect(() => {
     getCurrentCategory();

@@ -25,7 +25,7 @@ const useAxios = (option: any, params?: any) => {
 
   switch (option.method) {
     case "GET":
-      axiosBody["param"] = params;
+      axiosBody["params"] = params;
     default:
       axiosBody["data"] = params;
   }
