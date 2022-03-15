@@ -5,7 +5,7 @@ import { RootState } from "../../store/modules";
 import { useEffect, useState } from "react";
 import { CategoryVO } from "../../store/modules/category";
 import { PostVO } from "../../src/components/PostCard";
-import useAxios from "../../src/hooks/useAxios";
+import useAxios from "../../src/common/hooks/useAxios";
 import ApiOptions from "../../src/common/ApiOptions";
 
 const TITLE_MAX_LENGTH = 20;

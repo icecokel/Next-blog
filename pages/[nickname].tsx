@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { setBlog } from "../store/modules/blog";
 import { setCategory } from "../store/modules/category";
 import { setUser } from "../store/modules/user";
-import useAxios from "../src/hooks/useAxios";
+import useAxios from "../src/common/hooks/useAxios";
 import ApiOptions from "../src/common/ApiOptions";
 
 const Main = () => {
