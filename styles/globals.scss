@@ -161,16 +161,16 @@ input[type="checkbox"] {
   align-items: center;
   padding: 10px;
   height: 100px;
-  border-top: 3px solid $color-green4;
-
-  $size: 15vw;
+  border-top: 5px solid $color-green4;
 
   @media (max-width: 640px) {
-    border-top: 1px solid $color-green4;
+    border-top: 3px solid $color-green4;
   }
 
-  .header-user-info {
-    width: $size;
+  .header-user-info,
+  .header-user-info-login {
+    width: 10%;
+    max-width: 200px;
     min-width: 100px;
     background-color: $color-white;
     border-radius: 5px;
@@ -180,7 +180,6 @@ input[type="checkbox"] {
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
     box-shadow: 2px 3px gray;
 
     @media (max-width: 640px) {
@@ -191,24 +190,37 @@ input[type="checkbox"] {
     }
   }
 
+  .header-user-info-login {
+    &:hover {
+      transition-duration: 0.2s;
+      transform: scale(1.02);
+    }
+  }
+
   .logo {
-    width: $size * 1.8;
+    width: 30%;
+    max-width: 400px;
     min-width: 250px;
     font-family: "Bangers", cursive;
     background-color: $color-green4;
     padding: 3px 7px;
     border-bottom: 1px solid $color-black;
     color: $color-gray;
-    font-size: 45px;
-    line-height: 45px;
+    font-size: 3em;
     text-align: center;
-
     cursor: pointer;
     box-shadow: 2px 3px gray;
+
+    &:hover {
+      transition-duration: 0.2s;
+      transform: scale(1.02);
+    }
+
     i {
       font-size: 40px;
       margin-left: 5px;
     }
+
     @media (max-width: 640px) {
       font-size: 28px;
       min-width: 150px;
@@ -222,7 +234,8 @@ input[type="checkbox"] {
   }
 
   .search {
-    width: $size;
+    width: 10%;
+    max-width: 200px;
     min-width: 100px;
     display: flex;
     align-items: center;
@@ -232,12 +245,13 @@ input[type="checkbox"] {
     padding: 0px 10px;
     box-shadow: 2px 3px gray;
 
-    &:hover {
-      transform: rotate(5deg);
-    }
-
     &::before {
       content: "search";
+    }
+
+    &:hover {
+      transform: scale(1.05);
+      transition-duration: 0.2s;
     }
 
     div {
@@ -256,39 +270,69 @@ input[type="checkbox"] {
   }
 }
 
-.nav-bar {
+.nav-bar-wrap {
   background-color: $color-brown2;
   height: 3em;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  flex-wrap: wrap;
 
-  li {
-    font-size: 1.2em;
-    margin-right: 0.8em;
-    padding: 0px 0.4em;
-    background-color: $color-white;
-    color: $color-gray;
-    height: 2em;
-    line-height: 2em;
-    text-align: center;
-    border-radius: 5px;
+  .btn-arrow {
+    min-width: 20px;
+    background-color: transparent;
+    color: $color-white;
+    display: inline-block;
+
+    i {
+      position: relative;
+      top: 0.15em;
+    }
 
     &:hover {
-      color: $color-brown1;
+      transition-duration: 0.2s;
+      transform: scale(1.4);
+      color: $color-active;
       cursor: pointer;
     }
   }
 
-  @media (max-width: 640px) {
-    height: 2.8em;
-    font-size: 0.8em;
+  ul {
+    display: inline;
+    white-space: nowrap;
+    flex: 1;
+    overflow: hidden;
 
     li {
-      font-size: 1.1em;
-      margin-right: 0.3em;
-      padding: 0px 0.15em;
+      display: inline-block;
+      font-size: 18px;
+      margin: 4px 6px;
+      padding: 0px 5px;
+      background-color: $color-white;
+      color: $color-gray;
+      height: 2em;
+      line-height: 2em;
+      text-align: center;
+      border-radius: 5px;
+      width: fit-content;
+
+      &:hover {
+        transition-duration: 0.2s;
+        transform: scale(1.05);
+        color: $color-brown1;
+        cursor: pointer;
+      }
+    }
+
+    @media (max-width: 640px) {
+      height: 3em;
+      font-size: 0.8em;
+
+      li {
+        height: 2em;
+        font-size: 1em;
+        margin-left: 0.15em;
+        margin-right: 0.15em;
+        padding: 0px 0.15em;
+      }
     }
   }
 }
@@ -326,23 +370,34 @@ input[type="checkbox"] {
       box-shadow: 2px 2px gray;
       margin-bottom: 0.5em;
 
+      &:hover {
+        transition-duration: 0.2s;
+        transform: scale(1.005, 1.05);
+        border: 1px solid $color-active;
+      }
+
       div {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         .post-no {
           font-size: 0.9em;
           margin-right: 3px;
           width: 8vw;
+          max-width: 40px;
         }
+
         .post-title {
           font-size: 1.3em;
           flex: 1;
         }
+
         .post-hits {
           text-align: right;
           font-size: 0.7em;
           width: 8vw;
+          max-width: 40px;
 
           &::after {
             margin-left: 2px;
