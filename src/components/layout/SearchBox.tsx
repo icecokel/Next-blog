@@ -3,9 +3,7 @@ import React from "react";
 const SearchBox = () => {
   return (
     <div className={"search"}>
-      <div>
-        <i className="material-icons">search</i>
-      </div>
+      <i className="material-icons">search</i>
     </div>
   );
 };
