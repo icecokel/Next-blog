@@ -18,7 +18,7 @@ const Header = () => {
   return (
     <>
       <header className={"header-wrap"}>
-        <UserInfoBox userNickName={userInfo.userNickName} />
+        <UserInfoBox />
         <div className={"logo"} onClick={onClickLogo}>
           Eucalyptus<i className="material-icons">spa</i>
         </div>
