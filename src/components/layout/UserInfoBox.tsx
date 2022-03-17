@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import BaseModal from "../common/BaseModal";
-import { UserVO } from "../../../store/modules/user";
 
-const UserInfoBox = ({ userNickName }: { userNickName: string }) => {
+const UserInfoBox = () => {
   const [isOpenSignInModal, setIsOpenSignInModal] = useState<boolean>(false);
   const UNKNOWN = "Sign in";
+  // 임시 코드
+  const userNickName = false;
 
   const onClickLogIn = () => {
     if (userNickName) {
@@ -14,10 +15,12 @@ const UserInfoBox = ({ userNickName }: { userNickName: string }) => {
   };
 
   return (
-    <>
-      <div className="header-user-info" onClick={onClickLogIn}>
-        {userNickName || UNKNOWN}
-      </div>
+    <div
+      className={userNickName ? "header-user-info" : "header-user-info-login"}
+      onClick={onClickLogIn}
+    >
+      {userNickName || UNKNOWN}
+
       <BaseModal isOpen={isOpenSignInModal} setIsOpen={setIsOpenSignInModal}>
         <div className="login-wrap">
           <input type="email" placeholder="email@email.com" />
@@ -27,7 +30,7 @@ const UserInfoBox = ({ userNickName }: { userNickName: string }) => {
           <button className="sns-google"> Google</button>
         </div>
       </BaseModal>
-    </>
+    </div>
   );
 };
 
