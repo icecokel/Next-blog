@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import Link from "next/link";
@@ -19,7 +19,7 @@ const CategoryBar = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category, categoryIndex]);
 
-  const setCategorySizeList = () => {
+  const setCategorySizeList = useCallback(() => {
     const temp = new Array<number>();
 
     category.forEach((item) => {
@@ -29,7 +29,7 @@ const CategoryBar = () => {
     });
 
     categorySizeList.current = temp;
-  };
+  }, [category]);
 
   const handleMoveCategory = (side: "left" | "right") => {
     if (!navRef?.current) {
@@ -74,7 +74,6 @@ const CategoryBar = () => {
     });
 
     leftSize.current = tempLeftSize;
-
     setCategoryIndex(index);
   };
 
