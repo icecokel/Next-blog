@@ -33,13 +33,15 @@ const useAxios = (option: any, params?: any) => {
   axiosBody["url"] = BASE_URL + option.url;
 
   useEffect(() => {
-    axios(axiosBody)
-      .then((res) => {
-        setState({ ...state, isLoading: false, data: res.data });
-      })
-      .catch((error) => {
-        setState({ ...state, isLoading: false, error: error });
-      });
+    if (state.isLoading) {
+      axios(axiosBody)
+        .then((res) => {
+          setState({ ...state, isLoading: false, data: res.data });
+        })
+        .catch((error) => {
+          setState({ ...state, isLoading: false, error: error });
+        });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.isLoading]);
 
