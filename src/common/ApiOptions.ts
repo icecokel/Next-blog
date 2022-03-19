@@ -18,6 +18,10 @@ const ApiOptions = {
     url: "/posts",
     method: "GET",
   } as ApiOption,
+  login: {
+    url: "/success",
+    method: "POST",
+  } as ApiOption,
 };
 
 export default ApiOptions;
