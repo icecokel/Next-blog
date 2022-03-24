@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ApiOptions from "../../common/ApiOptions";
 import useAxios from "../../common/hooks/useAxios";
 import BaseModal from "../common/BaseModal";
+import CryptoUtil from "../../common/CryptoUtil";
+import SessionUtil from "../../common/SessionUtil";
+import { SessionEnum } from "../../common/SessionEnum";
 
 const UserInfoBox = () => {
   const [isOpenSignInModal, setIsOpenSignInModal] = useState<boolean>(false);
-  const [formData, setFormData] = useState<any>();
+  const [formData, setFormData] = useState<any>({
+    email: "",
+    password: "",
+  });
   const { isLoading, data, error } = useAxios(ApiOptions.login, formData);
 
   // 임시 코드
@@ -14,6 +20,7 @@ const UserInfoBox = () => {
   useEffect(() => {
     if (data?.message === "Success") {
       setUserInfo();
+      setIsOpenSignInModal(false);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -35,7 +42,10 @@ const UserInfoBox = () => {
     setFormData({ email, password });
   };
 
-  const setUserInfo = () => {};
+  const setUserInfo = useCallback(() => {
+    const text = CryptoUtil.encrypt({ email: formData.email });
+    SessionUtil.setSession(SessionEnum.userInfo, text);
+  }, [formData]);
 
   return (
     <div
