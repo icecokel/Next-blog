@@ -8,6 +8,8 @@ import { useRouter } from "next/router";
 const CategoryBar = () => {
   const router = useRouter();
   const category = useSelector((state: RootState) => state.category);
+  const user = useSelector((state: RootState) => state.user);
+  const sessionUserNickname = useRef<string>("");
   const haveCategoryInfos = category.length !== 0;
   const navRef = useRef<HTMLUListElement>(null);
   const [categoryIndex, setCategoryIndex] = useState<number>(0);
@@ -108,6 +110,7 @@ const CategoryBar = () => {
               );
             })}
           </Loader>
+          {user.userNickName}
         </ul>
 
         <span
