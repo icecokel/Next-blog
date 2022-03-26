@@ -5,17 +5,15 @@ import BaseModal from "../common/BaseModal";
 import CryptoUtil from "../../common/CryptoUtil";
 import SessionUtil from "../../common/SessionUtil";
 import { SessionEnum } from "../../common/SessionEnum";
-
+import { UserVO } from "../../../store/modules/user";
 const UserInfoBox = () => {
   const [isOpenSignInModal, setIsOpenSignInModal] = useState<boolean>(false);
+  const [currentUser, setCurrentUser] = useState<UserVO>();
   const [formData, setFormData] = useState<any>({
     email: "",
     password: "",
   });
   const { isLoading, data, error } = useAxios(ApiOptions.login, formData);
-
-  // 임시 코드
-  const userNickName = false;
 
   useEffect(() => {
     if (data?.message === "Success") {
@@ -27,7 +25,7 @@ const UserInfoBox = () => {
   }, [isLoading, formData]);
 
   const onClickLogIn = () => {
-    if (userNickName) {
+    if (currentUser?.email) {
       return;
     }
     setIsOpenSignInModal(!isOpenSignInModal);
@@ -44,14 +42,29 @@ const UserInfoBox = () => {
 
   const setUserInfo = useCallback(() => {
     const text = CryptoUtil.encrypt({ email: formData.email });
-    SessionUtil.setSession(SessionEnum.userInfo, text);
+
+    const tempData = {
+      userNo: "",
+      email: formData.email,
+      userName: "",
+      userEnglishName: "",
+      status: "",
+      userAuthority: "",
+      userNickName: "tempNick",
+    };
+    setCurrentUser(tempData),
+      SessionUtil.setSession(SessionEnum.userInfo, text);
   }, [formData]);
 
   return (
     <div
-      className={userNickName ? "header-user-info" : "header-user-info-login"}
+      className={
+        currentUser?.email ? "header-user-info" : "header-user-info-login"
+      }
     >
-      <label onClick={onClickLogIn}>{userNickName || "Sign in"}</label>
+      <label onClick={onClickLogIn}>
+        {currentUser?.userNickName || "Sign in"}
+      </label>
 
       <BaseModal isOpen={isOpenSignInModal} setIsOpen={setIsOpenSignInModal}>
         <div className="login-wrap">
