@@ -420,13 +420,17 @@ input[type="checkbox"] {
   justify-content: flex-end;
   align-items: center;
 
-  span {
+  i {
     font-size: 22px;
     border-radius: 2px;
     position: relative;
     left: 15px;
     bottom: 15px;
-    color: $color-red;
+
+    &:hover {
+      color: $color-red;
+      cursor: pointer;
+    }
   }
 }
 
@@ -455,6 +459,11 @@ input[type="checkbox"] {
     height: 2em;
     padding: 0px;
     margin-top: 0.5em;
+  }
+
+  .error {
+    color: $color-red;
+    font-size: 1.25em;
   }
 
   .sns-google {
