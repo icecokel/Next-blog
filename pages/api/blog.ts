@@ -12,6 +12,7 @@ export default function handler(
       userInfo: {
         userNo: "",
         nickName: "testUser",
+        email: "test@test.com",
       },
       blogInfo: {
         blogNo: "9999",

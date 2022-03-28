@@ -29,7 +29,7 @@ const Main = () => {
     dispatch(
       setUser({
         userNo: blogInfo.data.item.userInfo.userNo,
-        email: "",
+        email: blogInfo.data.item.userInfo.email,
         userName: "",
         userEnglishName: "",
         status: "",
