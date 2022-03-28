@@ -4,12 +4,16 @@ import { RootState } from "../../../store/modules";
 import Link from "next/link";
 import Loader from "../common/Loader";
 import { useRouter } from "next/router";
+import SessionUtil from "../../common/SessionUtil";
+import { SessionEnum } from "../../common/SessionEnum";
+import { UserVO } from "../../../store/modules/user";
+import CryptoUtil from "../../common/CryptoUtil";
 
 const CategoryBar = () => {
   const router = useRouter();
   const category = useSelector((state: RootState) => state.category);
   const user = useSelector((state: RootState) => state.user);
-  const sessionUserNickname = useRef<string>("");
+  const [currentUser, setCurrentUser] = useState<UserVO>();
   const haveCategoryInfos = category.length !== 0;
   const navRef = useRef<HTMLUListElement>(null);
   const [categoryIndex, setCategoryIndex] = useState<number>(0);
@@ -18,8 +22,28 @@ const CategoryBar = () => {
 
   useEffect(() => {
     setCategorySizeList();
+    setSessionUser();
+    setManagement();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category, categoryIndex]);
+
+  const setSessionUser = useCallback(() => {
+    const data = CryptoUtil.decrypt(
+      SessionUtil.getSession(SessionEnum.userInfo) ?? ""
+    );
+
+    setCurrentUser(data);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [category]);
+
+  const setManagement = useCallback(() => {
+    if (user.email !== currentUser?.email) {
+      return;
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser, user]);
 
   const setCategorySizeList = useCallback(() => {
     const temp = new Array<number>();
@@ -110,7 +134,6 @@ const CategoryBar = () => {
               );
             })}
           </Loader>
-          {user.userNickName}
         </ul>
 
         <span
