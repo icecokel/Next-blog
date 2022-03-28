@@ -2,7 +2,7 @@ import CryptoJS from "crypto-js";
 
 const SECRET_KEY = process.env.NEXT_PUBLIC_SECRET_KET ?? "";
 
-const crypto = {
+const CryptoUtil = {
   encrypt: (data: any) => {
     return CryptoJS.AES.encrypt(JSON.stringify(data), SECRET_KEY).toString();
   },
@@ -13,4 +13,4 @@ const crypto = {
   },
 };
 
-export default crypto;
+export default CryptoUtil;
