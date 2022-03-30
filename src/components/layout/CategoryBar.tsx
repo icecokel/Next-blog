@@ -28,9 +28,12 @@ const CategoryBar = () => {
   }, [category, categoryIndex]);
 
   const setSessionUser = useCallback(() => {
-    const data = CryptoUtil.decrypt(
-      SessionUtil.getSession(SessionEnum.userInfo) ?? ""
-    );
+    const encryptoText = SessionUtil.getSession(SessionEnum.userInfo);
+
+    if (!encryptoText) {
+      return;
+    }
+    const data = CryptoUtil.decrypt(encryptoText);
 
     setCurrentUser(data);
 
