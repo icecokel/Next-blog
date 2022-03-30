@@ -7,7 +7,11 @@ import { useRouter } from "next/router";
 import SessionUtil from "../../common/SessionUtil";
 import { SessionEnum } from "../../common/SessionEnum";
 import { UserVO } from "../../../store/modules/user";
+import { CategoryVO } from "../../../store/modules/category";
 import CryptoUtil from "../../common/CryptoUtil";
+
+const MANAGEMENT_URL = "management";
+const MANAGEMENT_PATH = "/category/management";
 
 const CategoryBar = () => {
   const router = useRouter();
@@ -21,9 +25,11 @@ const CategoryBar = () => {
   const leftSize = useRef<number>(0);
 
   useEffect(() => {
-    setCategorySizeList();
     setSessionUser();
     setManagement();
+    setCategorySizeList();
+    console.log(router);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category, categoryIndex]);
 
@@ -41,9 +47,21 @@ const CategoryBar = () => {
   }, [category]);
 
   const setManagement = useCallback(() => {
-    if (user.email !== currentUser?.email) {
+    if (
+      user.email !== currentUser?.email ||
+      category.some((item) => item.categoryNo === MANAGEMENT_URL)
+    ) {
       return;
     }
+
+    const management: CategoryVO = {
+      categoryNo: MANAGEMENT_URL,
+      categoryName: "MANAGEMENT",
+      groupNo: "",
+      groupOrder: "",
+      depth: "",
+    };
+    category.push(management);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser, user]);
@@ -106,7 +124,11 @@ const CategoryBar = () => {
     setCategoryIndex(index);
   };
 
-  if (router.query.nickname || router.query.no) {
+  if (
+    router.query.nickname ||
+    router.query.no ||
+    router.pathname === MANAGEMENT_PATH
+  ) {
     return (
       <div className="nav-bar-wrap">
         <span
