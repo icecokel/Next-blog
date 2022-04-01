@@ -496,5 +496,20 @@ input[type="checkbox"] {
   .management-content {
     flex: 1;
     padding: 1em;
+    display: flex;
+    flex-direction: column;
+    div:first-child {
+      min-height: 3em;
+      border-bottom: 2px solid $color-gray;
+      margin-bottom: 1em;
+      padding-left: 0.5em;
+      line-height: 2em;
+    }
+    div:last-child {
+      padding: 0.5em;
+      flex: 1;
+      background-color: $color-white;
+      border-radius: 5px;
+    }
   }
 }
