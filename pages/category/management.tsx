@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Quill } from "react-quill";
+import ReactQuill from 'react-quill';
 
 const MENU_LIST = [
   "글쓰기",
@@ -7,6 +9,25 @@ const MENU_LIST = [
   "통계",
   "블로그 설정",
 ];
+
+      const formats = [
+        //'font',
+        "header",
+        "bold",
+        "italic",
+        "underline",
+        "strike",
+        "blockquote",
+        "list",
+        "bullet",
+        "indent",
+        "link",
+        "image",
+        "align",
+        "color",
+        "background",
+      ];
+
 
 const ManagementPage = () => {
   const [currentMenu, setCurrentMenu] = useState<string>(MENU_LIST[0]);
@@ -57,6 +78,19 @@ const ManagementPage = () => {
         </div>
         <div>{getMenuContent()}</div>
       </div>
+    </div>
+  );
+};
+
+const WritingNewPost = () => {
+  return (
+    <div>
+       <ReactQuill 
+                    style={{height: "600px"}} 
+                    theme="snow" 
+                    formats={formats} 
+                    onChange={(content, delta, source, editor) => onChange(editor.getHTML())} />
+            </div>
     </div>
   );
 };
