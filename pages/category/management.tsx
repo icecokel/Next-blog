@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useRef } from "react";
 import { Quill } from "react-quill";
-import ReactQuill from 'react-quill';
+import ReactQuill from "react-quill";
 
 const MENU_LIST = [
   "글쓰기",
@@ -10,24 +10,23 @@ const MENU_LIST = [
   "블로그 설정",
 ];
 
-      const formats = [
-        //'font',
-        "header",
-        "bold",
-        "italic",
-        "underline",
-        "strike",
-        "blockquote",
-        "list",
-        "bullet",
-        "indent",
-        "link",
-        "image",
-        "align",
-        "color",
-        "background",
-      ];
-
+const formats = [
+  //'font',
+  "header",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "bullet",
+  "indent",
+  "link",
+  "image",
+  "align",
+  "color",
+  "background",
+];
 
 const ManagementPage = () => {
   const [currentMenu, setCurrentMenu] = useState<string>(MENU_LIST[0]);
@@ -43,7 +42,7 @@ const ManagementPage = () => {
 
     switch (menuIndex) {
       case 0:
-        return <span>글쓰기 컴포넌트</span>;
+        return <WritingNewPost></WritingNewPost>;
       case 1:
         return <span>카테고리 컴포넌트</span>;
       case 2:
@@ -83,15 +82,44 @@ const ManagementPage = () => {
 };
 
 const WritingNewPost = () => {
+  const quillRef = useRef<any>();
+  const [htmlContent, setHtmlContent] = useState<string>();
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        // 툴바에 넣을 기능
+        container: [
+          ["bold", "italic", "underline", "strike", "blockquote"],
+          [{ size: ["small", false, "large", "huge"] }, { color: [] }],
+          [
+            { list: "ordered" },
+            { list: "bullet" },
+            { indent: "-1" },
+            { indent: "+1" },
+            { align: [] },
+          ],
+        ],
+      },
+    }),
+    []
+  );
+
   return (
-    <div>
-       <ReactQuill 
-                    style={{height: "600px"}} 
-                    theme="snow" 
-                    formats={formats} 
-                    onChange={(content, delta, source, editor) => onChange(editor.getHTML())} />
-            </div>
-    </div>
+    <>
+      <ReactQuill
+        // ref={quillRef}
+        ref={(element) => {
+          if (element !== null) {
+            quillRef.current = element;
+          }
+        }}
+        value={htmlContent}
+        onChange={setHtmlContent}
+        modules={modules}
+        theme="snow"
+        style={{ height: "85%", marginBottom: "6%" }} // style
+      />
+    </>
   );
 };
 
