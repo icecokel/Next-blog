@@ -1,5 +1,4 @@
 import React, { useState, useMemo, useRef } from "react";
-import { Quill } from "react-quill";
 import ReactQuill from "react-quill";
 
 const MENU_LIST = [
@@ -8,24 +7,6 @@ const MENU_LIST = [
   "게시글 관리",
   "통계",
   "블로그 설정",
-];
-
-const formats = [
-  //'font',
-  "header",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "list",
-  "bullet",
-  "indent",
-  "link",
-  "image",
-  "align",
-  "color",
-  "background",
 ];
 
 const ManagementPage = () => {
@@ -82,43 +63,9 @@ const ManagementPage = () => {
 };
 
 const WritingNewPost = () => {
-  const quillRef = useRef<any>();
-  const [htmlContent, setHtmlContent] = useState<string>();
-  const modules = useMemo(
-    () => ({
-      toolbar: {
-        // 툴바에 넣을 기능
-        container: [
-          ["bold", "italic", "underline", "strike", "blockquote"],
-          [{ size: ["small", false, "large", "huge"] }, { color: [] }],
-          [
-            { list: "ordered" },
-            { list: "bullet" },
-            { indent: "-1" },
-            { indent: "+1" },
-            { align: [] },
-          ],
-        ],
-      },
-    }),
-    []
-  );
-
   return (
     <>
-      <ReactQuill
-        // ref={quillRef}
-        ref={(element) => {
-          if (element !== null) {
-            quillRef.current = element;
-          }
-        }}
-        value={htmlContent}
-        onChange={setHtmlContent}
-        modules={modules}
-        theme="snow"
-        style={{ height: "85%", marginBottom: "6%" }} // style
-      />
+      <ReactQuill theme="snow" />
     </>
   );
 };
