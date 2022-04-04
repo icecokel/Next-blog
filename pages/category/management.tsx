@@ -53,7 +53,7 @@ const ManagementPage = () => {
         </ul>
       </div>
       <div className="management-content">
-        <div>
+        <div className="management-content-title">
           <h2>{currentMenu}</h2>
         </div>
         <div>{getMenuContent()}</div>
@@ -65,6 +65,9 @@ const ManagementPage = () => {
 const WritingNewPost = () => {
   return (
     <>
+      <div className="editor-title">
+        <input type="text" placeholder="제목을 입력해주세요" />
+      </div>
       <ReactQuill theme="snow" />
     </>
   );
