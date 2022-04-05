@@ -25,15 +25,14 @@ const CategoryBar = () => {
   const leftSize = useRef<number>(0);
 
   useEffect(() => {
-    setSessionUser();
+    getSessionUser();
     setManagement();
     setCategorySizeList();
-    console.log(router);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category, categoryIndex]);
 
-  const setSessionUser = useCallback(() => {
+  const getSessionUser = useCallback(() => {
     const encryptoText = SessionUtil.getSession(SessionEnum.userInfo);
 
     if (!encryptoText) {
