@@ -12,24 +12,40 @@ const UserInfoBox = () => {
   const [isOpenSignInModal, setIsOpenSignInModal] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<UserVO>();
   const [isStartRequest, setIsStartRequest] = useState<boolean>(false);
+  const [isLogined, setIsLogined] = useState<boolean>(false);
   const [formData, setFormData] = useState<any>({
     email: "",
     password: "",
   });
 
+  useEffect(() => {
+    getSessionUser();
+  }, [isLogined]);
+
   const onClickModalOpen = () => {
-    if (currentUser?.email) {
+    if (isLogined) {
       return;
     }
     setIsOpenSignInModal(!isOpenSignInModal);
   };
 
+  const getSessionUser = useCallback(() => {
+    if (isLogined) {
+      return;
+    }
+    const encryptoText = SessionUtil.getSession(SessionEnum.userInfo);
+
+    if (!encryptoText) {
+      return;
+    }
+    const data = CryptoUtil.decrypt(encryptoText);
+
+    setCurrentUser(data);
+    setIsLogined(true);
+  }, [isLogined]);
+
   return (
-    <div
-      className={
-        currentUser?.email ? "header-user-info" : "header-user-info-login"
-      }
-    >
+    <div className={isLogined ? "header-user-info" : "header-user-info-login"}>
       <label onClick={onClickModalOpen}>
         {currentUser?.userNickName || "Sign in"}
       </label>
@@ -46,6 +62,7 @@ const UserInfoBox = () => {
             setCurrentUser={setCurrentUser}
             formData={formData}
             setIsStartRequest={setIsStartRequest}
+            setIsLogined={setIsLogined}
           />
         )}
       </BaseModal>
@@ -88,11 +105,13 @@ const LoginConfirmBox = ({
   setCurrentUser,
   formData,
   setIsStartRequest,
+  setIsLogined,
 }: {
   formData: any;
   setIsOpenSignInModal: Function;
   setCurrentUser: Function;
   setIsStartRequest: Function;
+  setIsLogined: Function;
 }) => {
   const { isLoading, data, error } = useAxios(ApiOptions.login, formData);
 
@@ -115,12 +134,11 @@ const LoginConfirmBox = ({
     if (message === "Success") {
       setUserInfo();
       setIsOpenSignInModal(false);
+      setIsLogined(true);
     }
   };
 
   const setUserInfo = useCallback(() => {
-    const text = CryptoUtil.encrypt({ email: formData.email });
-
     const tempData = {
       userNo: "",
       email: formData.email,
@@ -130,6 +148,7 @@ const LoginConfirmBox = ({
       userAuthority: "",
       userNickName: "tempNick",
     };
+    const text = CryptoUtil.encrypt(tempData);
 
     setCurrentUser(tempData),
       SessionUtil.setSession(SessionEnum.userInfo, text);
