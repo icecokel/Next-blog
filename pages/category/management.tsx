@@ -1,5 +1,5 @@
-import React, { useState, useMemo, useRef } from "react";
-import ReactQuill from "react-quill";
+import React, { useState } from "react";
+import NewPost from "../../src/components/management/NewPost";
 
 const MENU_LIST = [
   "글쓰기",
@@ -23,7 +23,7 @@ const ManagementPage = () => {
 
     switch (menuIndex) {
       case 0:
-        return <WritingNewPost></WritingNewPost>;
+        return <NewPost />;
       case 1:
         return <span>카테고리 컴포넌트</span>;
       case 2:
@@ -59,17 +59,6 @@ const ManagementPage = () => {
         <div>{getMenuContent()}</div>
       </div>
     </div>
-  );
-};
-
-const WritingNewPost = () => {
-  return (
-    <>
-      <div className="editor-title">
-        <input type="text" placeholder="제목을 입력해주세요" />
-      </div>
-      <ReactQuill theme="snow" />
-    </>
   );
 };
 
