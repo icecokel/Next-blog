@@ -525,13 +525,13 @@ input[type="text"] {
       background-color: $color-white;
       border-radius: 5px;
 
-      .editor-title {
+      .editor-wrap {
         padding: 0.5em;
 
         input[type="text"] {
           width: 100%;
           border: 2px solid $color-green4;
-
+          margin-bottom: 5px;
           &:active,
           &:focus {
             outline: none;
@@ -539,6 +539,7 @@ input[type="text"] {
           }
         }
       }
+
       .ql-toolbar {
         padding: 0px;
         margin-bottom: 5px;
@@ -558,6 +559,24 @@ input[type="text"] {
           &:focus {
             outline: 2px solid $color-active;
             border-radius: 2px;
+          }
+        }
+      }
+
+      .button-wrap {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        padding: 0;
+        padding-top: 10px;
+
+        button {
+          flex: 1;
+          margin: 0;
+          font-size: 1.2em;
+
+          &:first-child {
+            margin-right: 5px;
           }
         }
       }
