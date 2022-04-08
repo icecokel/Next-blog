@@ -18,16 +18,18 @@ const NewPost = () => {
     setFormData({ ...formData, title: value });
   };
   return (
-    <>
-      <div className="editor-title">
-        <input
-          type="text"
-          placeholder="제목을 입력해주세요"
-          onChange={onChangeTitle}
-        />
-      </div>
+    <div className="editor-wrap">
+      <input
+        type="text"
+        placeholder="제목을 입력해주세요"
+        onChange={onChangeTitle}
+      />
       <ReactQuill theme="snow" />
-    </>
+      <div className="button-wrap">
+        <button>임시 저장</button>
+        <button>발행</button>
+      </div>
+    </div>
   );
 };
 
