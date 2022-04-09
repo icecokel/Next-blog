@@ -12,19 +12,25 @@ const NewPost = () => {
     content: "",
   });
 
-  const onChangeTitle = (e: any) => {
-    const { value } = e.target;
+  const onChange = (e: any) => {
+    const { value, id } = e.target;
 
-    setFormData({ ...formData, title: value });
+    setFormData({ ...formData, [id]: value });
   };
   return (
     <div className="editor-wrap">
       <input
         type="text"
         placeholder="제목을 입력해주세요"
-        onChange={onChangeTitle}
+        id="title"
+        onChange={onChange}
       />
-      <ReactQuill theme="snow" />
+      <ReactQuill
+        theme="snow"
+        value={formData.content}
+        onChange={onChange}
+        id="content"
+      />
       <div className="button-wrap">
         <button>임시 저장</button>
         <button>발행</button>
