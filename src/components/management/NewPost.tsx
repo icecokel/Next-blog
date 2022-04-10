@@ -28,8 +28,9 @@ const NewPost = () => {
       <ReactQuill
         theme="snow"
         value={formData.content}
-        onChange={onChange}
-        id="content"
+        onChange={(content) => {
+          setFormData({ ...formData, content });
+        }}
       />
       <div className="button-wrap">
         <button>임시 저장</button>
