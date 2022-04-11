@@ -52,11 +52,11 @@ const ManagementPage = () => {
           })}
         </ul>
       </div>
-      <div className="management-content">
+      <div className="management-content-wrap">
         <div className="management-content-title">
           <h2>{currentMenu}</h2>
         </div>
-        <div>{getMenuContent()}</div>
+        <div className="management-content">{getMenuContent()}</div>
       </div>
     </div>
   );
