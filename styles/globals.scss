@@ -123,6 +123,7 @@ input[type="checkbox"] {
     box-shadow: 0 0 0 1px $color-gray;
   }
 }
+
 input[type="text"] {
   border: 1px solid $color-green3;
   border-radius: 3px;
@@ -505,7 +506,7 @@ input[type="text"] {
     }
   }
 
-  .management-content {
+  .management-content-wrap {
     flex: 1;
     padding: 1em;
     display: flex;
@@ -519,7 +520,7 @@ input[type="text"] {
       line-height: 2em;
     }
 
-    div:last-child {
+    .management-content {
       padding: 0.5em;
       flex: 1;
       background-color: $color-white;
