@@ -1,11 +1,11 @@
 import React from "react";
 
-const SearchBox = () => {
+const SearchIcon = () => {
   return (
-    <div className={"search"}>
+    <div className="header-icon">
       <i className="material-icons">search</i>
     </div>
   );
 };
 
-export default React.memo(SearchBox);
+export default React.memo(SearchIcon);
