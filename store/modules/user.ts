@@ -25,7 +25,7 @@ export type UserVO = {
   userName: string;
   userEnglishName: string;
   status: string;
-  userAuthority: string;
+  userAuthority: boolean;
   userNickName: string;
 };
 
@@ -36,7 +36,7 @@ const initialState: UserVO = {
   userName: "",
   userEnglishName: "",
   status: "",
-  userAuthority: "",
+  userAuthority: false,
   userNickName: "",
 };
 

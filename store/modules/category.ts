@@ -22,9 +22,6 @@ export type CategoryAction = ReturnType<typeof setCategory>;
 export type CategoryVO = {
   categoryNo: string;
   categoryName: string;
-  groupNo: string;
-  groupOrder: string;
-  depth: string;
 };
 
 // 초기 값 선언
