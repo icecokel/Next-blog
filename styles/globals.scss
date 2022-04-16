@@ -64,6 +64,17 @@ button {
   }
 }
 
+.btn-success {
+  background-color: $color-green3;
+  color: $color-black;
+  font-size: 1.2em;
+
+  &:hover {
+    background-color: $color-active;
+    color: $color-white;
+  }
+}
+
 input[type="radio"] {
   $size: 0.9rem;
   appearance: none;
@@ -302,6 +313,7 @@ select {
     }
   }
 }
+
 .main-wrap {
   .thumbnail {
     height: 300px;
@@ -442,6 +454,19 @@ select {
   .sns-google {
     background-color: #ea4335;
     color: $color-white;
+  }
+}
+
+.logout-wrap {
+  div {
+    margin-top: 1em;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  button {
+    display: inline-block;
+    width: 50%;
   }
 }
 
