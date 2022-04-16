@@ -21,6 +21,17 @@ const NewPost = () => {
     setFormData({ ...formData, [id]: value });
   };
 
+  const getTimeList = (type: "hour" | "minute") => {
+    const maxCount = type === "hour" ? 24 : 60;
+    const timeList = new Array();
+
+    for (let i = 0; i < maxCount; i++) {
+      timeList.push(i);
+    }
+
+    return timeList;
+  };
+
   return (
     <div className="editor-wrap">
       <input
@@ -38,13 +49,37 @@ const NewPost = () => {
       />
       <div>
         <label>발행일</label>
-        <DatePicker
-          selected={formData.postDate}
-          dateFormat={"yyyy년 MM월 dd일"}
-          onChange={(date: Date) => {
-            setFormData({ ...formData, postDate: date });
-          }}
-        />
+        <div className="editor-date-wrap">
+          <div className="editor-date">
+            <DatePicker
+              selected={formData.postDate}
+              dateFormat={"yyyy년 MM월 dd일"}
+              onChange={(date: Date) => {
+                setFormData({ ...formData, postDate: date });
+              }}
+            />
+          </div>
+          <div className="editor-time">
+            <select>
+              {getTimeList("hour")?.map((code) => {
+                return (
+                  <option key={"hour_" + code} value={code}>
+                    {code + " 시"}
+                  </option>
+                );
+              })}
+            </select>
+            <select>
+              {getTimeList("minute")?.map((code) => {
+                return (
+                  <option key={"minute" + code} value={code}>
+                    {code + " 분"}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </div>
       </div>
       <div className="button-wrap">
         <button>임시 저장</button>
