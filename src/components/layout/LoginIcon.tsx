@@ -6,14 +6,13 @@ import CryptoUtil from "../../common/CryptoUtil";
 import SessionUtil from "../../common/SessionUtil";
 import { SessionEnum } from "../../common/SessionEnum";
 import { UserVO } from "../../../store/modules/user";
-import Loader from "../common/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import { setUser } from "../../../store/modules/user";
-import { async } from "@firebase/util";
 
 const LoginIcon = () => {
-  const [isOpenSignInModal, setIsOpenSignInModal] = useState<boolean>(false);
+  const [isOpenLogInModal, setIsOpenLogInModal] = useState<boolean>(false);
+  const [isOpenLogOutModel, setIsOpenLogOutModal] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<UserVO>();
   const [isLogined, setIsLogined] = useState<boolean>(false);
   const user = useSelector((state: RootState) => state.user);
@@ -27,26 +26,34 @@ const LoginIcon = () => {
   }, [isLogined]);
 
   useEffect(() => {
-    setUserAuthority();
+    setUserAuthority(true);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
 
   const onClickModalOpen = () => {
     if (isLogined) {
+      setIsOpenLogOutModal(!isOpenLogOutModel);
       return;
     }
-    setIsOpenSignInModal(!isOpenSignInModal);
+    setIsOpenLogInModal(!isOpenLogInModal);
   };
 
-  const setUserAuthority = () => {
+  const onClickLogOut = () => {
+    SessionUtil.removeSession(SessionEnum.userInfo);
+    setCurrentUser(undefined);
+    setIsOpenLogOutModal(!isOpenLogOutModel);
+    setIsLogined(false);
+    setUserAuthority(false);
+  };
+
+  const setUserAuthority = (userAuthority: boolean) => {
     const tempUser = { ...user };
     if (tempUser.email !== currentUser?.email) {
       return;
     }
 
-    tempUser["userAuthority"] = true;
-
+    tempUser["userAuthority"] = userAuthority;
     dispatch(setUser(tempUser));
   };
 
@@ -61,7 +68,7 @@ const LoginIcon = () => {
     }
     const data = CryptoUtil.decrypt(encryptoText);
 
-    setUserAuthority();
+    setUserAuthority(true);
     setCurrentUser(data);
     setIsLogined(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -70,18 +77,36 @@ const LoginIcon = () => {
   return (
     <div className="header-icon">
       <label onClick={onClickModalOpen}>
-        {currentUser?.email ? (
+        {isLogined ? (
           <i className="material-icons">logout</i>
         ) : (
           <i className="material-icons">account_circle</i>
         )}
       </label>
 
-      <BaseModal isOpen={isOpenSignInModal} setIsOpen={setIsOpenSignInModal}>
+      <BaseModal isOpen={isOpenLogInModal} setIsOpen={setIsOpenLogInModal}>
         <LoginBox
           setCurrentUser={setCurrentUser}
-          setIsOpenSignInModal={setIsOpenSignInModal}
+          setIsOpenSignInModal={setIsOpenLogInModal}
+          setIsLogined={setIsLogined}
         />
+      </BaseModal>
+      <BaseModal isOpen={isOpenLogOutModel} setIsOpen={setIsOpenLogOutModal}>
+        <div className="logout-wrap">
+          로그아웃을 진행할까요?
+          <div>
+            <button
+              onClick={() => {
+                setIsOpenLogOutModal(!isOpenLogOutModel);
+              }}
+            >
+              취소
+            </button>
+            <button className="btn-success" onClick={onClickLogOut}>
+              확인
+            </button>
+          </div>
+        </div>
       </BaseModal>
     </div>
   );
@@ -90,9 +115,11 @@ const LoginIcon = () => {
 const LoginBox = ({
   setCurrentUser,
   setIsOpenSignInModal,
+  setIsLogined,
 }: {
   setCurrentUser: Function;
   setIsOpenSignInModal: Function;
+  setIsLogined: Function;
 }) => {
   const onClickSignIn = async (e: any) => {
     e.preventDefault();
@@ -114,8 +141,12 @@ const LoginBox = ({
       userAuthority: false,
       userNickName: "",
     } as UserVO;
+
+    const text = CryptoUtil.encrypt(test);
+    SessionUtil.setSession(SessionEnum.userInfo, text);
     setCurrentUser(test);
     setIsOpenSignInModal(false);
+    setIsLogined(true);
   };
 
   return (
