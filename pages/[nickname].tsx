@@ -1,51 +1,57 @@
 import type {} from "next";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setBlog } from "../store/modules/blog";
 import { setCategory } from "../store/modules/category";
 import { setUser } from "../store/modules/user";
-import useAxios from "../src/common/hooks/useAxios";
+import RequestUtil from "../src/common/RequestUtil";
 import ApiOptions from "../src/common/ApiOptions";
+import { useRouter } from "next/router";
+import NavBar from "../src/components/layout/NavBar";
 
 const Main = () => {
+  const router = useRouter();
+  const nickName = router.query.nickname;
   const dispatch = useDispatch();
-  const blogInfo = useAxios(ApiOptions.getBlogInfo);
+  const [result, setResult] = useState<any>();
 
   useEffect(() => {
-    if (!blogInfo.isLoading) {
-      setBlogInfo();
-      setUserInfo();
-      setCategorys();
+    if (!result) {
+      getBlogInfo();
+    } else {
+      setRedux();
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [blogInfo.isLoading]);
+  }, [nickName, result]);
 
-  const setBlogInfo = () => {
-    dispatch(setBlog(blogInfo.data.item.blogInfo));
+  const getBlogInfo = async () => {
+    const { data } = await RequestUtil(ApiOptions.getBlogInfo, {
+      nickname: nickName,
+    });
+
+    setResult(data.item);
   };
 
-  const setUserInfo = () => {
+  const setRedux = () => {
+    dispatch(setBlog(result.blogInfo));
     dispatch(
       setUser({
-        userNo: blogInfo.data.item.userInfo.userNo,
-        email: blogInfo.data.item.userInfo.email,
+        userNo: result.userInfo.userNo,
+        email: result.userInfo.email,
         userName: "",
         userEnglishName: "",
         status: "",
-        userAuthority: "",
-        userNickName: blogInfo.data.item.userInfo.nickName,
+        userAuthority: false,
+        userNickName: result.userInfo.nickName,
       })
     );
-  };
-
-  const setCategorys = () => {
-    dispatch(setCategory(blogInfo.data.item.categorys));
+    dispatch(setCategory(result.categorys));
   };
 
   return (
-    <div>
-      <div className={"thumbnail"}></div>
+    <div className="main-wrap">
+      <div className="thumbnail"></div>
+      <NavBar />
     </div>
   );
 };
