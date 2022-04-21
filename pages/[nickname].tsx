@@ -7,7 +7,6 @@ import { setUser } from "../store/modules/user";
 import RequestUtil from "../src/common/RequestUtil";
 import ApiOptions from "../src/common/ApiOptions";
 import { useRouter } from "next/router";
-import NavBar from "../src/components/layout/NavBar";
 
 const Main = () => {
   const router = useRouter();
@@ -49,9 +48,8 @@ const Main = () => {
   };
 
   return (
-    <div className="main-wrap">
+    <div className="blog-main-wrap">
       <div className="thumbnail"></div>
-      <NavBar />
     </div>
   );
 };

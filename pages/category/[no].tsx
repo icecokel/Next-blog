@@ -7,7 +7,6 @@ import { CategoryVO } from "../../store/modules/category";
 import { PostVO } from "../../src/components/PostCard";
 import RequestUtil from "../../src/common/RequestUtil";
 import ApiOptions from "../../src/common/ApiOptions";
-import NavBar from "../../src/components/layout/NavBar";
 
 const TITLE_MAX_LENGTH = 20;
 
@@ -78,7 +77,6 @@ const CategoryPage = () => {
             </ul>
           </Loader>
         </div>
-        <NavBar />
       </div>
     </div>
   );
