@@ -6,7 +6,7 @@ const Home: NextPage = () => {
     alert("Sorry, but the service is being prepared.");
   };
   return (
-    <div className="main-page">
+    <div className="entry-page">
       <h1>Welcome Eucalyptus </h1>
 
       <div>
