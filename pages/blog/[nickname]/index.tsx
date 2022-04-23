@@ -1,11 +1,11 @@
 import type {} from "next";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setBlog } from "../store/modules/blog";
-import { setCategory } from "../store/modules/category";
-import { setUser } from "../store/modules/user";
-import RequestUtil from "../src/common/RequestUtil";
-import ApiOptions from "../src/common/ApiOptions";
+import { setBlog } from "../../../store/modules/blog";
+import { setCategory } from "../../../store/modules/category";
+import { setUser } from "../../../store/modules/user";
+import RequestUtil from "../../../src/common/RequestUtil";
+import ApiOptions from "../../../src/common/ApiOptions";
 import { useRouter } from "next/router";
 
 const Main = () => {

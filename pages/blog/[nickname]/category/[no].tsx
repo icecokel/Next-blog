@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
-import Loader from "../../src/components/common/Loader";
+import Loader from "../../../../src/components/common/Loader";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store/modules";
+import { RootState } from "../../../../store/modules";
 import { useEffect, useState } from "react";
-import { CategoryVO } from "../../store/modules/category";
-import { PostVO } from "../../src/components/PostCard";
-import RequestUtil from "../../src/common/RequestUtil";
-import ApiOptions from "../../src/common/ApiOptions";
+import { CategoryVO } from "../../../../store/modules/category";
+import { PostVO } from "../../../../src/components/PostCard";
+import RequestUtil from "../../../../src/common/RequestUtil";
+import ApiOptions from "../../../../src/common/ApiOptions";
 
 const TITLE_MAX_LENGTH = 20;
 

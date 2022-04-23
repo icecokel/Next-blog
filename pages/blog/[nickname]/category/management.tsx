@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import NewPost from "../../src/components/management/NewPost";
+import NewPost from "../../../../src/components/management/NewPost";
 
 const MENU_LIST = [
   "글쓰기",
