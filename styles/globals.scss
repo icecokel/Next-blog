@@ -170,15 +170,17 @@ select {
   max-width: 720px;
   margin: 0 auto;
 }
-.entry-page {
+.entry-page-wrap {
   text-align: center;
+  height: 70vh;
   div {
     margin-top: 2em;
   }
 
   ul {
     margin: 0 auto;
-    width: 50vw;
+    width: 80%;
+    max-width: 700px;
     background-color: $color-white;
     border-radius: 5px;
     padding: 1vw;
