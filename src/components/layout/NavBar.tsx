@@ -13,11 +13,13 @@ const NavBar = () => {
   const haveCategoryInfos = category.length !== 0;
   const navRef = useRef<HTMLUListElement>(null);
 
-  if (
-    router.query.nickname ||
-    router.query.no ||
-    router.pathname === MANAGEMENT_PATH
-  ) {
+  const needRendering = () => {
+    return !(
+      router.pathname === "/" || router.pathname.includes(MANAGEMENT_PATH)
+    );
+  };
+
+  if (needRendering()) {
     return (
       <div className="nav-bar-wrap">
         <ul ref={navRef}>
@@ -25,7 +27,12 @@ const NavBar = () => {
             {category.map((item) => {
               return (
                 <Link
-                  href={"/category/" + item.categoryNo}
+                  href={
+                    "/blog/" +
+                    router.query.nickname +
+                    "/category/" +
+                    item.categoryNo
+                  }
                   key={item.categoryNo}
                 >
                   <a>
