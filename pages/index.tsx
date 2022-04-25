@@ -6,7 +6,7 @@ const Home: NextPage = () => {
     alert("Sorry, but the service is being prepared.");
   };
   return (
-    <div className="entry-page">
+    <div className="entry-page-wrap">
       <h1>Welcome Eucalyptus </h1>
 
       <div>
@@ -19,17 +19,7 @@ const Home: NextPage = () => {
       <div>
         <p>Go to Popular Blog.</p>
         <ul>
-          <Link href={"/testAdmin"}>
-            <a>
-              <li>Test Admin</li>
-            </a>
-          </Link>
-          <Link href={"/testAdmin"}>
-            <a>
-              <li>Test Admin</li>
-            </a>
-          </Link>
-          <Link href={"/testAdmin"}>
+          <Link href={"/blog/testAdmin"}>
             <a>
               <li>Test Admin</li>
             </a>
