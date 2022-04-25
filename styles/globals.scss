@@ -488,7 +488,11 @@ select {
   display: flex;
 
   .management-menu {
-    min-width: 10em;
+    position: fixed;
+    left: 0%;
+    width: 8em;
+    margin-left: calc(((100vw - 740px) / 2) - 6.5em);
+
     ul {
       text-align: center;
 
@@ -497,7 +501,7 @@ select {
         margin-top: 0.5em;
         margin-bottom: 0.5em;
         padding: 0.5em;
-        font-size: 22px;
+        font-size: 20px;
         background-color: $color-green3;
         color: $color-black;
       }
@@ -567,7 +571,8 @@ select {
         height: fit-content;
 
         .ql-editor {
-          min-height: 720px;
+          height: 60vh;
+          min-height: 30em;
           &:active,
           &:focus {
             outline: 2px solid $color-active;
@@ -590,6 +595,48 @@ select {
 
           &:first-child {
             margin-right: 5px;
+          }
+        }
+
+        .button-half {
+          flex: none;
+          width: 50%;
+        }
+      }
+
+      .edit-category-wrap {
+        .edit-category-item {
+          border: 1.8px solid $color-green4;
+          margin: 0.5em;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 1.2em;
+          &:hover {
+            color: $color-active;
+          }
+          .edit-category-no {
+            width: 2em;
+            text-align: center;
+            border-right: 1px solid $color-black;
+          }
+          .edit-category-name {
+            flex: 1;
+            margin-left: 1em;
+          }
+
+          i {
+            font-size: 0.9em;
+            margin-left: 5px;
+            display: block;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            &:hover {
+              transform: scale(1.8);
+              transition-duration: 0.15s;
+            }
           }
         }
       }
