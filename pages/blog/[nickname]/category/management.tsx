@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import NewPost from "../../../../src/components/management/NewPost";
+import EditCategory from "../../../../src/components/management/EditCategory";
+import EditBlogInfo from "../../../../src/components/management/EditBlogInfo";
 
 const MENU_LIST = [
   "글쓰기",
@@ -25,13 +27,13 @@ const ManagementPage = () => {
       case 0:
         return <NewPost />;
       case 1:
-        return <span>카테고리 컴포넌트</span>;
+        return <EditCategory />;
       case 2:
         return <span>게시글 컴포넌트</span>;
       case 3:
         return <span>통계 컴포넌트</span>;
       case 4:
-        return <span>블로그 컴포넌트</span>;
+        return <EditBlogInfo />;
     }
   };
 
