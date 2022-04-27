@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import DatePicker from "react-datepicker";
 
@@ -6,6 +6,8 @@ type formDataVo = {
   title: string;
   content: string;
   postDate: Date;
+  postTimeHour: string;
+  postTimeMinute: string;
 };
 
 const NewPost = () => {
@@ -13,6 +15,12 @@ const NewPost = () => {
     title: "",
     content: "",
     postDate: new Date(),
+    postTimeHour: new Date().getHours().toString(),
+    postTimeMinute: new Date().getMinutes().toString(),
+  });
+
+  useEffect(() => {
+    console.log(formData);
   });
 
   const onChange = (e: any) => {
@@ -48,7 +56,7 @@ const NewPost = () => {
         }}
       />
       <div>
-        <label>발행일</label>
+        <p>발행일</p>
         <div className="editor-date-wrap">
           <div className="editor-date">
             <DatePicker
@@ -60,20 +68,28 @@ const NewPost = () => {
             />
           </div>
           <div className="editor-time">
-            <select>
+            <select
+              onChange={onChange}
+              id="postTimeHour"
+              value={formData.postTimeHour}
+            >
               {getTimeList("hour")?.map((code) => {
                 return (
                   <option key={"hour_" + code} value={code}>
-                    {code + " 시"}
+                    {code + "시"}
                   </option>
                 );
               })}
             </select>
-            <select>
+            <select
+              onChange={onChange}
+              id="postTimeMinute"
+              value={formData.postTimeMinute}
+            >
               {getTimeList("minute")?.map((code) => {
                 return (
                   <option key={"minute" + code} value={code}>
-                    {code + " 분"}
+                    {code + "분"}
                   </option>
                 );
               })}
