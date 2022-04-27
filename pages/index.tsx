@@ -19,7 +19,7 @@ const Home: NextPage = () => {
       <div>
         <p>Go to Popular Blog.</p>
         <ul>
-          <Link href={"/blog/testAdmin"}>
+          <Link href={"/blog/testUser"}>
             <a>
               <li>Test Admin</li>
             </a>
