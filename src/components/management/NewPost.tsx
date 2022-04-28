@@ -8,8 +8,6 @@ type formDataVo = {
   title: string;
   content: string;
   postDate: Date;
-  postTimeHour: string;
-  postTimeMinute: string;
 };
 
 const Quill = dynamic(import("react-quill"), {
@@ -21,8 +19,6 @@ const NewPost = () => {
     title: "",
     content: "",
     postDate: new Date(),
-    postTimeHour: new Date().getHours().toString(),
-    postTimeMinute: new Date().getMinutes().toString(),
   });
 
   const onChange = (e: any) => {
@@ -62,25 +58,17 @@ const NewPost = () => {
     []
   );
 
-  const setParams = () => {
-    const temp = { ...formData } as any;
-    const hours = Number.parseInt(temp.postTimeHour);
-    const minutes = Number.parseInt(temp.postTimeMinute);
-    temp.postDate.setHours(hours);
-    temp.postDate.setMinutes(minutes);
-
-    delete temp.postTimeHour;
-    delete temp.postTimeMinute;
-
-    return temp;
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getSeestion = () => {
+    const data = SesstionUtil.getSession(SessionEnum.fomrData);
   };
 
-  const saveFormData = () => {};
+  const saveFormData = () => {
+    const params = { ...formData };
+    SesstionUtil.setSession(SessionEnum.fomrData, params);
+  };
 
   const onClickPostButton = () => {
-    const params = setParams();
+    const params = { ...formData };
 
     console.log(params);
   };
@@ -115,9 +103,12 @@ const NewPost = () => {
           </div>
           <div className="editor-time">
             <select
-              onChange={onChange}
-              id="postTimeHour"
-              value={formData.postTimeHour}
+              onChange={(e) => {
+                const temp = { ...formData };
+                temp.postDate.setHours(Number.parseInt(e.target.value));
+                setFormData(temp);
+              }}
+              value={formData.postDate.getHours()}
             >
               {getTimeList("hour")?.map((code) => {
                 return (
@@ -128,9 +119,13 @@ const NewPost = () => {
               })}
             </select>
             <select
-              onChange={onChange}
+              onChange={(e) => {
+                const temp = { ...formData };
+                temp.postDate.setMinutes(Number.parseInt(e.target.value));
+                setFormData(temp);
+              }}
               id="postTimeMinute"
-              value={formData.postTimeMinute}
+              value={formData.postDate.getMinutes()}
             >
               {getTimeList("minute")?.map((code) => {
                 return (
@@ -144,7 +139,7 @@ const NewPost = () => {
         </div>
       </div>
       <div className="button-wrap">
-        <button>임시 저장</button>
+        <button onClick={saveFormData}>임시 저장</button>
         <button onClick={onClickPostButton}>발행</button>
       </div>
     </div>
