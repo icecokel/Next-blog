@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import ReactQuill from "react-quill";
+import React, { useState, useMemo, ReactComponentElement } from "react";
 import DatePicker from "react-datepicker";
+import dynamic from "next/dynamic";
 
 type formDataVo = {
   title: string;
@@ -10,6 +10,10 @@ type formDataVo = {
   postTimeMinute: string;
 };
 
+const Quill = dynamic(import("react-quill"), {
+  ssr: false,
+});
+
 const NewPost = () => {
   const [formData, setFormData] = useState<formDataVo>({
     title: "",
@@ -17,10 +21,6 @@ const NewPost = () => {
     postDate: new Date(),
     postTimeHour: new Date().getHours().toString(),
     postTimeMinute: new Date().getMinutes().toString(),
-  });
-
-  useEffect(() => {
-    console.log(formData);
   });
 
   const onChange = (e: any) => {
@@ -40,6 +40,26 @@ const NewPost = () => {
     return timeList;
   };
 
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          [{ header: [1, 2, false] }],
+          ["bold", "italic", "underline", "strike", "blockquote"],
+          [
+            { list: "ordered" },
+            { list: "bullet" },
+            { indent: "-1" },
+            { indent: "+1" },
+          ],
+          ["link", "image"],
+          ["clean"],
+        ],
+      },
+    }),
+    []
+  );
+
   return (
     <div className="editor-wrap">
       <input
@@ -48,9 +68,10 @@ const NewPost = () => {
         id="title"
         onChange={onChange}
       />
-      <ReactQuill
+      <Quill
         theme="snow"
         value={formData.content}
+        modules={modules}
         onChange={(content) => {
           setFormData({ ...formData, content });
         }}
