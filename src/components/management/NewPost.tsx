@@ -1,6 +1,8 @@
 import React, { useState, useMemo, ReactComponentElement } from "react";
 import DatePicker from "react-datepicker";
 import dynamic from "next/dynamic";
+import SesstionUtil from "../../common/SessionUtil";
+import { SessionEnum } from "../../../src/common/SessionEnum";
 
 type formDataVo = {
   title: string;
@@ -59,6 +61,29 @@ const NewPost = () => {
     }),
     []
   );
+
+  const setParams = () => {
+    const temp = { ...formData } as any;
+    const hours = Number.parseInt(temp.postTimeHour);
+    const minutes = Number.parseInt(temp.postTimeMinute);
+    temp.postDate.setHours(hours);
+    temp.postDate.setMinutes(minutes);
+
+    delete temp.postTimeHour;
+    delete temp.postTimeMinute;
+
+    return temp;
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  };
+
+  const saveFormData = () => {};
+
+  const onClickPostButton = () => {
+    const params = setParams();
+
+    console.log(params);
+  };
 
   return (
     <div className="editor-wrap">
@@ -120,7 +145,7 @@ const NewPost = () => {
       </div>
       <div className="button-wrap">
         <button>임시 저장</button>
-        <button>발행</button>
+        <button onClick={onClickPostButton}>발행</button>
       </div>
     </div>
   );
