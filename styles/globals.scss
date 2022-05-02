@@ -545,13 +545,21 @@ select {
         .editor-date-wrap {
           display: flex;
           .editor-date {
-            width: 40%;
+            width: 30%;
+            input {
+              height: 2em;
+              font-size: 16px;
+              text-align: center;
+            }
           }
           .editor-time {
-            width: 60%;
+            width: 30%;
             select {
+              padding: 0px;
               border: 2px solid $color-green4;
               margin-left: 0.5em;
+              height: 2em;
+              font-size: 16px;
             }
           }
         }
@@ -571,7 +579,7 @@ select {
         height: fit-content;
 
         .ql-editor {
-          height: 60vh;
+          height: fit-content;
           min-height: 30em;
           &:active,
           &:focus {
@@ -638,6 +646,27 @@ select {
               transition-duration: 0.15s;
             }
           }
+        }
+      }
+
+      .edit-bloginfo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .edit-bloginfo-item {
+          display: flex;
+          margin: 0.5em 1em;
+          align-items: center;
+          label {
+            width: 8em;
+            font-size: 1.1em;
+          }
+        }
+
+        .button-wrap {
+          margin-top: 2em;
+          margin-bottom: 1em;
         }
       }
     }
