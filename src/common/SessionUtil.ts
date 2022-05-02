@@ -1,8 +1,8 @@
-import CryptoUtil from "./CryptoUtil";
+import EncryptUtil from "./EncryptUtil";
 
 const SessionUtil = {
   setSession: (key: string, value: string | object) => {
-    window.sessionStorage.setItem(key, CryptoUtil.encrypt(value));
+    window.sessionStorage.setItem(key, EncryptUtil.encrypt(value));
   },
 
   getSession: (key: string) => {
@@ -12,7 +12,7 @@ const SessionUtil = {
       return undefined;
     }
 
-    return CryptoUtil.decrypt(encryptoText);
+    return EncryptUtil.decrypt(encryptoText);
   },
 
   removeSession: (key: string) => {
