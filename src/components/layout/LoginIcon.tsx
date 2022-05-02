@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import ApiOptions from "../../common/ApiOptions";
 import RequestUtil from "../../common/RequestUtil";
 import BaseModal from "../common/BaseModal";
-import CryptoUtil from "../../common/CryptoUtil";
 import SessionUtil from "../../common/SessionUtil";
 import { SessionEnum } from "../../common/SessionEnum";
 import { UserVO } from "../../../store/modules/user";
@@ -21,7 +20,6 @@ const LoginIcon = () => {
 
   useEffect(() => {
     getSessionUser();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogined]);
 
@@ -49,6 +47,7 @@ const LoginIcon = () => {
 
   const setUserAuthority = (userAuthority: boolean) => {
     const tempUser = { ...user };
+
     if (tempUser.email !== currentUser?.email) {
       return;
     }
@@ -61,14 +60,13 @@ const LoginIcon = () => {
     if (isLogined) {
       return;
     }
-    const encryptoText = SessionUtil.getSession(SessionEnum.userInfo);
 
-    if (!encryptoText) {
+    const data = SessionUtil.getSession(SessionEnum.userInfo);
+
+    if (!data) {
       return;
     }
-    const data = CryptoUtil.decrypt(encryptoText);
 
-    setUserAuthority(true);
     setCurrentUser(data);
     setIsLogined(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -142,8 +140,7 @@ const LoginBox = ({
       userNickName: "",
     } as UserVO;
 
-    const text = CryptoUtil.encrypt(test);
-    SessionUtil.setSession(SessionEnum.userInfo, text);
+    SessionUtil.setSession(SessionEnum.userInfo, test);
     setCurrentUser(test);
     setIsOpenSignInModal(false);
     setIsLogined(true);
