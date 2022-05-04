@@ -1,4 +1,4 @@
-import React, { useState, useMemo, ReactComponentElement } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import dynamic from "next/dynamic";
 import SesstionUtil from "../../common/SessionUtil";
@@ -14,6 +14,18 @@ const Quill = dynamic(import("react-quill"), {
   ssr: false,
 });
 
+/**
+ * 이미지 버튼 클릭
+ * 파일 배열에 저장
+ * 파일 url을 화면에 이미지로 렌더링
+ * 발행 클릭시, file을 s3에 업로드
+ * 업로드 후 바로 링크 저장
+ * formData에서 교체
+ * formData를 DB or FireBase에 저장
+ *
+ *
+ */
+
 const NewPost = () => {
   const [formData, setFormData] = useState<formDataVo>({
     title: "",
@@ -21,45 +33,27 @@ const NewPost = () => {
     postDate: new Date(),
   });
 
+  const [images, setImages] = useState<Array<File>>();
+  const [imageLinks, setImageLinks] = useState<Array<string>>();
+
+  useEffect(() => {
+    setFormDataFromSesstionData();
+  }, []);
+
   const onChange = (e: any) => {
     const { value, id } = e.target;
 
     setFormData({ ...formData, [id]: value });
   };
 
-  const getTimeList = (type: "hour" | "minute") => {
-    const maxCount = type === "hour" ? 24 : 60;
-    const timeList = new Array();
-
-    for (let i = 0; i < maxCount; i++) {
-      timeList.push(i);
-    }
-
-    return timeList;
-  };
-
-  const modules = useMemo(
-    () => ({
-      toolbar: {
-        container: [
-          [{ header: [1, 2, false] }],
-          ["bold", "italic", "underline", "strike", "blockquote"],
-          [
-            { list: "ordered" },
-            { list: "bullet" },
-            { indent: "-1" },
-            { indent: "+1" },
-          ],
-          ["link", "image"],
-          ["clean"],
-        ],
-      },
-    }),
-    []
-  );
+  const imageHandler = () => {};
 
   const getSeestion = () => {
     const data = SesstionUtil.getSession(SessionEnum.fomrData);
+  };
+
+  const setFormDataFromSesstionData = () => {
+    const sessionData = getSeestion();
   };
 
   const saveFormData = () => {
@@ -73,6 +67,37 @@ const NewPost = () => {
     console.log(params);
   };
 
+  const getTimeList = (type: "hour" | "minute") => {
+    const maxCount = type === "hour" ? 24 : 60;
+    const timeList = new Array();
+
+    for (let i = 0; i < maxCount; i++) {
+      timeList.push(i);
+    }
+
+    return timeList;
+  };
+
+  const getModules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          [{ header: [1, 2, false] }],
+          ["bold", "italic", "underline", "strike", "blockquote"],
+          [
+            { list: "ordered" },
+            { list: "bullet" },
+            { indent: "-1" },
+            { indent: "+1" },
+          ],
+          ["link", "image"],
+          ["clean", "imageHandler"],
+        ],
+      },
+    }),
+    []
+  );
+
   return (
     <div className="editor-wrap">
       <input
@@ -84,7 +109,7 @@ const NewPost = () => {
       <Quill
         theme="snow"
         value={formData.content}
-        modules={modules}
+        modules={getModules}
         onChange={(content) => {
           setFormData({ ...formData, content });
         }}
