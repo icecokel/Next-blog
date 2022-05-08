@@ -23,6 +23,11 @@ type formDataVo = {
  *
  */
 
+type ImageFile = {
+  src: string;
+  file: File;
+};
+
 const NewPost = () => {
   const [formData, setFormData] = useState<formDataVo>({
     title: "",
@@ -30,7 +35,7 @@ const NewPost = () => {
     postDate: new Date(),
   });
 
-  const [images, setImages] = useState<Array<File>>();
+  const [images, setImages] = useState<Array<ImageFile>>();
   const quillRef = useRef<any>();
 
   useEffect(() => {
@@ -59,20 +64,20 @@ const NewPost = () => {
       }
 
       const file = input.files[0];
-      const tempImages: Array<File> = [...(images ?? [])];
+      const tempImages: Array<ImageFile> = [...(images ?? [])];
 
-      tempImages.push(file);
-
-      const imageSrc = window.URL.createObjectURL(file);
-
+      const src = window.URL.createObjectURL(file);
       const range = quillRef.current.getEditorSelection();
-
       const Image = Quill.import("formats/image");
+
       Image.sanitize = (url: string) => url;
-      quillRef.current.getEditor().insertEmbed(range.index, "image", imageSrc);
+      quillRef.current.getEditor().insertEmbed(range.index, "image", src);
       quillRef.current.getEditor().setSelection(range.index + 1);
 
+      tempImages.push({ src, file });
+
       setImages(tempImages);
+
       document.body.removeChild(input);
     };
   };
@@ -91,7 +96,7 @@ const NewPost = () => {
   };
 
   const onClickPostButton = () => {
-    const params = { ...formData };
+    const params = getParams();
 
     console.log(params);
   };
@@ -105,6 +110,21 @@ const NewPost = () => {
     }
 
     return timeList;
+  };
+
+  const getParams = () => {
+    const params = { ...formData };
+
+    images?.forEach((item) => {
+      if (params.content.includes(item.src)) {
+        // s3 업로드하고 링크 받아서 세팅해야함.
+
+        const s3Link = "S3LINK:" + item.src;
+        params.content = params.content.replaceAll(item.src, s3Link);
+      }
+    });
+
+    return params;
   };
 
   const getModules = useMemo(
