@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import NewPost from "../../../../src/components/management/NewPost";
 import EditCategory from "../../../../src/components/management/EditCategory";
 import EditBlogInfo from "../../../../src/components/management/EditBlogInfo";
+import dynamic from "next/dynamic";
 
 const MENU_LIST = [
   "글쓰기",
@@ -10,6 +10,11 @@ const MENU_LIST = [
   "통계",
   "블로그 설정",
 ];
+
+const NewPostCsr = dynamic(
+  import("../../../../src/components/management/NewPost"),
+  { ssr: false }
+);
 
 const ManagementPage = () => {
   const [currentMenu, setCurrentMenu] = useState<string>(MENU_LIST[0]);
@@ -25,7 +30,7 @@ const ManagementPage = () => {
 
     switch (menuIndex) {
       case 0:
-        return <NewPost />;
+        return <NewPostCsr />;
       case 1:
         return <EditCategory />;
       case 2:
