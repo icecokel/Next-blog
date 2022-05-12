@@ -4,7 +4,7 @@ import SesstionUtil from "../../common/SessionUtil";
 import { SessionEnum } from "../../../src/common/SessionEnum";
 import ReactQuill, { Quill } from "react-quill";
 
-type formDataVo = {
+type PostVo = {
   title: string;
   content: string;
   postDate: Date;
@@ -29,7 +29,7 @@ type ImageFile = {
 };
 
 const NewPost = () => {
-  const [formData, setFormData] = useState<formDataVo>({
+  const [formData, setFormData] = useState<PostVo>({
     title: "",
     content: "",
     postDate: new Date(),
