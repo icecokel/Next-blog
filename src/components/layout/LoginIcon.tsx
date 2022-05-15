@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import ApiOptions from "../../common/ApiOptions";
 import RequestUtil from "../../common/RequestUtil";
 import BaseModal from "../common/BaseModal";
@@ -8,6 +8,11 @@ import { UserVO } from "../../../store/modules/user";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import { setUser } from "../../../store/modules/user";
+
+interface LoginForm {
+  email: string;
+  password: string;
+}
 
 const LoginIcon = () => {
   const [isOpenLogInModal, setIsOpenLogInModal] = useState<boolean>(false);
@@ -119,20 +124,32 @@ const LoginBox = ({
   setIsOpenSignInModal: Function;
   setIsLogined: Function;
 }) => {
-  const onClickSignIn = async (e: any) => {
+  const [isEmptyInfo, setIsEmptyInfo] = useState<boolean>();
+  const onClickSignIn = (e: any) => {
     e.preventDefault();
 
     const email = e.target["email"].value;
     const password = e.target["password"].value;
+    const regExp =
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
-    const { data } = await RequestUtil(ApiOptions.login, { email, password });
+    if (!email || !password || !regExp.test(email)) {
+      setIsEmptyInfo(true);
+      return;
+    }
+
+    login({ email, password });
+  };
+
+  const login = async (param: LoginForm) => {
+    const { data } = await RequestUtil(ApiOptions.login, param);
     if (!data) {
       return;
     }
 
     const test = {
       userNo: "",
-      email: email,
+      email: param.email,
       userName: "",
       userEnglishName: "",
       status: "",
@@ -149,6 +166,9 @@ const LoginBox = ({
   return (
     <div className="login-wrap">
       <form onSubmit={onClickSignIn}>
+        {isEmptyInfo && (
+          <span className="error"> 로그인 정보를 입력해 주세요.</span>
+        )}
         <input type="email" placeholder="email@email.com" name="email" />
         <input type="password" placeholder="PassWord1@3$" name="password" />
         <button>Sign In</button>
