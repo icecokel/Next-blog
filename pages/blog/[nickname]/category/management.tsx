@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EditCategory from "../../../../src/components/management/EditCategory";
 import EditBlogInfo from "../../../../src/components/management/EditBlogInfo";
 import dynamic from "next/dynamic";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store/modules";
+import { useRouter } from "next/router";
 
 const MENU_LIST = [
   "글쓰기",
@@ -18,6 +21,14 @@ const NewPostCsr = dynamic(
 
 const ManagementPage = () => {
   const [currentMenu, setCurrentMenu] = useState<string>(MENU_LIST[0]);
+  const { userAuthority } = useSelector((state: RootState) => state.user);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!userAuthority) {
+      router.push("/");
+    }
+  }, [userAuthority]);
 
   const onClickMenu = (e: any) => {
     const { id } = e.target;
