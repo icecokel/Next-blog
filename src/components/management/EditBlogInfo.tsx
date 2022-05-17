@@ -18,11 +18,12 @@ const EditBlogInfo = () => {
     blogFavicon: undefined,
   });
   const [favicon, setFavicon] = useState<File>();
-  const inputFile = useRef<HTMLInputElement>();
-  const faviconSrc = useRef<string>("/resources/images/test.jpg");
+  const faviconSrc = useRef<string>("/resources/images/dafault.png");
 
   useEffect(() => {
     memoPreviewSrc();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
 
   const memoPreviewSrc = useCallback(() => {
@@ -49,6 +50,8 @@ const EditBlogInfo = () => {
       }
 
       const file = input.files[0];
+      const imgSrc = window.URL.createObjectURL(file);
+      faviconSrc.current = imgSrc;
 
       setFavicon(file);
       setFormData({
