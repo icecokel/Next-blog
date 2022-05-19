@@ -114,7 +114,7 @@ const LoginIcon = () => {
     </div>
   );
 };
-// RequestUtil(ApiOptions.login, formData);
+
 const LoginBox = ({
   setCurrentUser,
   setIsOpenSignInModal,

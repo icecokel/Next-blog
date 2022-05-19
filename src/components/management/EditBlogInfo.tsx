@@ -70,33 +70,24 @@ const EditBlogInfo = () => {
 
   return (
     <div className="edit-bloginfo">
-      <div className="edit-bloginfo-item">
-        <label>블로그 이름</label>
-        <input
-          type="text"
-          name="blogName"
-          onChange={onChangeText}
-          value={formData.blogName}
-        />
-      </div>
-      <div className="edit-bloginfo-item">
-        <label>블로그 활동명</label>
-        <input
-          type="text"
-          name="blogNickName"
-          onChange={onChangeText}
-          value={formData.blogNickName}
-        />
-      </div>
-      <div className="edit-bloginfo-item">
-        <label>블로그 설명</label>
-        <input
-          type="text"
-          name="blogDescription"
-          onChange={onChangeText}
-          value={formData.blogDescription}
-        />
-      </div>
+      <EditBlogInfo.item
+        lable="블로그 이름"
+        name="blogName"
+        onChange={onChangeText}
+        value={formData.blogName}
+      />
+      <EditBlogInfo.item
+        lable="블로그 활동명"
+        name="blogNickName"
+        onChange={onChangeText}
+        value={formData.blogNickName}
+      />
+      <EditBlogInfo.item
+        lable="블로그 설명"
+        name="blogDescription"
+        onChange={onChangeText}
+        value={formData.blogDescription}
+      />
       <div className="edit-bloginfo-item">
         <label>파비콘 설정</label>
         <div className="edit-bloginfo-favicon">
@@ -121,3 +112,19 @@ const EditBlogInfo = () => {
 };
 
 export default EditBlogInfo;
+
+interface IitemProps {
+  lable: string;
+  name: string;
+  onChange: any;
+  value: string;
+}
+
+EditBlogInfo.item = ({ name, onChange, value, lable }: IitemProps) => {
+  return (
+    <div className="edit-bloginfo-item">
+      <label>{lable}</label>
+      <input type="text" name={name} onChange={onChange} value={value} />
+    </div>
+  );
+};
