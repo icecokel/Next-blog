@@ -22,17 +22,11 @@ const EditCategory = () => {
     <div className="edit-category-wrap">
       {category.map((item, index) => {
         return (
-          <div
+          <EditCategory.item
             key={"category_management_" + index}
-            className="edit-category-item"
-          >
-            <span className="edit-category-no">{item.categoryNo}</span>
-            <span className="edit-category-name">{item.categoryName}</span>
-            <div contextMenu="edit-category-arrow-wrap">
-              <i className="material-icons">expand_less</i>
-              <i className="material-icons">expand_more</i>
-            </div>
-          </div>
+            categoryNo={item.categoryNo}
+            categoryName={item.categoryName}
+          />
         );
       })}
 
@@ -45,3 +39,21 @@ const EditCategory = () => {
 };
 
 export default EditCategory;
+
+interface ICategoryProps {
+  categoryNo: string;
+  categoryName: string;
+}
+
+EditCategory.item = ({ categoryNo, categoryName }: ICategoryProps) => {
+  return (
+    <div className="edit-category-item">
+      <span className="edit-category-no">{categoryNo}</span>
+      <span className="edit-category-name">{categoryName}</span>
+      <div contextMenu="edit-category-arrow-wrap">
+        <i className="material-icons">expand_less</i>
+        <i className="material-icons">expand_more</i>
+      </div>
+    </div>
+  );
+};
