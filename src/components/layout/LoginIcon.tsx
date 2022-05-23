@@ -8,6 +8,7 @@ import { UserVO } from "../../../store/modules/user";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import { setUser } from "../../../store/modules/user";
+import BaseInput from "../common/BaseInput";
 
 interface LoginForm {
   email: string;
@@ -125,6 +126,10 @@ const LoginBox = ({
   setIsLogined: Function;
 }) => {
   const [isEmptyInfo, setIsEmptyInfo] = useState<boolean>();
+  const [formData, setFormData] = useState<any>({
+    email: "",
+    password: "",
+  });
   const onClickSignIn = (e: any) => {
     e.preventDefault();
 
@@ -163,14 +168,31 @@ const LoginBox = ({
     setIsLogined(true);
   };
 
+  const handleTextOnChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
   return (
     <div className="login-wrap">
       <form onSubmit={onClickSignIn}>
         {isEmptyInfo && (
           <span className="error"> 로그인 정보를 입력해 주세요.</span>
         )}
-        <input type="email" placeholder="email@email.com" name="email" />
-        <input type="password" placeholder="PassWord1@3$" name="password" />
+        <BaseInput
+          type="email"
+          placeholder="email@email.com"
+          name="email"
+          value={formData.email}
+          onChangeValue={handleTextOnChange}
+        />
+        <BaseInput
+          type="password"
+          placeholder="PassWord1@3$"
+          name="password"
+          value={formData.password}
+          onChangeValue={handleTextOnChange}
+        />
         <button>Sign In</button>
       </form>
       <p> Social Sign In</p>
