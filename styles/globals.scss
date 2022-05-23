@@ -169,6 +169,16 @@ select {
   display: none;
 }
 
+.require-label {
+  $size: 8px;
+  background-color: $color-white;
+  border: $size/3 solid red;
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  display: inline-block;
+  margin: $size/3 $size/2;
+}
 /* component */
 .main-wrap {
   max-width: 720px;
@@ -663,7 +673,7 @@ select {
           display: flex;
           margin: 0.5em 1em;
           align-items: center;
-          label {
+          .title {
             width: 8em;
             font-size: 1.1em;
             text-align: right;
