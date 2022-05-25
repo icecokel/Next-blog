@@ -1,11 +1,13 @@
 import React from "react";
 import styles from "../../../styles/loader.module.scss";
 
-const Loader = (props: {
+interface ILoaderProps {
   children: any;
   isLoading: boolean;
   size?: number;
-}) => {
+}
+
+const Loader = (props: ILoaderProps) => {
   return (
     <>
       {props.isLoading ? (
