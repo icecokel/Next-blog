@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import RequireLabel from "../common/RequireLabel";
 
 type BlogInfoVo = {
   blogName: string;
@@ -89,14 +90,19 @@ const EditBlogInfo = () => {
         value={formData.blogDescription}
       />
       <div className="edit-bloginfo-item">
-        <label>파비콘 설정</label>
+        <div className="title">
+          <RequireLabel />
+          <label>파비콘 설정</label>
+        </div>
         <div className="edit-bloginfo-favicon">
           <label></label>
           <button onClick={onClickFavicon}>선택</button>
         </div>
       </div>
       <div className="edit-bloginfo-item">
-        <label>미리보기</label>
+        <div className="title">
+          <label>미리보기</label>
+        </div>
         <Image
           alt="preview"
           src={faviconSrc.current}
@@ -123,7 +129,10 @@ interface IitemProps {
 EditBlogInfo.item = ({ name, onChange, value, lable }: IitemProps) => {
   return (
     <div className="edit-bloginfo-item">
-      <label>{lable}</label>
+      <div className="title">
+        <RequireLabel isShowing={value.length < 1} />
+        <label>{lable}</label>
+      </div>
       <input type="text" name={name} onChange={onChange} value={value} />
     </div>
   );
