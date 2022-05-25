@@ -26,21 +26,12 @@ const NavBar = () => {
           <Loader isLoading={!haveCategoryInfos} size={5.5}>
             {category.map((item) => {
               return (
-                <Link
-                  href={
-                    "/blog/" +
-                    router.query.nickname +
-                    "/category/" +
-                    item.categoryNo
-                  }
+                <NavBar.item
+                  nickname={router.query.nickname ?? ""}
+                  categoryNo={item.categoryNo}
+                  categoryName={item.categoryName}
                   key={item.categoryNo}
-                >
-                  <a>
-                    <li id={"category_id_" + item.categoryNo} className="item">
-                      {item.categoryName}
-                    </li>
-                  </a>
-                </Link>
+                />
               );
             })}
           </Loader>
@@ -53,3 +44,21 @@ const NavBar = () => {
 };
 
 export default React.memo(NavBar);
+
+interface IItemProps {
+  nickname: string | string[];
+  categoryNo: string;
+  categoryName: string;
+}
+
+NavBar.item = ({ nickname, categoryNo, categoryName }: IItemProps) => {
+  return (
+    <Link href={"/blog/" + nickname + "/category/" + categoryNo}>
+      <a>
+        <li id={"category_id_" + categoryNo} className="item">
+          {categoryName}
+        </li>
+      </a>
+    </Link>
+  );
+};
