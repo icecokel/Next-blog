@@ -91,11 +91,11 @@ const EditBlogInfo = () => {
       />
       <div className="edit-bloginfo-item">
         <div className="title">
-          <RequireLabel />
+          <RequireLabel isShowing={!favicon?.name} />
           <label>파비콘 설정</label>
         </div>
         <div className="edit-bloginfo-favicon">
-          <label></label>
+          <label>{favicon?.name}</label>
           <button onClick={onClickFavicon}>선택</button>
         </div>
       </div>
