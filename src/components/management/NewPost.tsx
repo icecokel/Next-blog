@@ -3,14 +3,11 @@ import DatePicker from "react-datepicker";
 import SesstionUtil from "../../common/SessionUtil";
 import { SessionEnum } from "../../../src/common/SessionEnum";
 import ReactQuill, { Quill } from "react-quill";
-
-type PostVo = {
-  title: string;
-  content: string;
-  postDate: Date;
-};
+import { NewPostVo } from "../../common/Model";
 
 /**
+ * todos
+ *
  * 이미지 버튼 클릭  -  핸들러 추가
  * 파일 배열에 저장  -  상태 저장
  * 파일 url을 화면에 이미지로 렌더링  -  렌더링 성공
@@ -29,10 +26,10 @@ type ImageFile = {
 };
 
 const NewPost = () => {
-  const [formData, setFormData] = useState<PostVo>({
+  const [formData, setFormData] = useState<NewPostVo>({
     title: "",
-    content: "",
-    postDate: new Date(),
+    contents: "",
+    registDate: new Date(),
   });
 
   const [images, setImages] = useState<Array<ImageFile>>();
@@ -116,11 +113,11 @@ const NewPost = () => {
     const params = { ...formData };
 
     images?.forEach((item) => {
-      if (params.content.includes(item.src)) {
+      if (params.contents.includes(item.src)) {
         // s3 업로드하고 링크 받아서 세팅해야함.
 
         const s3Link = "S3LINK:" + item.src;
-        params.content = params.content.replaceAll(item.src, s3Link);
+        params.contents = params.contents.replaceAll(item.src, s3Link);
       }
     });
 
@@ -159,10 +156,10 @@ const NewPost = () => {
       <ReactQuill
         ref={quillRef}
         theme="snow"
-        value={formData.content}
+        value={formData.contents}
         modules={getModules}
-        onChange={(content) => {
-          setFormData({ ...formData, content });
+        onChange={(contents) => {
+          setFormData({ ...formData, contents });
         }}
       />
       <div>
@@ -170,10 +167,10 @@ const NewPost = () => {
         <div className="editor-date-wrap">
           <div className="editor-date">
             <DatePicker
-              selected={formData.postDate}
+              selected={formData.registDate}
               dateFormat={"yyyy년 MM월 dd일"}
               onChange={(date: Date) => {
-                setFormData({ ...formData, postDate: date });
+                setFormData({ ...formData, registDate: date });
               }}
             />
           </div>
@@ -181,10 +178,10 @@ const NewPost = () => {
             <select
               onChange={(e) => {
                 const temp = { ...formData };
-                temp.postDate.setHours(Number.parseInt(e.target.value));
+                temp.registDate.setHours(Number.parseInt(e.target.value));
                 setFormData(temp);
               }}
-              value={formData.postDate.getHours()}
+              value={formData.registDate.getHours()}
             >
               {getTimeList("hour")?.map((code) => {
                 return (
@@ -197,11 +194,11 @@ const NewPost = () => {
             <select
               onChange={(e) => {
                 const temp = { ...formData };
-                temp.postDate.setMinutes(Number.parseInt(e.target.value));
+                temp.registDate.setMinutes(Number.parseInt(e.target.value));
                 setFormData(temp);
               }}
               id="postTimeMinute"
-              value={formData.postDate.getMinutes()}
+              value={formData.registDate.getMinutes()}
             >
               {getTimeList("minute")?.map((code) => {
                 return (

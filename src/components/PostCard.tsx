@@ -1,16 +1,6 @@
 import React from "react";
 import Image from "next/image";
 
-export type PostVO = {
-  boardNo: string;
-  categoryNo: string;
-  title: string;
-  contents: string;
-  hits: string;
-  registDate: string;
-  registId: string;
-};
-
 const PostCard = (props: { item: any }) => {
   const { item } = props;
 

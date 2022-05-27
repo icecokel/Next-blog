@@ -2,13 +2,13 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import RequireLabel from "../common/RequireLabel";
 
-type BlogInfoVo = {
+interface BlogInfoVo {
   blogName: string;
   blogNickName: string;
   blogDescription: string;
   blogFaviconName: string;
   blogFavicon: File | undefined;
-};
+}
 
 const EditBlogInfo = () => {
   const [formData, setFormData] = useState<BlogInfoVo>({
@@ -119,14 +119,14 @@ const EditBlogInfo = () => {
 
 export default EditBlogInfo;
 
-interface IitemProps {
+interface IItemProps {
   lable: string;
   name: string;
   onChange: any;
   value: string;
 }
 
-EditBlogInfo.item = ({ name, onChange, value, lable }: IitemProps) => {
+EditBlogInfo.item = ({ name, onChange, value, lable }: IItemProps) => {
   return (
     <div className="edit-bloginfo-item">
       <div className="title">
