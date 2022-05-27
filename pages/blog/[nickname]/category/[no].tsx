@@ -3,10 +3,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/modules";
 import { useEffect, useState } from "react";
 import { CategoryVO } from "../../../../store/modules/category";
-import { PostVO } from "../../../../src/components/PostCard";
 import RequestUtil from "../../../../src/common/RequestUtil";
 import ApiOptions from "../../../../src/common/ApiOptions";
 import Category from "../../../../src/components/Category";
+import { PostVO } from "../../../../src/common/Model";
 
 const CategoryPage = () => {
   const router = useRouter();
