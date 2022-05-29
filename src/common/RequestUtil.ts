@@ -1,8 +1,9 @@
 import axios from "axios";
+import { ApiOptionVo } from "./ApiOptions";
 
 const BASE_URL = "/api";
 
-const RequestUtil = async (option: any, params?: any) => {
+const RequestUtil = async (option: ApiOptionVo, params?: any) => {
   const axiosBody = { ...option };
   const headers = {};
 
