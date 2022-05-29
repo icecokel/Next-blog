@@ -1,10 +1,10 @@
-export interface NewPostVo {
+export interface NewPostVO {
   title: string;
   contents: string;
   registDate: Date;
 }
 
-export interface PostVo extends NewPostVo {
+export interface PostVO extends NewPostVO {
   boardNo: string;
   categoryNo: string;
   hits: string;
