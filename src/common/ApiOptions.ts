@@ -1,27 +1,29 @@
 export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
 
-export type ApiOption = {
+export type ApiOptionVo = {
   url: string;
   method: HttpMethod;
+  params?: any;
+  data?: any;
 };
 
 const ApiOptions = {
   getBlogInfo: {
     url: "/blog",
     method: "GET",
-  } as ApiOption,
+  } as ApiOptionVo,
   getPostsByCategoryNo: {
     url: "/category",
     method: "GET",
-  } as ApiOption,
+  } as ApiOptionVo,
   getPostInfo: {
     url: "/posts",
     method: "GET",
-  } as ApiOption,
+  } as ApiOptionVo,
   login: {
     url: "/success",
     method: "POST",
-  } as ApiOption,
+  } as ApiOptionVo,
 };
 
 export default ApiOptions;
