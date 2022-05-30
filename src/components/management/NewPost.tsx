@@ -1,9 +1,15 @@
-import React, { useState, useMemo, useEffect, useRef } from "react";
+import React, {
+  useState,
+  useMemo,
+  useEffect,
+  useRef,
+  ReactEventHandler,
+} from "react";
 import DatePicker from "react-datepicker";
 import SesstionUtil from "../../common/SessionUtil";
 import { SessionEnum } from "../../../src/common/SessionEnum";
 import ReactQuill, { Quill } from "react-quill";
-import { NewPostVo } from "../../common/Model";
+import { NewPostVO } from "../../common/Model";
 
 /**
  * todos
@@ -26,7 +32,7 @@ type ImageFile = {
 };
 
 const NewPost = () => {
-  const [formData, setFormData] = useState<NewPostVo>({
+  const [formData, setFormData] = useState<NewPostVO>({
     title: "",
     contents: "",
     registDate: new Date(),
@@ -39,7 +45,7 @@ const NewPost = () => {
     setFormDataFromSesstionData();
   }, []);
 
-  const onChange = (e: any) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, id } = e.target;
 
     setFormData({ ...formData, [id]: value });
