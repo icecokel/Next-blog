@@ -1,6 +1,6 @@
 import React from "react";
 import Loader from "./common/Loader";
-import { PostVo } from "../common/Model";
+import { PostVO } from "../common/Model";
 
 const TITLE_MAX_LENGTH = 20;
 
@@ -9,7 +9,7 @@ const Category = ({
   postList,
 }: {
   categoryName: string;
-  postList: Array<PostVo>;
+  postList: Array<PostVO>;
 }) => {
   return (
     <div className="category-wrap">
