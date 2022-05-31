@@ -1,8 +1,8 @@
-import React from "react";
+import React, { ReactComponentElement } from "react";
 import styles from "../../../styles/loader.module.scss";
 
 interface ILoaderProps {
-  children: any;
+  children: React.ReactChildren;
   isLoading: boolean;
   size?: number;
 }
