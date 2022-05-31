@@ -22,7 +22,7 @@ const BaseModal = ({
   isOpen,
   setIsOpen,
 }: {
-  children: any;
+  children: React.ReactChildren;
   isOpen: boolean;
   setIsOpen: Function;
 }) => {
