@@ -116,6 +116,11 @@ const LoginIcon = () => {
   );
 };
 
+interface LoginFormVO {
+  email: string;
+  password: string;
+}
+
 const LoginBox = ({
   setCurrentUser,
   setIsOpenSignInModal,
@@ -126,7 +131,7 @@ const LoginBox = ({
   setIsLogined: Function;
 }) => {
   const [isEmptyInfo, setIsEmptyInfo] = useState<boolean>();
-  const [formData, setFormData] = useState<any>({
+  const [formData, setFormData] = useState<LoginFormVO>({
     email: "",
     password: "",
   });
@@ -168,7 +173,7 @@ const LoginBox = ({
     setIsLogined(true);
   };
 
-  const handleTextOnChange = (e: any) => {
+  const onChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -184,14 +189,14 @@ const LoginBox = ({
           placeholder="email@email.com"
           name="email"
           value={formData.email}
-          onChangeValue={handleTextOnChange}
+          onChangeValue={onChangeText}
         />
         <BaseInput
           type="password"
           placeholder="PassWord1@3$"
           name="password"
           value={formData.password}
-          onChangeValue={handleTextOnChange}
+          onChangeValue={onChangeText}
         />
         <button>Sign In</button>
       </form>
