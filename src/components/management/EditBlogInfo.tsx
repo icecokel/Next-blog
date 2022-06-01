@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  ChangeEventHandler,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import Image from "next/image";
 import RequireLabel from "../common/RequireLabel";
 
@@ -63,7 +69,7 @@ const EditBlogInfo = () => {
     };
   };
 
-  const onChangeText = (e: any) => {
+  const onChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     setFormData({ ...formData, [name]: value });
@@ -122,7 +128,7 @@ export default EditBlogInfo;
 interface IItemProps {
   lable: string;
   name: string;
-  onChange: any;
+  onChange: ChangeEventHandler<HTMLInputElement>;
   value: string;
 }
 
