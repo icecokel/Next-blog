@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import ReactModal from "react-modal";
 
 const customStyles = {
@@ -17,15 +17,13 @@ const customStyles = {
   },
 };
 
-const BaseModal = ({
-  children,
-  isOpen,
-  setIsOpen,
-}: {
-  children: React.ReactChildren;
+interface IBaseModalProps {
+  children: Element | ReactNode | React.ReactChildren;
   isOpen: boolean;
   setIsOpen: Function;
-}) => {
+}
+
+const BaseModal = ({ children, isOpen, setIsOpen }: IBaseModalProps) => {
   return (
     <div>
       <ReactModal
