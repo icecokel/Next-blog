@@ -3,6 +3,8 @@ import { HYDRATE } from "next-redux-wrapper";
 import blog, { BlogVO } from "./blog";
 import category, { CategoryVO } from "./category";
 import user, { UserVO } from "./user";
+import post from "./post";
+import { NewPostVO } from "../../src/common/Model";
 
 const rootReducer = (
   state: IndexState | undefined,
@@ -17,6 +19,7 @@ const rootReducer = (
         blog,
         category,
         user,
+        post,
       });
       return combineReducer(state as any, action as any);
     }
@@ -30,4 +33,5 @@ export interface IndexState {
   blog: BlogVO;
   category: Array<CategoryVO>;
   user: UserVO;
+  post: NewPostVO;
 }
