@@ -38,7 +38,7 @@ const EditCategory = () => {
 
   return (
     <div className="edit-category-wrap">
-      {categoryList!.map((item, index) => {
+      {categoryList?.map((item, index) => {
         return (
           <EditCategory.item
             key={"category_management_" + index}
