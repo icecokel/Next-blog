@@ -10,6 +10,10 @@ import SesstionUtil from "../../common/SessionUtil";
 import { SessionEnum } from "../../../src/common/SessionEnum";
 import ReactQuill, { Quill } from "react-quill";
 import { NewPostVO } from "../../common/Model";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store/modules";
+import { setPost } from "../../../store/modules/post";
+import { stat } from "fs";
 
 /**
  * todos
@@ -32,23 +36,35 @@ type ImageFile = {
 };
 
 const NewPost = () => {
-  const [formData, setFormData] = useState<NewPostVO>({
-    title: "",
-    contents: "",
-    registDate: new Date(),
-  });
+  const state = useSelector((state: RootState) => state.post);
+  const dispatch = useDispatch();
 
   const [images, setImages] = useState<Array<ImageFile>>();
   const quillRef = useRef<any>();
 
-  useEffect(() => {
-    setFormDataFromSesstionData();
-  }, []);
-
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, id } = e.target;
+    const { value, name } = e.target;
+    dispatch(setPost({ ...state, [name]: value }));
+  };
 
-    setFormData({ ...formData, [id]: value });
+  const onChangeContents = (value: any) => {
+    dispatch(setPost({ ...state, contents: value }));
+  };
+  const onChangeDatePicker = (date: any) => {
+    dispatch(setPost({ ...state, registDate: date }));
+  };
+  const onChangeTime = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value, name } = e.target;
+    const time = Number.parseInt(value);
+    const { registDate } = { ...state };
+
+    if (name === "postTimehour") {
+      registDate.setHours(time);
+    } else {
+      registDate.setMinutes(time);
+    }
+
+    dispatch(setPost({ ...state, registDate: registDate }));
   };
 
   const imageHandler = () => {
@@ -85,19 +101,6 @@ const NewPost = () => {
     };
   };
 
-  const getSeestion = () => {
-    const data = SesstionUtil.getSession(SessionEnum.fomrData);
-  };
-
-  const setFormDataFromSesstionData = () => {
-    const sessionData = getSeestion();
-  };
-
-  const saveFormData = () => {
-    const params = { ...formData };
-    SesstionUtil.setSession(SessionEnum.fomrData, params);
-  };
-
   const onClickPostButton = () => {
     const params = getParams();
 
@@ -116,7 +119,7 @@ const NewPost = () => {
   };
 
   const getParams = () => {
-    const params = { ...formData };
+    const params = { ...state };
 
     images?.forEach((item) => {
       if (params.contents.includes(item.src)) {
@@ -156,16 +159,17 @@ const NewPost = () => {
       <input
         type="text"
         placeholder="제목을 입력해주세요"
-        id="title"
+        name="title"
         onChange={onChange}
+        value={state.title}
       />
       <ReactQuill
         ref={quillRef}
         theme="snow"
-        value={formData.contents}
+        value={state.contents}
         modules={getModules}
         onChange={(contents) => {
-          setFormData({ ...formData, contents });
+          onChangeContents(contents);
         }}
       />
       <div>
@@ -173,21 +177,16 @@ const NewPost = () => {
         <div className="editor-date-wrap">
           <div className="editor-date">
             <DatePicker
-              selected={formData.registDate}
+              selected={state.registDate}
               dateFormat={"yyyy년 MM월 dd일"}
-              onChange={(date: Date) => {
-                setFormData({ ...formData, registDate: date });
-              }}
+              onChange={onChangeDatePicker}
             />
           </div>
           <div className="editor-time">
             <select
-              onChange={(e) => {
-                const temp = { ...formData };
-                temp.registDate.setHours(Number.parseInt(e.target.value));
-                setFormData(temp);
-              }}
-              value={formData.registDate.getHours()}
+              onChange={onChangeTime}
+              name={"postTimehour"}
+              value={state.registDate.getHours()}
             >
               {getTimeList("hour")?.map((code) => {
                 return (
@@ -198,13 +197,9 @@ const NewPost = () => {
               })}
             </select>
             <select
-              onChange={(e) => {
-                const temp = { ...formData };
-                temp.registDate.setMinutes(Number.parseInt(e.target.value));
-                setFormData(temp);
-              }}
-              id="postTimeMinute"
-              value={formData.registDate.getMinutes()}
+              onChange={onChangeTime}
+              name={"postTimeMinute"}
+              value={state.registDate.getMinutes()}
             >
               {getTimeList("minute")?.map((code) => {
                 return (
@@ -218,7 +213,6 @@ const NewPost = () => {
         </div>
       </div>
       <div className="button-wrap">
-        <button onClick={saveFormData}>임시 저장</button>
         <button onClick={onClickPostButton}>발행</button>
       </div>
     </div>
