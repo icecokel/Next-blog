@@ -19,7 +19,7 @@ const EditCategory = () => {
     setCategoryList(category);
   };
 
-  const onChangeItemIndex = (index: number, sign: "up" | "down") => {
+  const handleChangeItemIndex = (index: number, sign: "up" | "down") => {
     const list = [...(categoryList ?? [])];
 
     switch (sign) {
@@ -45,10 +45,10 @@ const EditCategory = () => {
             categoryNo={item.categoryNo}
             categoryName={item.categoryName}
             moveUp={() => {
-              onChangeItemIndex(index, "up");
+              handleChangeItemIndex(index, "up");
             }}
             moveDown={() => {
-              onChangeItemIndex(index, "down");
+              handleChangeItemIndex(index, "down");
             }}
           />
         );
@@ -74,18 +74,18 @@ interface ICategoryProps {
 EditCategory.item = ({
   categoryNo,
   categoryName,
-  moveUp,
-  moveDown,
+  moveUp: handleMoveUp,
+  moveDown: handleMoveDown,
 }: ICategoryProps) => {
   return (
     <div className="edit-category-item">
       <span className="edit-category-no">{categoryNo}</span>
       <span className="edit-category-name">{categoryName}</span>
       <div contextMenu="edit-category-arrow-wrap">
-        <i className="material-icons" onClick={moveUp}>
+        <i className="material-icons" onClick={handleMoveUp}>
           expand_less
         </i>
-        <i className="material-icons" onClick={moveDown}>
+        <i className="material-icons" onClick={handleMoveDown}>
           expand_more
         </i>
       </div>

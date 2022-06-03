@@ -42,7 +42,7 @@ const EditBlogInfo = () => {
     ).toString();
   }, [formData.blogFavicon]);
 
-  const onClickFavicon = () => {
+  const handleClickFavicon = () => {
     const input = document.createElement("input");
 
     input.setAttribute("type", "file");
@@ -69,7 +69,7 @@ const EditBlogInfo = () => {
     };
   };
 
-  const onChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     setFormData({ ...formData, [name]: value });
@@ -80,19 +80,19 @@ const EditBlogInfo = () => {
       <EditBlogInfo.item
         lable="블로그 이름"
         name="blogName"
-        onChange={onChangeText}
+        onChange={handleChangeText}
         value={formData.blogName}
       />
       <EditBlogInfo.item
         lable="블로그 활동명"
         name="blogNickName"
-        onChange={onChangeText}
+        onChange={handleChangeText}
         value={formData.blogNickName}
       />
       <EditBlogInfo.item
         lable="블로그 설명"
         name="blogDescription"
-        onChange={onChangeText}
+        onChange={handleChangeText}
         value={formData.blogDescription}
       />
       <div className="edit-bloginfo-item">
@@ -102,7 +102,7 @@ const EditBlogInfo = () => {
         </div>
         <div className="edit-bloginfo-favicon">
           <label>{favicon?.name}</label>
-          <button onClick={onClickFavicon}>선택</button>
+          <button onClick={handleClickFavicon}>선택</button>
         </div>
       </div>
       <div className="edit-bloginfo-item">
