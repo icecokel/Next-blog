@@ -35,7 +35,7 @@ const LoginIcon = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
 
-  const onClickModalOpen = () => {
+  const handleClickModalOpen = () => {
     if (isLogined) {
       setIsOpenLogOutModal(!isOpenLogOutModel);
       return;
@@ -43,7 +43,7 @@ const LoginIcon = () => {
     setIsOpenLogInModal(!isOpenLogInModal);
   };
 
-  const onClickLogOut = () => {
+  const handleClickLogOut = () => {
     SessionUtil.removeSession(SessionEnum.userInfo);
     setCurrentUser(undefined);
     setIsOpenLogOutModal(!isOpenLogOutModel);
@@ -80,7 +80,7 @@ const LoginIcon = () => {
 
   return (
     <div className="header-icon">
-      <label onClick={onClickModalOpen}>
+      <label onClick={handleClickModalOpen}>
         {isLogined ? (
           <i className="material-icons">logout</i>
         ) : (
@@ -106,7 +106,7 @@ const LoginIcon = () => {
             >
               취소
             </button>
-            <button className="btn-success" onClick={onClickLogOut}>
+            <button className="btn-success" onClick={handleClickLogOut}>
               확인
             </button>
           </div>
@@ -135,7 +135,7 @@ const LoginBox = ({
     email: "",
     password: "",
   });
-  const onClickSignIn = (e: any) => {
+  const handleClickSignIn = (e: any) => {
     e.preventDefault();
 
     const email = e.target["email"].value;
@@ -173,14 +173,14 @@ const LoginBox = ({
     setIsLogined(true);
   };
 
-  const onChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   return (
     <div className="login-wrap">
-      <form onSubmit={onClickSignIn}>
+      <form onSubmit={handleClickSignIn}>
         {isEmptyInfo && (
           <span className="error"> 로그인 정보를 입력해 주세요.</span>
         )}
@@ -189,14 +189,14 @@ const LoginBox = ({
           placeholder="email@email.com"
           name="email"
           value={formData.email}
-          onChangeValue={onChangeText}
+          onChangeValue={handleChangeText}
         />
         <BaseInput
           type="password"
           placeholder="PassWord1@3$"
           name="password"
           value={formData.password}
-          onChangeValue={onChangeText}
+          onChangeValue={handleChangeText}
         />
         <button>Sign In</button>
       </form>

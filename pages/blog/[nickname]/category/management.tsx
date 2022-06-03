@@ -30,7 +30,7 @@ const ManagementPage = () => {
     }
   }, [userAuthority]);
 
-  const onClickMenu = (e: any) => {
+  const handleClickMenu = (e: any) => {
     const { id } = e.target;
     const no = Number.parseInt((id as string).replace("memu_", ""));
     setCurrentMenu(MENU_LIST[no]);
@@ -61,7 +61,7 @@ const ManagementPage = () => {
             return (
               <li
                 key={"memu_" + index}
-                onClick={onClickMenu}
+                onClick={handleClickMenu}
                 id={"memu_" + index}
               >
                 {menu}

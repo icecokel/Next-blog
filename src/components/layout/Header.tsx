@@ -10,17 +10,17 @@ const Header = () => {
   );
   const router = useRouter();
 
-  const onClickLogo = () => {
+  const handleClickLogo = () => {
     router.push("/blog/" + userNickName);
   };
 
-  const onClickSettings = () => {
+  const handleClickSettings = () => {
     router.push("/blog/" + userNickName + "/category/management");
   };
 
   return (
     <header className="header-wrap">
-      <div className="logo" onClick={onClickLogo}>
+      <div className="logo" onClick={handleClickLogo}>
         {userNickName}
         <i className="material-icons">spa</i>
       </div>
@@ -29,7 +29,7 @@ const Header = () => {
         <SearchIcon />
         {userAuthority && (
           <div className="header-icon">
-            <i className="material-icons" onClick={onClickSettings}>
+            <i className="material-icons" onClick={handleClickSettings}>
               settings
             </i>
           </div>

@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Link from "next/link";
 
 const Home: NextPage = () => {
-  const onClickSignUp = () => {
+  const handleClickSignUp = () => {
     alert("Sorry, but the service is being prepared.");
   };
   return (
@@ -12,7 +12,7 @@ const Home: NextPage = () => {
       <div>
         Sign up and make your own blog.
         <div>
-          <button onClick={onClickSignUp}>Sign Up</button>
+          <button onClick={handleClickSignUp}>Sign Up</button>
         </div>
       </div>
 
