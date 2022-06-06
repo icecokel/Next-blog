@@ -36,6 +36,10 @@ const EditCategory = () => {
     setCategoryList(list);
   };
 
+  const handleCancelButton = () => {
+    setCategoryList(category);
+  };
+
   return (
     <div className="edit-category-wrap">
       {categoryList?.map((item, index) => {
@@ -55,7 +59,7 @@ const EditCategory = () => {
       })}
 
       <div className="button-wrap">
-        <button>작업취소</button>
+        <button onClick={handleCancelButton}>작업취소</button>
         <button>저장</button>
       </div>
     </div>
