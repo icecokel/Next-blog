@@ -36,11 +36,9 @@ const LoginIcon = () => {
   }, [currentUser]);
 
   const handleClickModalOpen = () => {
-    if (isLogined) {
-      setIsOpenLogOutModal(!isOpenLogOutModel);
-      return;
-    }
-    setIsOpenLogInModal(!isOpenLogInModal);
+    isLogined
+      ? setIsOpenLogOutModal(!isOpenLogOutModel)
+      : setIsOpenLogInModal(!isOpenLogInModal);
   };
 
   const handleClickLogOut = () => {
