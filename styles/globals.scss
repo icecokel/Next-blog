@@ -179,6 +179,22 @@ select {
   display: inline-block;
   margin: $size/3 $size/2;
 }
+
+.error-text {
+  font-size: 0.9em;
+  color: $color-red;
+  background-color: $color-white;
+  font-weight: 100;
+  width: fit-content;
+  &::before {
+    content: "* ";
+    margin-left: 1em;
+  }
+  &::after {
+    content: " *";
+    margin-right: 1em;
+  }
+}
 /* component */
 .main-wrap {
   max-width: 720px;
