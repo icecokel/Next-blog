@@ -2,6 +2,7 @@ import React, { MouseEventHandler, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import { CategoryVO } from "../../../store/modules/category";
+import ErrorLabel from "../common/ErrorLabel";
 
 const EditCategory = () => {
   const category = useSelector((state: RootState) => state.category);
@@ -57,7 +58,7 @@ const EditCategory = () => {
           />
         );
       })}
-
+      <ErrorLabel text="저장하지 않으면 변경되지 않습니다." />
       <div className="button-wrap">
         <button onClick={handleCancelButton}>작업취소</button>
         <button>저장</button>
