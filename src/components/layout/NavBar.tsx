@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import Link from "next/link";
@@ -12,12 +12,20 @@ const NavBar = () => {
   const category = useSelector((state: RootState) => state.category);
   const haveCategoryInfos = category.length !== 0;
   const navRef = useRef<HTMLUListElement>(null);
+  const [width, setWidth] = useState<number>(window.innerWidth);
 
   const needRendering = () => {
     return !(
       router.pathname === "/" || router.pathname.includes(MANAGEMENT_PATH)
     );
   };
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, []);
 
   if (needRendering()) {
     return (
@@ -36,6 +44,11 @@ const NavBar = () => {
             })}
           </Loader>
         </ul>
+        {width < 960 && (
+          <div className="nav-bar-menu-icon">
+            <i className="material-icons">menu</i>
+          </div>
+        )}
       </div>
     );
   } else {
