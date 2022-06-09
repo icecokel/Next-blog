@@ -172,12 +172,12 @@ select {
 .require-label {
   $size: 8px;
   background-color: $color-white;
-  border: $size/3 solid red;
+  border: calc($size/3) solid red;
   width: $size;
   height: $size;
   border-radius: 50%;
   display: inline-block;
-  margin: $size/3 $size/2;
+  margin: calc($size/3) calc($size/2);
 }
 
 .error-text {
@@ -302,7 +302,6 @@ select {
 }
 
 .nav-bar-wrap {
-  background-color: $color-white;
   position: fixed;
   width: 250px;
   margin-right: calc(((100vw - 740px) / 2) - 250px);
@@ -311,6 +310,7 @@ select {
   margin-top: calc(100px + 1em);
 
   ul {
+    background-color: $color-white;
     width: 100%;
     display: inline;
     white-space: nowrap;
@@ -334,6 +334,20 @@ select {
         cursor: pointer;
       }
     }
+  }
+
+  .nav-bar-menu-icon {
+    background-color: $color-white;
+    border: 1px solid $color-green2;
+    margin-left: 1em;
+    width: fit-content;
+    border-radius: 8px;
+    height: 1.7em;
+    line-height: 1.7em;
+    padding: 0.2em;
+    font-size: 1.2em;
+    cursor: pointer;
+    box-shadow: 1.5px 1.5px gray;
   }
 
   @media (max-width: 1200px) {
