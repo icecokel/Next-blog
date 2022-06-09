@@ -75,6 +75,10 @@ const EditBlogInfo = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const hamdleClickSave = () => {
+    window.URL.revokeObjectURL(faviconSrc.current);
+  };
+
   return (
     <div className="edit-bloginfo">
       <EditBlogInfo.item
@@ -117,7 +121,9 @@ const EditBlogInfo = () => {
         />
       </div>
       <div className="button-wrap">
-        <button className="button-half">저장</button>
+        <button className="button-half" onClick={hamdleClickSave}>
+          저장
+        </button>
       </div>
     </div>
   );
