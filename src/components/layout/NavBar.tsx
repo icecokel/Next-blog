@@ -12,18 +12,21 @@ const NavBar = () => {
   const category = useSelector((state: RootState) => state.category);
   const haveCategoryInfos = category.length !== 0;
   const navRef = useRef<HTMLUListElement>(null);
-  const [width, setWidth] = useState<number>(window.innerWidth);
+  const [width, setWidth] = useState<number>(0);
+  const currentCategory = router.query.no;
 
   const needRendering = () => {
     return !(
       router.pathname === "/" || router.pathname.includes(MANAGEMENT_PATH)
     );
   };
+
   const handleResize = () => {
     setWidth(window.innerWidth);
   };
 
   useEffect(() => {
+    handleResize();
     window.addEventListener("resize", handleResize);
   }, []);
 
@@ -39,6 +42,7 @@ const NavBar = () => {
                   categoryNo={item.categoryNo}
                   categoryName={item.categoryName}
                   key={item.categoryNo}
+                  currentCategory={currentCategory}
                 />
               );
             })}
@@ -62,13 +66,23 @@ interface IItemProps {
   nickname: string | string[];
   categoryNo: string;
   categoryName: string;
+  currentCategory: string | string[] | undefined;
 }
 
-NavBar.item = ({ nickname, categoryNo, categoryName }: IItemProps) => {
+NavBar.item = ({
+  nickname,
+  categoryNo,
+  categoryName,
+  currentCategory,
+}: IItemProps) => {
+  const isCurrentCategory = currentCategory == categoryNo;
   return (
     <Link href={"/blog/" + nickname + "/category/" + categoryNo}>
       <a>
-        <li id={"category_id_" + categoryNo} className="item">
+        <li
+          id={"category_id_" + categoryNo}
+          className={isCurrentCategory ? "selected" : ""}
+        >
           {categoryName}
         </li>
       </a>
