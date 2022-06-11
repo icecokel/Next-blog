@@ -12,9 +12,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     <div>
       <Header />
       <div className="main-wrap">
-        <Component {...pageProps} />
+        <div>
+          <Component {...pageProps} />
+        </div>
+        <NavBar />
       </div>
-      <NavBar />
       <Footer />
     </div>
   );
