@@ -14,6 +14,7 @@ const NavBar = () => {
   const navRef = useRef<HTMLUListElement>(null);
   const [width, setWidth] = useState<number>(0);
   const currentCategory = router.query.no;
+  const [needHideMenu, setNeedHideMenu] = useState<boolean>(false);
 
   const needRendering = () => {
     return !(
@@ -23,6 +24,11 @@ const NavBar = () => {
 
   const handleResize = () => {
     setWidth(window.innerWidth);
+    setNeedHideMenu(window.innerWidth >= 960);
+  };
+
+  const handleToggleMenu = () => {
+    setNeedHideMenu(!needHideMenu);
   };
 
   useEffect(() => {
@@ -33,24 +39,46 @@ const NavBar = () => {
   if (needRendering()) {
     return (
       <div className="nav-bar-wrap">
-        <ul ref={navRef}>
-          <Loader isLoading={!haveCategoryInfos} size={5.5}>
-            {category.map((item) => {
-              return (
-                <NavBar.item
-                  nickname={router.query.nickname ?? ""}
-                  categoryNo={item.categoryNo}
-                  categoryName={item.categoryName}
-                  key={item.categoryNo}
-                  currentCategory={currentCategory}
-                />
-              );
-            })}
-          </Loader>
-        </ul>
-        {width < 960 && (
-          <div className="nav-bar-menu-icon">
-            <i className="material-icons">menu</i>
+        {width >= 960 ? (
+          <ul ref={navRef}>
+            <Loader isLoading={!haveCategoryInfos} size={5.5}>
+              {category.map((item) => {
+                return (
+                  <NavBar.item
+                    nickname={router.query.nickname ?? ""}
+                    categoryNo={item.categoryNo}
+                    categoryName={item.categoryName}
+                    key={item.categoryNo}
+                    currentCategory={currentCategory}
+                  />
+                );
+              })}
+            </Loader>
+          </ul>
+        ) : (
+          <div className="nav-bar-menu-icon" onClick={handleToggleMenu}>
+            {!needHideMenu ? (
+              <i className="material-icons">menu</i>
+            ) : (
+              <div>
+                <i className="material-icons">arrow_forward_ios</i>
+                <ul ref={navRef}>
+                  <Loader isLoading={!haveCategoryInfos} size={5.5}>
+                    {category.map((item) => {
+                      return (
+                        <NavBar.item
+                          nickname={router.query.nickname ?? ""}
+                          categoryNo={item.categoryNo}
+                          categoryName={item.categoryName}
+                          key={item.categoryNo}
+                          currentCategory={currentCategory}
+                        />
+                      );
+                    })}
+                  </Loader>
+                </ul>
+              </div>
+            )}
           </div>
         )}
       </div>
