@@ -60,7 +60,7 @@ const NavBar = () => {
             {!needHideMenu ? (
               <i className="material-icons">menu</i>
             ) : (
-              <div>
+              <div className="menu">
                 <i className="material-icons">arrow_forward_ios</i>
                 <ul ref={navRef}>
                   <Loader isLoading={!haveCategoryInfos} size={5.5}>
