@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import LoginIcon from "./LoginIcon";
-import SearchIcon from "./SearchIcon";
+import MenuIcon from "./MenuIcon";
 
 const Header = () => {
   const { userNickName, userAuthority } = useSelector(
@@ -26,7 +26,7 @@ const Header = () => {
       </div>
       <div className="icons-wrap">
         <LoginIcon />
-        <SearchIcon />
+        <MenuIcon />
         {userAuthority && (
           <div className="header-icon">
             <i className="material-icons" onClick={handleClickSettings}>
