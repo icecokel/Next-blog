@@ -27,9 +27,9 @@ const MenuIcon = () => {
 
   if (needRendering()) {
     return (
-      <div className="nav-bar-wrap" onClick={handleToggleMenu}>
+      <div className="nav-bar-wrap">
         {!needHideMenu ? (
-          <div className="header-icon">
+          <div className="header-icon" onClick={handleToggleMenu}>
             <i className="material-icons">menu</i>
           </div>
         ) : (
@@ -37,18 +37,14 @@ const MenuIcon = () => {
             <div className="menu">
               <div className="icon-wrap">
                 <i className="material-icons">arrow_forward_ios</i>
-                <span>메뉴 접기</span>
+                <span onClick={handleToggleMenu}>메뉴 접기</span>
               </div>
               <MenuIcon.menuList
                 category={category}
                 isLoading={haveCategoryInfos}
                 nickname={router.query.nickname ?? ""}
               />
-              <div>
-                <hr />
-                <SearchIcon />
-                <hr />
-              </div>
+              <SearchIcon />
             </div>
           </div>
         )}
