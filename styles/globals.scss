@@ -211,10 +211,8 @@ select {
   max-width: 980px;
   margin: 0 auto;
   display: flex;
-
   div:first-child {
     flex: 5;
-    margin-right: 4px;
   }
 }
 .entry-page-wrap {
@@ -324,7 +322,9 @@ select {
     line-height: 1.7em;
     padding: 0.2em;
     font-size: 1.2em;
-    cursor: pointer;
+    i {
+      cursor: pointer;
+    }
 
     .menu-wrap {
       position: absolute;
@@ -351,6 +351,7 @@ select {
           display: flex;
           padding: 0.5em 0.25em;
           align-items: center;
+          cursor: pointer;
 
           &:hover {
             background-color: $color-green4;
@@ -383,6 +384,18 @@ select {
             }
           }
         }
+
+        .search-wrap {
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+
+          input {
+            border: none;
+            border-bottom: 1px solid $color-black;
+            border-radius: 0px;
+          }
+        }
       }
     }
   }
@@ -393,7 +406,6 @@ select {
   .thumbnail {
     min-height: 300px;
     background-color: $color-white;
-    margin-top: 1em;
     @media (max-width: 640px) {
       height: 200px;
     }
