@@ -25,6 +25,16 @@ const MenuIcon = () => {
     setNeedHideMenu(!needHideMenu);
   };
 
+  useEffect(() => {
+    const handleEscape = ({ key }: any) => {
+      if (key === "Escape") {
+        setNeedHideMenu(false);
+      }
+    };
+    window.addEventListener("keydown", handleEscape, false);
+    return () => window.removeEventListener("keydown", handleEscape, false);
+  }, []);
+
   if (needRendering()) {
     return (
       <div className="nav-bar-wrap">
