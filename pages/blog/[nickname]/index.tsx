@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { UserVO } from "../../../store/modules/user";
 import SessionUtil from "../../../src/common/SessionUtil";
 import { SessionEnum } from "../../../src/common/SessionEnum";
+import Image from "next/image";
 
 const Main = () => {
   const router = useRouter();
@@ -64,7 +65,9 @@ const Main = () => {
 
   return (
     <div className="blog-main-wrap">
-      <div className="thumbnail"></div>
+      <div className="thumbnail">
+        <img src={"/resources/images/test.jpg"} alt="thumnail" />
+      </div>
     </div>
   );
 };
