@@ -26,6 +26,10 @@ const MenuIcon = () => {
   };
 
   useEffect(() => {
+    setNeedHideMenu(false);
+  }, [router.query.no]);
+
+  useEffect(() => {
     const handleEscape = ({ key }: any) => {
       if (key === "Escape") {
         setNeedHideMenu(false);
