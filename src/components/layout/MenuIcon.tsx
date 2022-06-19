@@ -26,10 +26,6 @@ const MenuIcon = () => {
   };
 
   useEffect(() => {
-    setNeedHideMenu(false);
-  }, [router.query.no]);
-
-  useEffect(() => {
     const handleEscape = ({ key }: any) => {
       if (key === "Escape") {
         setNeedHideMenu(false);
@@ -57,6 +53,7 @@ const MenuIcon = () => {
                 category={category}
                 isLoading={haveCategoryInfos}
                 nickname={router.query.nickname ?? ""}
+                onClick={handleToggleMenu}
               />
               <SearchIcon />
             </div>
@@ -75,12 +72,14 @@ interface IMenuListProps {
   category: Array<CategoryVO>;
   isLoading: boolean;
   nickname: string[] | string;
+  onClick: () => void;
 }
 
 MenuIcon.menuList = ({
   category,
   isLoading,
   nickname = "",
+  onClick,
 }: IMenuListProps) => {
   return (
     <ul>
@@ -91,7 +90,7 @@ MenuIcon.menuList = ({
               href={"/blog/" + nickname + "/category/" + item.categoryNo}
               key={item.categoryNo}
             >
-              <a>
+              <a onClick={onClick}>
                 <li id={"category_id_" + item.categoryNo}>
                   {item.categoryName}
                 </li>
