@@ -209,6 +209,7 @@ select {
 /* component */
 .main-wrap {
   max-width: 980px;
+  min-height: 70vw;
   margin: 0 auto;
   display: flex;
   div:first-child {
@@ -562,6 +563,13 @@ select {
     display: inline-block;
     width: 50%;
   }
+}
+.footer-wrap {
+  text-align: center;
+  border-top: 1px solid $color-black;
+  padding: 16px;
+  font-size: 0.8em;
+  font-weight: 100;
 }
 
 .management-wrap {
