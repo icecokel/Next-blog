@@ -1,0 +1,179 @@
+/* font */
+@import url("https://fonts.googleapis.com/css2?family=Bangers&family=Do+Hyeon&display=swap");
+
+/* color */
+$color-green1: #e6f0ef;
+$color-green2: #dae9e7;
+$color-green3: #c5dcd5;
+$color-green4: #a9c5b9;
+
+$color-brown1: #b6abab;
+$color-brown2: #dbd2d1;
+
+$color-red: #d23203;
+$color-gray: #4b4b4b;
+
+$color-black: #000;
+$color-white: #fff;
+$color-active: #f78c27;
+
+ul {
+  list-style: none;
+  padding-left: 0px;
+}
+
+button {
+  border: 1px solid $color-gray;
+  background-color: $color-white;
+  padding: 0.5em 1em;
+  margin: 0.2em;
+  border-radius: 5px;
+  font-size: 1.05em;
+  color: $color-gray;
+  font-family: "Do Hyeon", sans-serif;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-green2;
+    color: $color-black;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    background-color: $color-gray;
+    color: $color-white;
+    font-weight: normal;
+  }
+}
+
+.btn-success {
+  background-color: $color-green3;
+  color: $color-black;
+  font-size: 1.2em;
+
+  &:hover {
+    background-color: $color-active;
+    color: $color-white;
+  }
+}
+
+input[type="radio"] {
+  $size: 0.9rem;
+  appearance: none;
+  width: $size;
+  height: $size;
+  border-radius: 100%;
+  margin: $size * 0.2;
+  background-color: $color-white;
+  box-shadow: 0 0 0 1.5px $color-gray;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  &:checked {
+    background-color: $color-active;
+    box-shadow: 0 0 0 1.5px $color-active;
+    border: 0.2rem solid $color-white;
+  }
+}
+
+input[type="checkbox"] {
+  $size: 1rem;
+  width: $size;
+  height: $size;
+  background-color: $color-white;
+  box-shadow: 0 0 0 1px $color-gray;
+  border-radius: 2px;
+  margin: $size * 0.2;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  &:checked {
+    box-shadow: 0 0 0 1px $color-active;
+    background-color: $color-active;
+
+    &::after {
+      border-radius: 1px;
+      $color: $color-white;
+      content: "";
+      position: relative;
+      padding-top: $size * 0.4;
+      left: $size * 0.25;
+      top: -1px;
+      width: $size * 0.3;
+      height: $size * 0.3;
+      border-bottom: $size * 0.15 solid $color;
+      border-right: $size * 0.15 solid $color;
+      transform: rotate(45deg);
+      display: block;
+    }
+  }
+
+  &:disabled {
+    pointer-events: none;
+    background-color: $color-gray;
+    box-shadow: 0 0 0 1px $color-gray;
+  }
+}
+
+select,
+input[type="text"] {
+  border: 1px solid $color-green3;
+  border-radius: 3px;
+  padding: 0.5em 1em;
+  font-size: 18px;
+
+  &:active,
+  &:focus {
+    outline: none;
+    border: 1.5px solid $color-active;
+  }
+}
+select {
+  border: 1px solid $color-green3;
+  border-radius: 3px;
+  padding: 0.5em 1em;
+  font-size: 18px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  option {
+    &:focus {
+      background-color: $color-green4;
+    }
+  }
+}
+
+.display-none {
+  display: none;
+}
+
+.require-label {
+  $size: 8px;
+  background-color: $color-white;
+  border: calc($size/3) solid red;
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  display: inline-block;
+  margin: calc($size/3) calc($size/2);
+}
+
+.error-text {
+  font-size: 0.9em;
+  color: $color-red;
+  background-color: $color-white;
+  font-weight: 100;
+  width: fit-content;
+  &::before {
+    content: "* ";
+    margin-left: 1em;
+  }
+  &::after {
+    content: " *";
+    margin-right: 1em;
+  }
+}
