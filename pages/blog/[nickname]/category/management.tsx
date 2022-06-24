@@ -63,6 +63,7 @@ const ManagementPage = () => {
                 key={"memu_" + index}
                 onClick={handleClickMenu}
                 id={"memu_" + index}
+                className={"mt-05 mb-05"}
               >
                 {menu}
               </li>
