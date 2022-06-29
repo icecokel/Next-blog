@@ -29,14 +29,13 @@ const Category = ({
                 }
 
                 return (
-                  <li key={"post_" + index}>
-                    <div>
-                      <span className="post-no">{post.boardNo}</span>
-                      <span className="post-title">{title}</span>
-                      <span className="post-hits">{hits}</span>
-                    </div>
-                    <span className="post-registDate">{post.registDate}</span>
-                  </li>
+                  <Category.item
+                    boardNo={post.boardNo}
+                    title={title}
+                    hits={hits}
+                    registDate={post.registDate}
+                    key={"category_" + index}
+                  />
                 );
               })}
             </ul>
@@ -48,3 +47,23 @@ const Category = ({
 };
 
 export default Category;
+
+interface IItemProps {
+  boardNo: string;
+  title: string;
+  hits: number;
+  registDate: string | Date;
+}
+
+Category.item = ({ boardNo, hits, registDate, title }: IItemProps) => {
+  return (
+    <li>
+      <div>
+        <span className="post-no">{boardNo}</span>
+        <span className="post-title">{title}</span>
+        <span className="post-hits">{hits}</span>
+      </div>
+      <span className="post-registDate">{registDate}</span>
+    </li>
+  );
+};
