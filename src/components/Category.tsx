@@ -1,16 +1,17 @@
 import React from "react";
 import Loader from "./common/Loader";
 import { PostVO } from "../common/Model";
+import Link from "next/link";
 
 const TITLE_MAX_LENGTH = 20;
 
-const Category = ({
-  categoryName,
-  postList,
-}: {
+interface ICatogoryProps {
+  nickname: string | string[];
   categoryName: string;
   postList: Array<PostVO>;
-}) => {
+}
+
+const Category = ({ categoryName, postList, nickname }: ICatogoryProps) => {
   return (
     <div className="category-wrap">
       <h2>{categoryName}</h2>
@@ -35,6 +36,7 @@ const Category = ({
                     hits={hits}
                     registDate={post.registDate}
                     key={"category_" + index}
+                    nickname={nickname}
                   />
                 );
               })}
@@ -49,21 +51,32 @@ const Category = ({
 export default Category;
 
 interface IItemProps {
+  nickname: string | string[];
   boardNo: string;
   title: string;
   hits: number;
   registDate: string | Date;
 }
 
-Category.item = ({ boardNo, hits, registDate, title }: IItemProps) => {
+Category.item = ({
+  boardNo,
+  hits,
+  registDate,
+  title,
+  nickname,
+}: IItemProps) => {
   return (
-    <li>
-      <div>
-        <span className="post-no">{boardNo}</span>
-        <span className="post-title">{title}</span>
-        <span className="post-hits">{hits}</span>
-      </div>
-      <span className="post-registDate">{registDate}</span>
-    </li>
+    <Link href={"/blog/" + nickname + "/post/" + boardNo}>
+      <a>
+        <li>
+          <div>
+            <span className="post-no">{boardNo}</span>
+            <span className="post-title">{title}</span>
+            <span className="post-hits">{hits}</span>
+          </div>
+          <span className="post-registDate">{registDate}</span>
+        </li>
+      </a>
+    </Link>
   );
 };

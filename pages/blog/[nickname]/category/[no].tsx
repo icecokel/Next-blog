@@ -48,6 +48,7 @@ const CategoryPage = () => {
     <Category
       categoryName={currentCategory?.categoryName ?? ""}
       postList={postList}
+      nickname={router.query.nickname ?? ""}
     />
   );
 };
