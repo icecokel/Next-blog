@@ -8,7 +8,13 @@ const Post = () => {
   const id = router.query.id;
 
   const getPost = () => {
-    return {} as PostVO;
+    return {
+      boardNo: "1",
+      title: "title",
+      registId: "registId",
+      hits: "2",
+      registDate: new Date("2022-05-21"),
+    } as PostVO;
   };
 
   return (
