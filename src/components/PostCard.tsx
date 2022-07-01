@@ -4,17 +4,17 @@ import { PostVO } from "../common/Model";
 
 const PostCard = (props: PostVO) => {
   return (
-    <div>
+    <div className="post-wrap">
       <Image
         src="/resources/images/dafault.png"
         alt={props.title}
         width={300}
         height={400}
       />
-      <div>
+      <div className="post-title">
         <p>{props.title}</p>
         <div>
-          <span>{props.registDate}</span>
+          <span>{props.registDate.toLocaleString()}</span>
         </div>
       </div>
     </div>
