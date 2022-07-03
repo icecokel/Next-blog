@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { PostVO } from "../common/Model";
+import { formatDateToString } from "../common/DateUtil";
 
 const PostCard = (props: PostVO) => {
   return (
@@ -14,7 +15,9 @@ const PostCard = (props: PostVO) => {
       <div className="post-title">
         <p>{props.title}</p>
         <div>
-          <span>{props.registDate.toLocaleString()}</span>
+          <span>
+            {formatDateToString(props.registDate, "yyyy년 MM월 dd일 hh:mm")}
+          </span>
         </div>
       </div>
     </div>
