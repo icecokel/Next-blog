@@ -411,14 +411,16 @@ a {
 }
 
 .post-wrap {
+  padding: 1em;
   width: 100%;
-  background-color: #4b4b4b;
-
   .post-title {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    p {
+      margin-right: 1em;
+    }
   }
 }
 
