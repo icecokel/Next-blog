@@ -413,13 +413,38 @@ a {
 .post-wrap {
   padding: 1em;
   width: 100%;
-  .post-title {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    p {
-      margin-right: 1em;
+  .post-title-wrap {
+    border-radius: 5px;
+    height: 300px;
+    background-color: $color-white;
+    .post-image-wrap {
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      img {
+        width: 100%;
+        max-height: initial;
+        margin-top: -30%;
+      }
+    }
+    .post-title {
+      width: calc(100% - 2em);
+      position: absolute;
+      margin-top: -200px;
+      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba($color-gray, 0.8);
+      color: $color-white;
+      font-weight: 500;
+      font-size: 1em;
+      p {
+        margin-right: 1em;
+        font-size: 1.5em;
+      }
     }
   }
 }
