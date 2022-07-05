@@ -24,7 +24,12 @@ const PostCard = (props: PostVO) => {
           </div>
         </div>
       </div>
-      <div></div>
+      <div className="post-contents-wrap">
+        <div
+          className="post-contents"
+          dangerouslySetInnerHTML={{ __html: props.contents }}
+        />
+      </div>
     </div>
   );
 };
