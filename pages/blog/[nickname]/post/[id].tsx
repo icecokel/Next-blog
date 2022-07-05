@@ -14,6 +14,8 @@ const Post = () => {
       registId: "registId",
       hits: "2",
       registDate: new Date("2022-05-21"),
+      contents:
+        "<p>sdf</p><p>df</p><p><em>wdgf</em></p><p>adfasdf</p><p><strong>dsgf</strong></p>",
     } as PostVO;
   };
 
