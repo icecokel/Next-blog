@@ -417,8 +417,9 @@ a {
     border-radius: 5px;
     height: 300px;
     background-color: $color-white;
+    padding: 1em;
     .post-image-wrap {
-      height: 300px;
+      height: calc(300px - 2em);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -430,7 +431,7 @@ a {
       }
     }
     .post-title {
-      width: calc(100% - 2em);
+      width: calc(100% - 4em);
       position: absolute;
       margin-top: -200px;
       height: 80px;
@@ -445,6 +446,18 @@ a {
         margin-right: 1em;
         font-size: 1.5em;
       }
+    }
+  }
+  .post-contents-wrap {
+    background-color: $color-white;
+    border-radius: 5px;
+    padding: 1em;
+    margin-top: 1em;
+
+    .post-contents {
+      border: 1px solid rgba($color-gray, 0.2);
+      border-radius: 4px;
+      padding: 1em;
     }
   }
 }
