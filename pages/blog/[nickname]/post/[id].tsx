@@ -1,27 +1,37 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import ApiOptions from "../../../../src/common/ApiOptions";
 import { PostVO } from "../../../../src/common/Model";
+import RequestUtil from "../../../../src/common/RequestUtil";
+import Loader from "../../../../src/components/common/Loader";
 import PostCard from "../../../../src/components/PostCard";
 
 const Post = () => {
+  const [postInfo, setPostInfo] = useState<PostVO>();
   const router = useRouter();
   const id = router.query.id;
 
-  const getPost = () => {
-    return {
-      boardNo: "1",
-      title: "title",
-      registId: "registId",
-      hits: "2",
-      registDate: new Date("2022-05-21"),
-      contents:
-        "<p>sdf</p><p>df</p><p><em>wdgf</em></p><p>adfasdf</p><p><strong>dsgf</strong></p>",
-    } as PostVO;
+  useEffect(() => {
+    getPost();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
+  const getPost = async () => {
+    const {
+      data: { item },
+    } = await RequestUtil(ApiOptions.getPostInfo, id);
+    setPostInfo({
+      ...item.posts,
+      registDate: new Date(item.posts.registDate),
+    });
   };
 
   return (
     <div>
-      <PostCard {...getPost()} />
+      <Loader isLoading={!postInfo}>
+        {postInfo && <PostCard {...postInfo} />}
+      </Loader>
     </div>
   );
 };
