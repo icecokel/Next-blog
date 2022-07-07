@@ -17,7 +17,7 @@ const ApiOptions = {
     method: "GET",
   } as ApiOptionVo,
   getPostInfo: {
-    url: "/posts",
+    url: "/post",
     method: "GET",
   } as ApiOptionVo,
   login: {
