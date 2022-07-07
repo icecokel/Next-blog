@@ -10,13 +10,13 @@ export default function handler(
     message: "Success",
     item: {
       posts: {
-        boardNo: "",
-        categoryNo: "",
-        title: "",
-        contents: "",
-        hits: "",
-        registDate: "",
-        registId: "",
+        boardNo: "1",
+        title: "title",
+        registId: "registId",
+        hits: "2",
+        registDate: "2022-05-21",
+        contents:
+          "<p>sdf</p><p>df</p><p><em>wdgf</em></p><p>adfasdf</p><p><strong>dsgf</strong></p>",
       },
     },
   });
