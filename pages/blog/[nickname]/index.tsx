@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { UserVO } from "../../../store/modules/user";
 import SessionUtil from "../../../src/common/SessionUtil";
 import { SessionEnum } from "../../../src/common/SessionEnum";
+import Main from "../../../src/components/Main";
 
 const Main = () => {
   const router = useRouter();
@@ -62,13 +63,7 @@ const Main = () => {
     dispatch(setCategory(result.categorys));
   };
 
-  return (
-    <div className="blog-main-wrap">
-      <div className="thumbnail">
-        <img src={"/resources/images/test.jpg"} alt="thumnail" />
-      </div>
-    </div>
-  );
+  return <Main />;
 };
 
 export default Main;
