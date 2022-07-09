@@ -11,8 +11,8 @@ const PostCard = (props: PostVO) => {
           <Image
             src="/resources/images/dafault.png"
             alt={props.title}
-            width={300}
-            height={400}
+            width={800}
+            height={300}
           />
         </div>
         <div className="post-title">
