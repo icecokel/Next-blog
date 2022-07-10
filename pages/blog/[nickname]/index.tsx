@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import { UserVO } from "../../../store/modules/user";
 import SessionUtil from "../../../src/common/SessionUtil";
 import { SessionEnum } from "../../../src/common/SessionEnum";
-import Main from "../../../src/components/Main";
+import MainCp from "../../../src/components/MainCp";
 
 const Main = () => {
   const router = useRouter();
@@ -63,7 +63,7 @@ const Main = () => {
     dispatch(setCategory(result.categorys));
   };
 
-  return <Main />;
+  return <MainCp />;
 };
 
 export default Main;
