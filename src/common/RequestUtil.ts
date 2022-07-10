@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ApiOptionVo } from "./ApiOptions";
 
-const BASE_URL = "/api";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const RequestUtil = async (option: ApiOptionVo, params?: any) => {
   const axiosBody = { ...option };
