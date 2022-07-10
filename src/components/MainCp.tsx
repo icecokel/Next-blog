@@ -1,6 +1,6 @@
 import React from "react";
 
-const Main = () => {
+const MainCp = () => {
   return (
     <div className="blog-main-wrap">
       <div className="thumbnail">
@@ -10,4 +10,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default MainCp;
