@@ -5,16 +5,25 @@ import Header from "../src/components/layout/Header";
 import Footer from "../src/components/layout/Footer";
 import "react-quill/dist/quill.snow.css";
 import { wrapper } from "../store";
+import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+import React from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [queryClient] = React.useState(() => new QueryClient());
   return (
-    <div>
-      <Header />
-      <div className="main-wrap">
-        <Component {...pageProps} />
-      </div>
-      <Footer />
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <Hydrate state={pageProps.dehydratedState}>
+        <div>
+          <Header />
+          <div className="main-wrap">
+            <Component {...pageProps} />
+          </div>
+          <Footer />
+        </div>
+      </Hydrate>
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   );
 }
 
