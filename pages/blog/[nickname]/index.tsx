@@ -11,59 +11,61 @@ import { UserVO } from "../../../store/modules/user";
 import SessionUtil from "../../../src/common/SessionUtil";
 import { SessionEnum } from "../../../src/common/SessionEnum";
 import MainCp from "../../../src/components/MainCp";
+import { useQuery, QueryClient, dehydrate } from "react-query";
+import Loader from "../../../src/components/common/Loader";
 
 const Main = () => {
   const router = useRouter();
   const nickName = router.query.nickname;
   const dispatch = useDispatch();
-  const [result, setResult] = useState<any>();
   const [currentUser, setCurrentUser] = useState<UserVO>();
+  const { data, error, isLoading } = useQuery<any>(
+    "result",
+    async () =>
+      await RequestUtil(ApiOptions.getBlogInfo, { nickname: nickName })
+  );
 
   useEffect(() => {
-    if (!result) {
-      getBlogInfo();
-    } else {
-      setRedux();
-    }
-
+    setRedux();
     if (!currentUser) {
       getSessionUser();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nickName, result]);
-
-  const getBlogInfo = async () => {
-    const { data } = await RequestUtil(ApiOptions.getBlogInfo, {
-      nickname: nickName,
-    });
-
-    setResult(data.item);
-  };
+  }, [nickName, data]);
 
   const getSessionUser = () => {
     const data = SessionUtil.getSession(SessionEnum.userInfo);
-
     setCurrentUser(data);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   };
 
   const setRedux = () => {
-    dispatch(setBlog(result.blogInfo));
+    if (!data) {
+      return;
+    }
+    dispatch(setBlog(data.data.item.blogInfo));
     dispatch(
       setUser({
-        userNo: result.userInfo.userNo,
-        email: result.userInfo.email,
+        userNo: data.data.item.userInfo.userNo,
+        email: data.data.item.userInfo.email,
         userName: "",
         userEnglishName: "",
         status: "",
-        userAuthority: currentUser?.email === result.userInfo.email,
-        userNickName: result.userInfo.nickName,
+        userAuthority: currentUser?.email === data.data.item.userInfo.email,
+        userNickName: data.data.item.userInfo.nickName,
       })
     );
-    dispatch(setCategory(result.categorys));
+    dispatch(setCategory(data.data.item.categorys));
   };
 
-  return <MainCp />;
+  if (error) {
+    <div></div>;
+  }
+
+  return (
+    <Loader isLoading={isLoading}>
+      <MainCp />
+    </Loader>
+  );
 };
 
 export default Main;
