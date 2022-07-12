@@ -5,6 +5,7 @@ import category, { CategoryVO } from "./category";
 import user, { UserVO } from "./user";
 import post from "./post";
 import { NewPostVO } from "../../src/common/Model";
+import clientState, { ClientStateVO } from "./clientState";
 
 const rootReducer = (
   state: IndexState | undefined,
@@ -20,6 +21,7 @@ const rootReducer = (
         category,
         user,
         post,
+        clientState,
       });
       return combineReducer(state as any, action as any);
     }
@@ -34,4 +36,5 @@ export interface IndexState {
   category: Array<CategoryVO>;
   user: UserVO;
   post: NewPostVO;
+  clientState: ClientStateVO;
 }
