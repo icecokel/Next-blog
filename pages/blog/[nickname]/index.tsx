@@ -11,7 +11,7 @@ import { UserVO } from "../../../store/modules/user";
 import SessionUtil from "../../../src/common/SessionUtil";
 import { SessionEnum } from "../../../src/common/SessionEnum";
 import MainCp from "../../../src/components/MainCp";
-import { useQuery, QueryClient, dehydrate } from "react-query";
+import { useQuery } from "react-query";
 import Loader from "../../../src/components/common/Loader";
 
 const Main = () => {
