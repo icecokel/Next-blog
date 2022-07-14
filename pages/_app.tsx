@@ -8,20 +8,20 @@ import { wrapper } from "../store";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import React from "react";
+import ErrorModal from "../src/components/common/ErrorModal";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
-        <div>
-          <Header />
-          <div className="main-wrap">
-            <Component {...pageProps} />
-          </div>
-          <Footer />
+        <Header />
+        <div className="main-wrap">
+          <Component {...pageProps} />
         </div>
+        <Footer />
       </Hydrate>
+      <ErrorModal />
       <ReactQueryDevtools />
     </QueryClientProvider>
   );

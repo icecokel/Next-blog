@@ -7,23 +7,23 @@
  */
 
 // 액션 타입 선언
-export const SET_CLIENT_STATE = "clientState/SET_CLIENT_STATE" as const;
+export const SET_ERROR = "clientState/SET_ERROR" as const;
 
 // 액션 함수 선언
-export const setClientState = (clientState: ClientStateVO) => ({
-  type: SET_CLIENT_STATE,
-  payload: clientState,
+export const setError = (error: ErrorVO) => ({
+  type: SET_ERROR,
+  payload: error,
 });
 
 // 액센 객체들에 대한 타입 선언
-export type ClientStateAction = ReturnType<typeof setClientState>;
+export type ClientStateAction = ReturnType<typeof setError>;
 
 // 카테고리 타입
 export type ClientStateVO = {
   error: ErrorVO;
 };
 
-interface ErrorVO {
+export interface ErrorVO {
   isShowing: boolean;
   title: string;
   error: string;
@@ -45,9 +45,11 @@ export default (
   action: ClientStateAction
 ) => {
   switch (action.type) {
-    case SET_CLIENT_STATE:
-      state = action.payload;
-      return state;
+    case SET_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
     default:
       return state;
   }
