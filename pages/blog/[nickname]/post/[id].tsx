@@ -1,35 +1,35 @@
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { GetServerSideProps } from "next";
+import React from "react";
+import { dehydrate, QueryClient, useQuery } from "react-query";
 import ApiOptions from "../../../../src/common/ApiOptions";
-import { PostVO } from "../../../../src/common/Model";
 import RequestUtil from "../../../../src/common/RequestUtil";
 import Loader from "../../../../src/components/common/Loader";
 import PostCard from "../../../../src/components/PostCard";
 
-const Post = ({ item }: { item: PostVO }) => {
-  return (
-    <div>
-      <Loader isLoading={!item}>{item && <PostCard {...item} />}</Loader>
-    </div>
+const Post = ({ id, item }: { id: string; item: any }) => {
+  const { data } = useQuery(
+    ["post", id],
+    async () => await RequestUtil(ApiOptions.getPostInfo, id)
   );
+  const postInfo = data?.data?.item?.posts;
+  return <div>{item && <PostCard {...postInfo} />}</div>;
 };
 
 export default Post;
 
-export async function getServerSideProps(context: any) {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const router = useRouter();
-  const id = router.query.id;
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { data } = useQuery<any>(
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const id = context.query.id;
+  const quertClient = new QueryClient();
+
+  quertClient.prefetchQuery(
     ["post", id],
     async () => await RequestUtil(ApiOptions.getPostInfo, id)
   );
 
   return {
     props: {
-      item: data,
+      id: id,
+      item: dehydrate(quertClient),
     },
   };
-}
+};
