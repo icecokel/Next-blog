@@ -3,7 +3,6 @@ import React from "react";
 import { dehydrate, QueryClient, useQuery } from "react-query";
 import ApiOptions from "../../../../src/common/ApiOptions";
 import RequestUtil from "../../../../src/common/RequestUtil";
-import Loader from "../../../../src/components/common/Loader";
 import PostCard from "../../../../src/components/PostCard";
 
 const Post = ({ id, item }: { id: string; item: any }) => {

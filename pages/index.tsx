@@ -8,7 +8,6 @@ const Home: NextPage = () => {
   return (
     <div className="entry-page-wrap">
       <h1>Welcome Eucalyptus </h1>
-
       <div>
         Sign up and make your own blog.
         <div>
