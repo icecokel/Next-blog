@@ -6,7 +6,12 @@ interface IErrorLabelProps {
 }
 
 const ErrorLabel = ({ text, className }: IErrorLabelProps) => {
-  return <div className={className ?? "error-text"}>{text}</div>;
+  return (
+    <span className={className ?? "error-text"}>
+      <i className="material-icons">error</i>
+      <span>{text}</span>
+    </span>
+  );
 };
 
 export default ErrorLabel;
