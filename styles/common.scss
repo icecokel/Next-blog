@@ -165,16 +165,13 @@ select {
 .error-text {
   font-size: 0.9em;
   color: $color-red;
-  background-color: $color-white;
   font-weight: 100;
   width: fit-content;
-  &::before {
-    content: "* ";
-    margin-left: 1em;
-  }
-  &::after {
-    content: " *";
-    margin-right: 1em;
+  display: inline-flex;
+  align-items: center;
+  i {
+    font-size: 1.5em;
+    margin-right: 0.2em;
   }
 }
 
