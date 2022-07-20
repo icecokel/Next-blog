@@ -485,6 +485,7 @@ a {
         font-size: 20px;
         background-color: $color-green3;
         color: $color-black;
+        cursor: pointer;
       }
     }
   }
@@ -677,5 +678,15 @@ a {
         }
       }
     }
+  }
+}
+.error-wrap {
+  padding: 10em;
+  .error-box {
+    text-align: center;
+    color: $color-red;
+    padding: 3em;
+    border-top: 3px solid $color-red;
+    border-bottom: 3px solid $color-red;
   }
 }
