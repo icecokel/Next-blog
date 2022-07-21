@@ -11,7 +11,8 @@ const Post = ({ id, item }: { id: string; item: any }) => {
     async () => await RequestUtil(ApiOptions.getPostInfo, id)
   );
   const postInfo = data?.data?.item?.posts;
-  return <div>{item && <PostCard {...postInfo} />}</div>;
+
+  return <div>{postInfo && <PostCard {...postInfo} />}</div>;
 };
 
 export default Post;
