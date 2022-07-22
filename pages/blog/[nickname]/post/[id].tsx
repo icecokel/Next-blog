@@ -5,7 +5,7 @@ import ApiOptions from "../../../../src/common/ApiOptions";
 import RequestUtil from "../../../../src/common/RequestUtil";
 import PostCard from "../../../../src/components/PostCard";
 
-const Post = ({ id, item }: { id: string; item: any }) => {
+const Post = ({ id }: { id: string; item: any }) => {
   const { data } = useQuery(
     ["post", id],
     async () => await RequestUtil(ApiOptions.getPostInfo, id)

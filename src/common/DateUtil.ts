@@ -1,4 +1,4 @@
-const getTimeList = (type: "hours" | "minutes") => {
+const getTimeList = (type: "hours" | "minutes"): number[] => {
   const maxCount = type === "hours" ? 24 : 60;
   const timeList = new Array();
 
@@ -9,14 +9,14 @@ const getTimeList = (type: "hours" | "minutes") => {
   return timeList;
 };
 
-const converDateType = (target: Date | string) => {
+const converDateType = (target: Date | string): Date => {
   return typeof target === "string" ? new Date(target) : target;
 };
 
 export const formatDateToString = (
   date: Date,
   format: string = "YYYY-MM-DD"
-) => {
+): string => {
   return format
     .replaceAll(/YYYY/gi, converDateType(date).getFullYear().toString())
     .replaceAll(/YY/gi, converDateType(date).getFullYear().toString().slice(-2))
