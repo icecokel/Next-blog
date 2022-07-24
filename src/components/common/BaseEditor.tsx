@@ -1,5 +1,7 @@
 import React, { useRef, useMemo } from "react";
 import ReactQuill, { Quill } from "react-quill";
+import { useDispatch } from "react-redux";
+import { setError } from "../../../store/modules/clientState";
 
 export type ImageFile = {
   src: string;
@@ -20,6 +22,7 @@ const BaseEditor = ({
   onChange,
 }: IBaseEditorProps) => {
   const quillRef = useRef<any>();
+  const dispatch = useDispatch();
   const imageHandler = () => {
     const input = document.createElement("input");
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -31,27 +34,29 @@ const BaseEditor = ({
 
     input.click();
 
-    input.onchange = () => {
+    input.onchange = (): void => {
       if (!input.files) {
-        return;
+        dispatch(
+          setError({
+            isShowing: true,
+            title: "파일을 찾수 없습니다. 다시 확인해주세요",
+            error: "Not Found File",
+          })
+        );
+      } else {
+        const file = input.files[0];
+        const tempImages: Array<ImageFile> = [...(images ?? [])];
+        const src = window.URL.createObjectURL(file);
+        const range = quillRef.current.getEditorSelection();
+        const Image = Quill.import("formats/image");
+
+        Image.sanitize = (url: string) => url;
+        quillRef.current.getEditor().insertEmbed(range.index, "image", src);
+        quillRef.current.getEditor().setSelection(range.index + 1);
+        tempImages.push({ src, file });
+        setImages(tempImages);
+        document.body.removeChild(input);
       }
-
-      const file = input.files[0];
-      const tempImages: Array<ImageFile> = [...(images ?? [])];
-
-      const src = window.URL.createObjectURL(file);
-      const range = quillRef.current.getEditorSelection();
-      const Image = Quill.import("formats/image");
-
-      Image.sanitize = (url: string) => url;
-      quillRef.current.getEditor().insertEmbed(range.index, "image", src);
-      quillRef.current.getEditor().setSelection(range.index + 1);
-
-      tempImages.push({ src, file });
-
-      setImages(tempImages);
-
-      document.body.removeChild(input);
     };
   };
 
