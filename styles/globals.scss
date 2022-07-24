@@ -681,11 +681,15 @@ a {
   }
 }
 .error-wrap {
-  padding: 10em;
+  padding: 2em;
+  h3 {
+    font-size: 1.5em;
+  }
   .error-box {
+    margin-top: 1em;
     text-align: center;
     color: $color-red;
-    padding: 3em;
+    padding: 2em;
     border-top: 3px solid $color-red;
     border-bottom: 3px solid $color-red;
   }
