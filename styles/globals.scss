@@ -161,6 +161,7 @@ a {
     line-height: 1.7em;
     padding: 0.2em;
     font-size: 1.2em;
+    z-index: 1000;
     i {
       cursor: pointer;
     }
@@ -435,14 +436,12 @@ a {
       }
     }
     .post-title {
-      width: calc(100% - 4em);
-      position: absolute;
       margin-top: -200px;
       height: 80px;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: rgba($color-gray, 0.8);
+      background-color: rgba($color-gray, 0.9);
       color: $color-white;
       font-weight: 500;
       font-size: 1em;
