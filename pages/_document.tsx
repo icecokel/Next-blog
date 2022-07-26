@@ -5,6 +5,7 @@ class MyDocument extends Document {
     return (
       <Html lang="ko">
         <Head>
+          {/* eslint-disable-next-line @next/next/no-title-in-document-head */}
           <title>Eucalyptus</title>
           <link
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
