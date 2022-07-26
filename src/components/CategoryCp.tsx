@@ -11,7 +11,7 @@ interface ICatogoryProps {
   postList: Array<PostVO>;
 }
 
-const Category = ({ categoryName, postList, nickname }: ICatogoryProps) => {
+const CategoryCp = ({ categoryName, postList, nickname }: ICatogoryProps) => {
   return (
     <div className="category-wrap">
       <h2>{categoryName}</h2>
@@ -30,7 +30,7 @@ const Category = ({ categoryName, postList, nickname }: ICatogoryProps) => {
                 }
 
                 return (
-                  <Category.item
+                  <CategoryCp.item
                     boardNo={post.boardNo}
                     title={title}
                     hits={hits}
@@ -48,7 +48,7 @@ const Category = ({ categoryName, postList, nickname }: ICatogoryProps) => {
   );
 };
 
-export default Category;
+export default CategoryCp;
 
 interface IItemProps {
   nickname: string | string[];
@@ -58,7 +58,7 @@ interface IItemProps {
   registDate: string | Date;
 }
 
-Category.item = ({
+CategoryCp.item = ({
   boardNo,
   hits,
   registDate,
