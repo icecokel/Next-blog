@@ -1,4 +1,4 @@
-import type {} from "next";
+import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setBlog } from "../../../store/modules/blog";
@@ -14,7 +14,7 @@ import MainCp from "../../../src/components/MainCp";
 import { useQuery } from "react-query";
 import Loader from "../../../src/components/common/Loader";
 
-const Main = () => {
+const BlogMainPage: NextPage = () => {
   const router = useRouter();
   const nickName = router.query.nickname;
   const dispatch = useDispatch();
@@ -35,7 +35,9 @@ const Main = () => {
 
   const getSessionUser = () => {
     const data = SessionUtil.getSession(SessionEnum.userInfo);
-    setCurrentUser(data);
+    if (data) {
+      setCurrentUser(data);
+    }
   };
 
   const setRedux = () => {
@@ -68,4 +70,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default BlogMainPage;
