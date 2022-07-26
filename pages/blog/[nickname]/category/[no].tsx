@@ -5,10 +5,11 @@ import { useEffect, useState } from "react";
 import { CategoryVO } from "../../../../store/modules/category";
 import RequestUtil from "../../../../src/common/RequestUtil";
 import ApiOptions from "../../../../src/common/ApiOptions";
-import Category from "../../../../src/components/Category";
+import CategoryCp from "../../../../src/components/CategoryCp";
 import { PostVO } from "../../../../src/common/Model";
+import { NextPage } from "next";
 
-const CategoryPage = () => {
+const CategoryPage: NextPage = () => {
   const router = useRouter();
   const categoryNo = router.query.no;
   const category = useSelector((state: RootState) => state.category);
@@ -43,7 +44,7 @@ const CategoryPage = () => {
   };
 
   return (
-    <Category
+    <CategoryCp
       categoryName={currentCategory?.categoryName ?? ""}
       postList={postList}
       nickname={router.query.nickname ?? ""}
