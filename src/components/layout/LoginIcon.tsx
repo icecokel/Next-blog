@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import ApiOptions from "../../common/ApiOptions";
+import { login } from "../../common/ApiOptions";
 import RequestUtil from "../../common/RequestUtil";
 import BaseModal from "../common/BaseModal";
 import SessionUtil from "../../common/SessionUtil";
@@ -146,11 +146,11 @@ const LoginBox = ({
       return;
     }
 
-    login({ email, password });
+    postLogin({ email, password });
   };
 
-  const login = async (param: LoginForm) => {
-    const { data } = await RequestUtil(ApiOptions.login, param);
+  const postLogin = async (param: LoginForm) => {
+    const { data } = await RequestUtil(login, param);
     if (!data) {
       return;
     }
