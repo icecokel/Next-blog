@@ -7,23 +7,19 @@ export type ApiOptionVo = {
   data?: any;
 };
 
-const ApiOptions = {
-  getBlogInfo: {
-    url: "/blog",
-    method: "GET",
-  } as ApiOptionVo,
-  getPostsByCategoryNo: {
-    url: "/category",
-    method: "GET",
-  } as ApiOptionVo,
-  getPostInfo: {
-    url: "/post",
-    method: "GET",
-  } as ApiOptionVo,
-  login: {
-    url: "/success",
-    method: "POST",
-  } as ApiOptionVo,
+export const getBlogInfo: ApiOptionVo = {
+  url: "/blog",
+  method: "GET",
 };
-
-export default ApiOptions;
+export const getPostsByCategoryNo: ApiOptionVo = {
+  url: "/category",
+  method: "GET",
+};
+export const getPostInfo: ApiOptionVo = {
+  url: "/post",
+  method: "GET",
+};
+export const login: ApiOptionVo = {
+  url: "/success",
+  method: "POST",
+};
