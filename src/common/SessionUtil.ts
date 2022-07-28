@@ -5,7 +5,7 @@ const SessionUtil = {
     window.sessionStorage.setItem(key, EncryptUtil.encrypt(value));
   },
 
-  getSession: (key: string) => {
+  getSession: (key: string): any | undefined => {
     const encryptoText = window.sessionStorage.getItem(key);
 
     if (!encryptoText) {
@@ -15,7 +15,7 @@ const SessionUtil = {
     return EncryptUtil.decrypt(encryptoText);
   },
 
-  removeSession: (key: string) => {
+  removeSession: (key: string): void => {
     window.sessionStorage.removeItem(key);
   },
 };
