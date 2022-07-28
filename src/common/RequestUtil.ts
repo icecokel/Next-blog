@@ -7,10 +7,6 @@ const RequestUtil = async (option: ApiOptionVo, params?: any) => {
   const axiosBody = { ...option };
   const headers = {};
 
-  if (!option.url) {
-    throw "Check HttpOption";
-  }
-
   switch (option.method) {
     case "GET":
       axiosBody["params"] = params;
