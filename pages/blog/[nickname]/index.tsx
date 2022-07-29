@@ -5,7 +5,7 @@ import { setBlog } from "../../../store/modules/blog";
 import { setCategory } from "../../../store/modules/category";
 import { setUser } from "../../../store/modules/user";
 import RequestUtil from "../../../src/common/RequestUtil";
-import ApiOptions from "../../../src/common/ApiOptions";
+import { getBlogInfo } from "../../../src/common/ApiOptions";
 import { useRouter } from "next/router";
 import { UserVO } from "../../../store/modules/user";
 import SessionUtil from "../../../src/common/SessionUtil";
@@ -21,8 +21,7 @@ const BlogMainPage: NextPage = () => {
   const [currentUser, setCurrentUser] = useState<UserVO>();
   const { data, error, isLoading } = useQuery<any>(
     "result",
-    async () =>
-      await RequestUtil(ApiOptions.getBlogInfo, { nickname: nickName })
+    async () => await RequestUtil(getBlogInfo, { nickname: nickName })
   );
 
   useEffect(() => {
