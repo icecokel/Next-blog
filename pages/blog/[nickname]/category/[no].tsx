@@ -4,7 +4,7 @@ import { RootState } from "../../../../store/modules";
 import { useEffect, useState } from "react";
 import { CategoryVO } from "../../../../store/modules/category";
 import RequestUtil from "../../../../src/common/RequestUtil";
-import ApiOptions from "../../../../src/common/ApiOptions";
+import { getPostsByCategoryNo } from "../../../../src/common/ApiOptions";
 import CategoryCp from "../../../../src/components/CategoryCp";
 import { PostVO } from "../../../../src/common/Model";
 import { NextPage } from "next";
@@ -23,7 +23,7 @@ const CategoryPage: NextPage = () => {
   }, [categoryNo, currentCategory]);
 
   const getPosts = async () => {
-    const { data } = await RequestUtil(ApiOptions.getPostsByCategoryNo, {
+    const { data } = await RequestUtil(getPostsByCategoryNo, {
       categoryNo,
     });
 
