@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/modules";
 import { useRouter } from "next/router";
+import { NextPage } from "next";
 
 const MENU_LIST = [
   "글쓰기",
@@ -19,7 +20,7 @@ const NewPostCsr = dynamic(
   { ssr: false }
 );
 
-const ManagementPage = () => {
+const ManagementPage: NextPage = () => {
   const [currentMenu, setCurrentMenu] = useState<string>(MENU_LIST[0]);
   const { userAuthority } = useSelector((state: RootState) => state.user);
   const router = useRouter();
@@ -28,6 +29,7 @@ const ManagementPage = () => {
     if (!userAuthority) {
       router.push("/");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAuthority]);
 
   const handleClickMenu = (e: any) => {
