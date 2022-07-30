@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
+import ErrorLabel from "./ErrorLabel";
 import BaseModal from "./BaseModal";
 
 const ErrorModal = () => {
@@ -9,9 +10,10 @@ const ErrorModal = () => {
   return (
     <BaseModal isOpen={clientState.error.isShowing} setIsOpen={() => {}}>
       <div className="error-wrap">
-        <h3>{clientState.error.title}</h3>
-        <hr />
-        <div>{clientState.error.error}</div>
+        <h3>
+          <ErrorLabel text={clientState.error.title} />
+        </h3>
+        <div className="error-box">{clientState.error.error}</div>
       </div>
     </BaseModal>
   );
