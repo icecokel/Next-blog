@@ -16,7 +16,7 @@ const CategoryCp = ({ categoryName, postList, nickname }: ICatogoryProps) => {
     <div className="category-wrap">
       <h2>{categoryName}</h2>
       <hr />
-      <div className="category-contents-wrap">
+      <section className="category-contents-wrap">
         <div className="category-contents">
           <label>게시글 리스트</label>
           <Loader isLoading={postList.length === 0}>
@@ -43,7 +43,7 @@ const CategoryCp = ({ categoryName, postList, nickname }: ICatogoryProps) => {
             </ul>
           </Loader>
         </div>
-      </div>
+      </section>
     </div>
   );
 };
