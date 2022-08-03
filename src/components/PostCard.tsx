@@ -5,7 +5,7 @@ import { formatDateToString } from "../common/DateUtil";
 
 const PostCard = (props: PostVO) => {
   return (
-    <div className="post-wrap">
+    <article className="post-wrap">
       <div className="post-title-wrap">
         <div className="post-image-wrap">
           <Image
@@ -30,7 +30,7 @@ const PostCard = (props: PostVO) => {
           dangerouslySetInnerHTML={{ __html: props.contents }}
         />
       </div>
-    </div>
+    </article>
   );
 };
 
