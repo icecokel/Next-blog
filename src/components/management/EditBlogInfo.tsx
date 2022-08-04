@@ -80,7 +80,7 @@ const EditBlogInfo = () => {
   };
 
   return (
-    <div className="edit-bloginfo">
+    <article className="edit-bloginfo">
       <EditBlogInfo.item
         lable="블로그 이름"
         name="blogName"
@@ -125,7 +125,7 @@ const EditBlogInfo = () => {
           저장
         </button>
       </div>
-    </div>
+    </article>
   );
 };
 
