@@ -42,28 +42,30 @@ const EditCategory = () => {
   };
 
   return (
-    <div className="edit-category-wrap">
-      {categoryList?.map((item, index) => {
-        return (
-          <EditCategory.item
-            key={"category_management_" + index}
-            categoryNo={item.categoryNo}
-            categoryName={item.categoryName}
-            moveUp={() => {
-              handleChangeItemIndex(index, "up");
-            }}
-            moveDown={() => {
-              handleChangeItemIndex(index, "down");
-            }}
-          />
-        );
-      })}
+    <article className="edit-category-wrap">
+      <section>
+        {categoryList?.map((item, index) => {
+          return (
+            <EditCategory.item
+              key={"category_management_" + index}
+              categoryNo={item.categoryNo}
+              categoryName={item.categoryName}
+              moveUp={() => {
+                handleChangeItemIndex(index, "up");
+              }}
+              moveDown={() => {
+                handleChangeItemIndex(index, "down");
+              }}
+            />
+          );
+        })}
+      </section>
       <ErrorLabel text="저장하지 않으면 변경되지 않습니다." />
       <div className="button-wrap">
         <button onClick={handleCancelButton}>작업취소</button>
         <button>저장</button>
       </div>
-    </div>
+    </article>
   );
 };
 
