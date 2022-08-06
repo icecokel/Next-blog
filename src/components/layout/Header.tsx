@@ -11,7 +11,7 @@ const Header = () => {
   const router = useRouter();
 
   const handleClickLogo = () => {
-    router.push("/blog/" + userNickName);
+    userNickName && router.push("/blog/" + userNickName);
   };
 
   const handleClickSettings = () => {
