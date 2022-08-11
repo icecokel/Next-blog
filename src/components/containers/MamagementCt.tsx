@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ReactElement } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { RootState } from "../../../store/modules";
 import dynamic from "next/dynamic";
 import EditCategory from "../management/EditCategory";
 import EditBlogInfo from "../management/EditBlogInfo";
+import ManagementCp from "../management/ManagementCp";
 
 const MENU_LIST = [
   "글쓰기",
@@ -31,54 +32,43 @@ const MamagementCt = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAuthority]);
 
-  const handleClickMenu = (e: any) => {
-    const { id } = e.target;
-    const no = Number.parseInt((id as string).replace("memu_", ""));
+  const handleClickMenu = (no: number) => {
     setCurrentMenu(MENU_LIST[no]);
   };
 
-  const getMenuContent = () => {
+  const getMenuContent = (): ReactElement => {
     const menuIndex = MENU_LIST.findIndex((menu) => menu === currentMenu);
-
+    let component = <span></span>;
     switch (menuIndex) {
       case 0:
-        return <NewPostCsr />;
+        component = <NewPostCsr />;
+        break;
       case 1:
-        return <EditCategory />;
+        component = <EditCategory />;
+        break;
       case 2:
-        return <span>게시글 컴포넌트</span>;
+        component = <span>게시글 컴포넌트</span>;
+        break;
       case 3:
-        return <span>통계 컴포넌트</span>;
+        component = <span>통계 컴포넌트</span>;
+        break;
       case 4:
-        return <EditBlogInfo />;
+        component = <EditBlogInfo />;
+        break;
+      default:
+        <span></span>;
     }
+
+    return component;
   };
 
   return (
-    <div className="management-wrap">
-      <div className="management-menu">
-        <ul>
-          {MENU_LIST.map((menu, index) => {
-            return (
-              <li
-                key={"memu_" + index}
-                onClick={handleClickMenu}
-                id={"memu_" + index}
-                className={"mt-05 mb-05"}
-              >
-                {menu}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-      <div className="management-content-wrap">
-        <div className="management-content-title">
-          <h2>{currentMenu}</h2>
-        </div>
-        <div className="management-content">{getMenuContent()}</div>
-      </div>
-    </div>
+    <ManagementCp
+      menuList={MENU_LIST}
+      handleClickMenu={handleClickMenu}
+      currentMenu={currentMenu}
+      currentMenuComponent={getMenuContent()}
+    />
   );
 };
 
