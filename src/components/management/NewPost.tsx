@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import NewPostCp from "./NewPostCp";
+import { ImageFile } from "../common/BaseEditor";
 
 /**
  * todos
@@ -18,11 +19,6 @@ import NewPostCp from "./NewPostCp";
  *
  */
 
-type ImageFile = {
-  src: string;
-  file: File;
-};
-
 const NewPost = () => {
   const state = useSelector((state: RootState) => state.post);
   const [images, setImages] = useState<Array<ImageFile>>([]);
@@ -31,6 +27,10 @@ const NewPost = () => {
     const params = getParams();
 
     console.log(params);
+  };
+
+  const handleChangeImages = (files: ImageFile[]) => {
+    setImages(files);
   };
 
   const getParams = () => {
@@ -50,7 +50,7 @@ const NewPost = () => {
 
   return (
     <div className="editor-wrap">
-      <NewPostCp imageList={images} setImageList={setImages} />
+      <NewPostCp imageList={images} setImageList={handleChangeImages} />
       <div className="button-wrap">
         <button onClick={handleClickPostButton}>발행</button>
       </div>
