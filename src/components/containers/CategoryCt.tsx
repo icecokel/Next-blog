@@ -13,7 +13,7 @@ const CategoryCt = () => {
   const categoryNo = router.query.no;
   const category = useSelector((state: RootState) => state.category);
   const [currentCategory, setCurrentCategory] = useState<CategoryVO>();
-  const [postList, setPostList] = useState<Array<PostVO>>([]);
+  const [postList, setPostList] = useState<PostVO[]>([]);
 
   useEffect(() => {
     getCurrentCategory();
@@ -29,7 +29,7 @@ const CategoryCt = () => {
     if (!data) {
       return;
     }
-    const temp = (data.item.posts as Array<PostVO>).filter(
+    const temp = (data.item.posts as PostVO[]).filter(
       (post) => post.categoryNo === categoryNo
     );
     setPostList(temp);
