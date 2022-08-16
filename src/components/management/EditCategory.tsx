@@ -6,7 +6,7 @@ import ErrorLabel from "../common/ErrorLabel";
 
 const EditCategory = () => {
   const category = useSelector((state: RootState) => state.category);
-  const [categoryList, setCategoryList] = useState<Array<CategoryVO>>();
+  const [categoryList, setCategoryList] = useState<CategoryVO[]>();
 
   useEffect(() => {
     setCategorys();
