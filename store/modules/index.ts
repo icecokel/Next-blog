@@ -33,7 +33,7 @@ export default rootReducer;
 
 export interface IndexState {
   blog: BlogVO;
-  category: Array<CategoryVO>;
+  category: CategoryVO[];
   user: UserVO;
   post: NewPostVO;
   clientState: ClientStateVO;
