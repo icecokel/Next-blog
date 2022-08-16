@@ -69,7 +69,7 @@ const MenuIcon = () => {
 export default React.memo(MenuIcon);
 
 interface IMenuListProps {
-  category: Array<CategoryVO>;
+  category: CategoryVO[];
   isLoading: boolean;
   nickname: string[] | string;
   onClick: () => void;
