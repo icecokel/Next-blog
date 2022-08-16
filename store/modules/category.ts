@@ -10,7 +10,7 @@
 export const SET_CATEGORY = "category/SET_CATEGORY" as const;
 
 // 액션 함수 선언
-export const setCategory = (category: Array<CategoryVO>) => ({
+export const setCategory = (category: CategoryVO[]) => ({
   type: SET_CATEGORY,
   payload: category,
 });
@@ -26,14 +26,11 @@ export type CategoryVO = {
 
 // 초기 값 선언
 // 배열로 선언
-const initialState: Array<CategoryVO> = [];
+const initialState: CategoryVO[] = [];
 
 // 리듀서 반환
 // eslint-disable-next-line import/no-anonymous-default-export
-export default (
-  state: Array<CategoryVO> = initialState,
-  action: CategoryAction
-) => {
+export default (state: CategoryVO[] = initialState, action: CategoryAction) => {
   switch (action.type) {
     case SET_CATEGORY:
       state = action.payload;
