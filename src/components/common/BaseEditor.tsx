@@ -9,10 +9,10 @@ export type ImageFile = {
 };
 
 export interface IBaseEditorProps {
-  imageList: Array<ImageFile>;
-  setImageList: Function;
-  value: any;
-  onChange: (content: any) => void;
+  imageList: ImageFile[];
+  setImageList: (images: ImageFile[]) => void;
+  value?: any;
+  onChange?: (content: any) => void;
 }
 
 const BaseEditor = ({
@@ -45,7 +45,7 @@ const BaseEditor = ({
         );
       } else {
         const file = input.files[0];
-        const tempImages: Array<ImageFile> = [...(images ?? [])];
+        const tempImages: ImageFile[] = [...(images ?? [])];
         const src = window.URL.createObjectURL(file);
         const range = quillRef.current.getEditorSelection();
         const Image = Quill.import("formats/image");
