@@ -21,7 +21,7 @@ import { ImageFile } from "../common/BaseEditor";
 
 const NewPostCp = () => {
   const state = useSelector((state: RootState) => state.post);
-  const [images, setImages] = useState<Array<ImageFile>>([]);
+  const [images, setImages] = useState<ImageFile[]>([]);
 
   const handleClickPostButton = () => {
     const params = getParams();
