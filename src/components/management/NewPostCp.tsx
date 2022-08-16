@@ -1,98 +1,60 @@
-import React from "react";
-import DatePicker from "react-datepicker";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
-import { setPost } from "../../../store/modules/post";
-import { HOURS, MINUTES } from "../../common/DateUtil";
-import BaseEditor, {
-  IBaseEditorProps,
-} from "../../components/common/BaseEditor";
+import NewPost from "./NewPost";
+import { ImageFile } from "../common/BaseEditor";
 
-const NewPostCp = ({ imageList, setImageList }: IBaseEditorProps) => {
+/**
+ * todos
+ *
+ * 이미지 버튼 클릭  -  핸들러 추가
+ * 파일 배열에 저장  -  상태 저장
+ * 파일 url을 화면에 이미지로 렌더링  -  렌더링 성공
+ * 발행 클릭시, file을 s3에 업로드
+ * 업로드 후 바로 링크 저장
+ * formData에서 교체
+ * formData를 DB or FireBase에 저장
+ *
+ * 임시 저장 기능
+ *
+ */
+
+const NewPostCp = () => {
   const state = useSelector((state: RootState) => state.post);
-  const dispatch = useDispatch();
+  const [images, setImages] = useState<Array<ImageFile>>([]);
 
-  const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
-    dispatch(setPost({ ...state, [name]: value }));
+  const handleClickPostButton = () => {
+    const params = getParams();
+
+    console.log(params);
   };
 
-  const handleChangeContents = (value: any) => {
-    dispatch(setPost({ ...state, contents: value }));
+  const handleChangeImages = (files: ImageFile[]) => {
+    setImages(files);
   };
-  const handleChangeDatePicker = (date: any) => {
-    dispatch(setPost({ ...state, registDate: date }));
-  };
-  const handleChangeTime = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { value, name } = e.target;
-    const time = Number.parseInt(value);
-    const { registDate } = { ...state };
 
-    if (name === "postTimehour") {
-      registDate.setHours(time);
-    } else {
-      registDate.setMinutes(time);
-    }
+  const getParams = () => {
+    const params = { ...state };
 
-    dispatch(setPost({ ...state, registDate: registDate }));
+    images?.forEach((item) => {
+      if (params.contents.includes(item.src)) {
+        // s3 업로드하고 링크 받아서 세팅해야함.
+
+        const s3Link = "S3LINK:" + item.src;
+        params.contents = params.contents.replaceAll(item.src, s3Link);
+      }
+    });
+
+    return params;
   };
 
   return (
-    <>
-      <input
-        type="text"
-        placeholder="제목을 입력해주세요"
-        name="title"
-        onChange={handleChangeText}
-        value={state.title}
-      />
-      <BaseEditor
-        value={state.contents}
-        imageList={imageList}
-        setImageList={setImageList}
-        onChange={handleChangeContents}
-      />
-      <div>
-        <p>발행일</p>
-        <div className="editor-date-wrap">
-          <div className="editor-date">
-            <DatePicker
-              selected={state.registDate}
-              dateFormat={"yyyy년 MM월 dd일"}
-              onChange={handleChangeDatePicker}
-            />
-          </div>
-          <div className="editor-time">
-            <select
-              onChange={handleChangeTime}
-              name={"postTimehour"}
-              value={state.registDate.getHours()}
-            >
-              {HOURS.map((code) => {
-                return (
-                  <option key={"hour_" + code} value={code}>
-                    {code + "시"}
-                  </option>
-                );
-              })}
-            </select>
-            <select
-              onChange={handleChangeTime}
-              name={"postTimeMinute"}
-              value={state.registDate.getMinutes()}
-            >
-              {MINUTES.map((code) => {
-                return (
-                  <option key={"minute" + code} value={code}>
-                    {code + "분"}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-        </div>
+    <div className="editor-wrap">
+      <NewPost imageList={images} setImageList={handleChangeImages} />
+      <div className="button-wrap">
+        <button onClick={handleClickPostButton}>발행</button>
       </div>
-    </>
+    </div>
   );
 };
 
