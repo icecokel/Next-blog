@@ -8,7 +8,7 @@ const TITLE_MAX_LENGTH = 20;
 interface ICatogoryProps {
   nickname: string | string[];
   categoryName: string;
-  postList: Array<PostVO>;
+  postList: PostVO[];
 }
 
 const CategoryCp = ({ categoryName, postList, nickname }: ICatogoryProps) => {
