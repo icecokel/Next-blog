@@ -6,7 +6,10 @@ import { setPost } from "../../../store/modules/post";
 import { HOURS, MINUTES } from "../../common/DateUtil";
 import BaseEditor, { IBaseEditorProps } from "../common/BaseEditor";
 
-const NewPost = ({ imageList, setImageList }: IBaseEditorProps) => {
+const NewPost = ({
+  imageList,
+  setImageList,
+}: Pick<IBaseEditorProps, "imageList" | "setImageList">) => {
   const state = useSelector((state: RootState) => state.post);
   const dispatch = useDispatch();
 
