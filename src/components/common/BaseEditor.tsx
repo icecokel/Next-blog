@@ -11,8 +11,8 @@ export type ImageFile = {
 export interface IBaseEditorProps {
   imageList: ImageFile[];
   setImageList: (images: ImageFile[]) => void;
-  value?: any;
-  onChange?: (content: any) => void;
+  value: any;
+  onChange: (content: any) => void;
 }
 
 const BaseEditor = ({
