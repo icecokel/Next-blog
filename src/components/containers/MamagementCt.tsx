@@ -15,10 +15,7 @@ const MENU_LIST = [
   "블로그 설정",
 ];
 
-const NewPostCsr = dynamic(
-  import("../../../src/components/management/NewPost"),
-  { ssr: false }
-);
+const NewPostCsr = dynamic(import("../management/NewPostCp"), { ssr: false });
 
 const MamagementCt = () => {
   const [currentMenu, setCurrentMenu] = useState<string>(MENU_LIST[0]);
