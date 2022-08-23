@@ -2,12 +2,13 @@ import React from "react";
 import Image from "next/image";
 import { PostVO } from "../common/Model";
 import { formatDateToString } from "../common/DateUtil";
+import styles from "../../styles/post.module.scss";
 
 const PostCard = (props: PostVO) => {
   return (
-    <article className="post-wrap">
-      <div className="post-title-wrap">
-        <div className="post-image-wrap">
+    <article className={styles.wrapper}>
+      <div className={styles.titleWarpper}>
+        <div className={styles.imageWarpper}>
           <Image
             src="/resources/images/dafault.png"
             alt={props.title}
@@ -15,7 +16,7 @@ const PostCard = (props: PostVO) => {
             height={300}
           />
         </div>
-        <div className="post-title">
+        <div className={styles.postTitle}>
           <p>{props.title}</p>
           <div>
             <span>
@@ -24,9 +25,9 @@ const PostCard = (props: PostVO) => {
           </div>
         </div>
       </div>
-      <div className="post-contents-wrap">
+      <div className={styles.contentsWrapper}>
         <div
-          className="post-contents"
+          className={styles.contents}
           dangerouslySetInnerHTML={{ __html: props.contents }}
         />
       </div>
