@@ -1,52 +1,67 @@
-.post-wrap {
+$color-green1: #e6f0ef;
+$color-green2: #dae9e7;
+$color-green3: #c5dcd5;
+$color-green4: #a9c5b9;
+
+$color-brown1: #b6abab;
+$color-brown2: #dbd2d1;
+
+$color-red: #d23203;
+$color-gray: #4b4b4b;
+
+$color-black: #000;
+$color-white: #fff;
+$color-active: #f78c27;
+
+.wrapper {
   padding: 1em;
   width: 100%;
-  .post-title-wrap {
-    border-radius: 5px;
-    height: 300px;
-    background-color: $color-white;
-    padding: 1em;
+}
 
-    .post-image-wrap {
-      height: calc(300px - 2em);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      border: 1px solid $color-green1;
-      border-radius: 5px;
-      img {
-        width: 100%;
-        max-height: initial;
-        margin-top: -30%;
-      }
-    }
-    .post-title {
-      margin-top: -200px;
-      height: 80px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: rgba($color-gray, 0.9);
-      color: $color-white;
-      font-weight: 500;
-      font-size: 1em;
-      p {
-        margin-right: 1em;
-        font-size: 1.5em;
-      }
-    }
+.titleWarpper {
+  border-radius: 5px;
+  height: 300px;
+  background-color: $color-white;
+  padding: 1em;
+}
+.imageWarpper {
+  height: calc(300px - 2em);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid $color-green1;
+  border-radius: 5px;
+  img {
+    width: 100%;
+    max-height: initial;
+    margin-top: -30%;
   }
-  .post-contents-wrap {
-    background-color: $color-white;
-    border-radius: 5px;
-    padding: 1em;
-    margin-top: 1em;
+}
+.postTitle {
+  margin-top: -200px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba($color-gray, 0.9);
+  color: $color-white;
+  font-weight: 500;
+  font-size: 1em;
+  p {
+    margin-right: 1em;
+    font-size: 1.5em;
+  }
+}
+.contentsWrapper {
+  background-color: $color-white;
+  border-radius: 5px;
+  padding: 1em;
+  margin-top: 1em;
+}
 
-    .post-contents {
-      border: 1px solid rgba($color-gray, 0.2);
-      border-radius: 4px;
-      padding: 1em;
-    }
-  }
+.contents {
+  border: 1px solid rgba($color-gray, 0.2);
+  border-radius: 4px;
+  padding: 1em;
 }
