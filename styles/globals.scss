@@ -337,25 +337,6 @@ a {
   }
 }
 
-.modal-close {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-
-  i {
-    font-size: 22px;
-    border-radius: 2px;
-    position: relative;
-    left: 15px;
-    bottom: 15px;
-
-    &:hover {
-      color: $color-red;
-      cursor: pointer;
-    }
-  }
-}
-
 .login-wrap {
   $size: 300px;
 
