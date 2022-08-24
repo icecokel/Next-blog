@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import ReactModal from "react-modal";
+import styles from "../../../styles/baseModal.module.scss";
 
 const customStyles = {
   content: {
@@ -34,7 +35,7 @@ const BaseModal = ({ children, isOpen, setIsOpen }: IBaseModalProps) => {
         ariaHideApp={false}
         style={customStyles}
       >
-        <div className="modal-close">
+        <div className={styles.close}>
           <i className="material-icons" onClick={() => setIsOpen(false)}>
             highlight_off
           </i>
