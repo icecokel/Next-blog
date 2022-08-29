@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "../../../styles/error.module.scss";
 
 interface IErrorLabelProps {
   text: string;
@@ -7,7 +8,7 @@ interface IErrorLabelProps {
 
 const ErrorLabel = ({ text, className }: IErrorLabelProps) => {
   return (
-    <span className={className ?? "error-text"}>
+    <span className={className ?? styles.errorLabel}>
       <i className="material-icons">error</i>
       <span>{text}</span>
     </span>
