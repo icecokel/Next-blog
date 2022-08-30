@@ -151,17 +151,6 @@ select {
   display: none;
 }
 
-.require-label {
-  $size: 8px;
-  background-color: $color-white;
-  border: calc($size/3) solid red;
-  width: $size;
-  height: $size;
-  border-radius: 50%;
-  display: inline-block;
-  margin: calc($size/3) calc($size/2);
-}
-
 /* size - margin*/
 
 .m-05 {
