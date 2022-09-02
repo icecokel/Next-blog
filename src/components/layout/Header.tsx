@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import LoginIcon from "./LoginIcon";
 import MenuIcon from "./MenuIcon";
+import styles from "../../../styles/header.module.scss";
 
 const Header = () => {
   const { userNickName, userAuthority } = useSelector(
@@ -19,12 +20,12 @@ const Header = () => {
   };
 
   return (
-    <header className="header-wrap">
-      <div className="logo" onClick={handleClickLogo}>
+    <header className={styles.wraper}>
+      <div className={styles.logo} onClick={handleClickLogo}>
         {userNickName}
         <i className="material-icons">spa</i>
       </div>
-      <div className="icons-wrap">
+      <div className={styles.iconsWrapper}>
         <LoginIcon />
         <MenuIcon />
         {userAuthority && (
