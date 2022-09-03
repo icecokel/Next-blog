@@ -1,4 +1,19 @@
-.wraper {
+$color-green1: #e6f0ef;
+$color-green2: #dae9e7;
+$color-green3: #c5dcd5;
+$color-green4: #a9c5b9;
+
+$color-brown1: #b6abab;
+$color-brown2: #dbd2d1;
+
+$color-red: #d23203;
+$color-gray: #4b4b4b;
+
+$color-black: #000;
+$color-white: #fff;
+$color-active: #f78c27;
+
+.wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -10,89 +25,89 @@
   @media (max-width: 640px) {
     border-top: 3px solid $color-green4;
   }
+}
 
-  .nav-bar-wrap {
-    margin-left: auto;
-    width: fit-content;
-    height: 1.7em;
-    line-height: 1.7em;
-    padding: 0.2em;
-    font-size: 1.2em;
-    z-index: 1000;
-    i {
-      cursor: pointer;
-    }
+.navWrapper {
+  margin-left: auto;
+  width: fit-content;
+  height: 1.7em;
+  line-height: 1.7em;
+  padding: 0.2em;
+  font-size: 1.2em;
+  z-index: 1000;
+  i {
+    cursor: pointer;
+  }
 
-    .menu-wrap {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+  .menu-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(#fff, 0.75);
+
+    .menu {
+      width: fit-content;
+      height: 100%;
+      padding: 3em 1em;
       background-color: rgba(#fff, 0.75);
+      animation-name: move;
+      animation-duration: 0.3s;
+      position: fixed;
+      right: 0%;
+      border-left: 1px solid rgba($color-gray, 0.3);
 
-      .menu {
-        width: fit-content;
-        height: 100%;
-        padding: 3em 1em;
-        background-color: rgba(#fff, 0.75);
-        animation-name: move;
-        animation-duration: 0.3s;
-        position: fixed;
-        right: 0%;
-        border-left: 1px solid rgba($color-gray, 0.3);
+      .icon-wrap {
+        background-color: $color-brown2;
+        border-radius: 5px;
+        display: flex;
+        padding: 0.5em 0.25em;
+        align-items: center;
+        cursor: pointer;
 
-        .icon-wrap {
-          background-color: $color-brown2;
-          border-radius: 5px;
-          display: flex;
-          padding: 0.5em 0.25em;
-          align-items: center;
+        &:hover {
+          background-color: $color-green4;
+          transition-duration: 0.2s;
+        }
+
+        span {
+          margin-left: 0.5em;
+        }
+      }
+
+      ul {
+        width: 300px;
+        white-space: nowrap;
+
+        li {
+          padding-left: 1em;
+          padding-right: 1em;
+          width: fit-content;
+          color: $color-gray;
+          font-size: 1em;
           cursor: pointer;
 
           &:hover {
-            background-color: $color-green4;
-            transition-duration: 0.2s;
-          }
-
-          span {
-            margin-left: 0.5em;
-          }
-        }
-
-        ul {
-          width: 300px;
-          white-space: nowrap;
-
-          li {
-            padding-left: 1em;
-            padding-right: 1em;
-            width: fit-content;
-            color: $color-gray;
-            font-size: 1em;
-            cursor: pointer;
-
-            &:hover {
-              border-radius: 5px;
-              transition-duration: 0.15s;
-              font-size: 1.1em;
-              color: $color-black;
-              background-color: $color-green2;
-            }
+            border-radius: 5px;
+            transition-duration: 0.15s;
+            font-size: 1.1em;
+            color: $color-black;
+            background-color: $color-green2;
           }
         }
+      }
 
-        .search-wrap {
-          display: flex;
-          justify-content: center;
-          align-items: flex-end;
+      .search-wrap {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
 
-          input {
-            border: none;
-            border-bottom: 1px solid $color-black;
-            border-radius: 0px;
-            background-color: transparent;
-          }
+        input {
+          border: none;
+          border-bottom: 1px solid $color-black;
+          border-radius: 0px;
+          background-color: transparent;
         }
       }
     }
@@ -140,17 +155,16 @@
   align-items: center;
   justify-content: space-around;
   padding: 0.55em 0.7em;
+}
+.icon {
+  width: fit-content;
 
-  .header-icon {
-    width: fit-content;
+  &:hover {
+    transform: scale(1.05);
+    transition-duration: 0.2s;
+  }
 
-    &:hover {
-      transform: scale(1.05);
-      transition-duration: 0.2s;
-    }
-
-    @media (max-width: 640px) {
-      min-width: 15px;
-    }
+  @media (max-width: 640px) {
+    min-width: 15px;
   }
 }

@@ -20,7 +20,7 @@ const Header = () => {
   };
 
   return (
-    <header className={styles.wraper}>
+    <header className={styles.wrapper}>
       <div className={styles.logo} onClick={handleClickLogo}>
         {userNickName}
         <i className="material-icons">spa</i>
@@ -29,7 +29,7 @@ const Header = () => {
         <LoginIcon />
         <MenuIcon />
         {userAuthority && (
-          <div className="header-icon">
+          <div className={styles.icon}>
             <i className="material-icons" onClick={handleClickSettings}>
               settings
             </i>
