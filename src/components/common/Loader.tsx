@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import styles from "../../../styles/loader.module.scss";
+import styles from "./Loader.module.scss";
 
 interface ILoaderProps {
   children: Element | ReactNode | React.ReactChildren;

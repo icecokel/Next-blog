@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../../styles/require.module.scss";
+import styles from "./RequireLabel.module.scss";
 
 interface IRequireProps {
   isShowing?: boolean;

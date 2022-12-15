@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { PostVO } from "../common/Model";
 import { formatDateToString } from "../common/DateUtil";
-import styles from "../../styles/post.module.scss";
+import styles from "./PostCard.module.scss";
 
 const PostCard = (props: PostVO) => {
   return (

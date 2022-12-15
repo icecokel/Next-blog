@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../../styles/error.module.scss";
+import styles from "./Error.module.scss";
 
 interface IErrorLabelProps {
   text: string;

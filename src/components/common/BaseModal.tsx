@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import ReactModal from "react-modal";
-import styles from "../../../styles/baseModal.module.scss";
+import styles from "./BaseModal.module.scss";
 
 const customStyles = {
   content: {
