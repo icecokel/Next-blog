@@ -1,0 +1,59 @@
+@import "../../../styles/color.scss";
+
+.memuWarpper {
+  position: fixed;
+  inset: 0px;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.menuList {
+  background-color: rgba(255, 255, 255, 0.9);
+  height: 100%;
+  width: 40%;
+  min-width: 360px;
+  max-width: 400px;
+  float: right;
+  padding: 30px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  animation-duration: 0.4s;
+  animation-name: slidein;
+
+  ul {
+    li {
+      margin: 8px 0px;
+      font-size: 16px;
+      color: $color-black;
+      font-weight: bold;
+
+      &:hover {
+        color: $color-active;
+        font-size: 17px;
+        transition-duration: 0.1s;
+        margin-left: 5px;
+      }
+    }
+  }
+}
+
+.profile {
+  padding-bottom: 20px;
+  border-bottom: 1px solid $color-gray;
+}
+
+@keyframes slidein {
+  0% {
+    width: 39%;
+    min-width: 340px;
+    max-width: 380px;
+  }
+
+  100% {
+    width: 40%;
+    min-width: 360px;
+    max-width: 400px;
+  }
+}

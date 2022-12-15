@@ -1,21 +1,6 @@
 /* font */
-@import url("https://fonts.googleapis.com/css2?family=Bangers&family=Do+Hyeon&display=swap");
-
-/* color */
-$color-green1: #e6f0ef;
-$color-green2: #dae9e7;
-$color-green3: #c5dcd5;
-$color-green4: #a9c5b9;
-
-$color-brown1: #b6abab;
-$color-brown2: #dbd2d1;
-
-$color-red: #d23203;
-$color-gray: #4b4b4b;
-
-$color-black: #000;
-$color-white: #fff;
-$color-active: #f78c27;
+@import url("https://fonts.googleapis.com/css2?family=Bangers&family=Do+Hyeon&family=Noto+Sans+KR:wght@300&display=swap");
+@import "./color.scss";
 
 ul {
   list-style: none;
@@ -30,7 +15,9 @@ button {
   border-radius: 5px;
   font-size: 1.05em;
   color: $color-gray;
+  font-family: "Bangers", cursive;
   font-family: "Do Hyeon", sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   cursor: pointer;
 
   &:hover {

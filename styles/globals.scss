@@ -1,28 +1,14 @@
 /* font */
-@import url("https://fonts.googleapis.com/css2?family=Bangers&family=Do+Hyeon&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bangers&family=Do+Hyeon&family=Noto+Sans+KR:wght@300&display=swap");
 @import "./common.scss";
-
-/* color */
-$color-green1: #e6f0ef;
-$color-green2: #dae9e7;
-$color-green3: #c5dcd5;
-$color-green4: #a9c5b9;
-
-$color-brown1: #b6abab;
-$color-brown2: #dbd2d1;
-
-$color-red: #d23203;
-$color-gray: #4b4b4b;
-
-$color-black: #000;
-$color-white: #fff;
-$color-active: #f78c27;
-
+@import "./color.scss";
 html,
 body {
   margin: 0;
+  font-family: "Bangers", cursive;
   font-family: "Do Hyeon", sans-serif;
-  background-color: $color-green1;
+  font-family: "Noto Sans KR", sans-serif;
+  background-color: $color-white;
 }
 
 a {
@@ -54,53 +40,6 @@ a {
   section,
   div:first-child {
     flex: 5;
-  }
-}
-.entry-page-wrap {
-  text-align: center;
-  height: 70vh;
-  div {
-    margin-top: 2em;
-  }
-
-  ul {
-    margin: 0 auto;
-    width: 80%;
-    max-width: 700px;
-    background-color: $color-white;
-    border-radius: 5px;
-    padding: 1vw;
-    min-width: 300px;
-
-    li {
-      border: 1px solid $color-green4;
-      margin: 1em 1em;
-      padding: 1vw;
-      font-size: 1.5em;
-      border-radius: 5px;
-
-      &:hover {
-        background-color: $color-green4;
-        color: $color-white;
-      }
-    }
-  }
-}
-
-.blog-main-wrap {
-  margin-top: calc(60px + 1em);
-  .thumbnail {
-    height: 300px;
-    background-color: $color-white;
-    overflow: hidden;
-    img {
-      width: 100%;
-      max-height: initial;
-      margin-top: -30%;
-    }
-    @media (max-width: 640px) {
-      height: 200px;
-    }
   }
 }
 
