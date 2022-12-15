@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "./SearchIcon.module.scss";
 
 const SearchIcon = () => {
   const [kerword, setKeyword] = useState<string>("");
@@ -11,7 +12,7 @@ const SearchIcon = () => {
     console.log(kerword);
   };
   return (
-    <div className="search-wrap">
+    <div className={styles.searchWrapper}>
       <input type="text" value={kerword} onChange={handleChange} />
       <i className="material-icons" onClick={handleClickSearch}>
         search

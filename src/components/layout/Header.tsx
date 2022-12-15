@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import LoginIcon from "./LoginIcon";
 import MenuIcon from "./MenuIcon";
-import styles from "../../../styles/header.module.scss";
+import styles from "./Header.module.scss";
 
 const Header = () => {
   const { userNickName, userAuthority } = useSelector(
@@ -21,21 +21,22 @@ const Header = () => {
 
   return (
     <header className={styles.wrapper}>
-      <div className={styles.logo} onClick={handleClickLogo}>
-        {userNickName}
-        <i className="material-icons">spa</i>
-      </div>
-      <div className={styles.iconsWrapper}>
-        <LoginIcon />
-        <MenuIcon />
-        {userAuthority && (
-          <div className={styles.icon}>
-            <i className="material-icons" onClick={handleClickSettings}>
-              settings
-            </i>
-          </div>
-        )}
-      </div>
+      <article className={styles.headerWrapper}>
+        <div className={styles.logo} onClick={handleClickLogo}>
+          {userNickName}
+          <i className="material-icons">spa</i>
+        </div>
+        <div className={styles.iconsWrapper}>
+          <MenuIcon />
+          {userAuthority && (
+            <div className={styles.icon}>
+              <i className="material-icons" onClick={handleClickSettings}>
+                settings
+              </i>
+            </div>
+          )}
+        </div>
+      </article>
     </header>
   );
 };
