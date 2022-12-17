@@ -2,13 +2,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { DynamoDBClient, GetItemCommand } from "@aws-sdk/client-dynamodb";
 
-const REGION = "ap-northeast-2";
-
 const client = new DynamoDBClient({
-  region: "ap-northeast-1",
+  region: process.env.REGION,
   credentials: {
-    accessKeyId: "AKIARKT7E4LVZX6Z6RUJ",
-    secretAccessKey: "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",
+    accessKeyId: process.env.ACCESS_KEY_ID ?? "",
+    secretAccessKey: process.env.SECRET_ACCESS_KEY ?? "",
   },
 });
 
