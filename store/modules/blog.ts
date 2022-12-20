@@ -20,18 +20,20 @@ export type BlogAction = ReturnType<typeof setBlog>;
 
 // 블로그 타입
 export type BlogVO = {
-  blogNo: string;
-  blogName: string;
-  blogDescription: string;
+  name: string;
+  description: string;
   faviconPath: string;
+  id: string;
+  userId: string;
 };
 
 // 초기 값 선언
 const initialState: BlogVO = {
-  blogNo: "",
-  blogName: "",
-  blogDescription: "",
+  name: "",
+  description: "",
   faviconPath: "",
+  id: "",
+  userId: "",
 };
 
 // 리듀서 반환
