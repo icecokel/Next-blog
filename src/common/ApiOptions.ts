@@ -6,20 +6,3 @@ export type ApiOptionVo = {
   params?: any;
   data?: any;
 };
-
-export const getBlogInfo: ApiOptionVo = {
-  url: "/blog",
-  method: "GET",
-};
-export const getPostsByCategoryNo: ApiOptionVo = {
-  url: "/category",
-  method: "GET",
-};
-export const getPostInfo: ApiOptionVo = {
-  url: "/post",
-  method: "GET",
-};
-export const login: ApiOptionVo = {
-  url: "/success",
-  method: "POST",
-};
