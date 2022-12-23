@@ -1,4 +1,8 @@
-import { DynamoDBClient, GetItemCommand } from "@aws-sdk/client-dynamodb";
+import {
+  DynamoDBClient,
+  GetItemCommand,
+  QueryCommand,
+} from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 
 export const client = new DynamoDBClient({
@@ -20,9 +24,34 @@ export const getItem = (tableName: string, key: any) => {
   );
 };
 
-export const unmarshallByItem = (item: any) => {
+export const unmarshallByItem = (item: any): any => {
   if (!item) {
     throw "Not Found";
   }
-  return unmarshall(item);
+
+  if (Array.isArray(item)) {
+    return item.map((value: any) => {
+      return unmarshallByItem(value);
+    });
+  } else {
+    return unmarshall(item);
+  }
+};
+
+export const getCategorys = async (blogId: string) => {
+  console.log(blogId);
+
+  const categorys = await client.send(
+    new QueryCommand({
+      TableName: "CATEGORY",
+      IndexName: "blogIdIndex",
+      KeyConditionExpression: "blogId = :blogId",
+      ExpressionAttributeValues: {
+        ":blogId": { S: blogId },
+      },
+      ScanIndexForward: false,
+    })
+  );
+
+  return unmarshallByItem(categorys.Items);
 };
