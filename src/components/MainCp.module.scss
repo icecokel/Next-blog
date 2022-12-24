@@ -33,5 +33,17 @@
   margin-top: 20px;
 }
 
+.profile {
+  display: flex;
+}
+
+.profileImg {
+  width: 15em;
+  height: 15em;
+  border-radius: 50%;
+  display: block;
+  margin: 0px auto;
+}
+
 .profileDetail {
 }
