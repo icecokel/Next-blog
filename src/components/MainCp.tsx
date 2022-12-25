@@ -20,13 +20,21 @@ const MainCp = () => {
         <h2>프로필</h2>
         <div className={styles.profile}>
           <div>
-            <img className={styles.profileImg} src={user.profileImgPath} alt="profileImg" />
+            <div className={styles.profileImg}>
+              <img src={user.profileImgPath} alt="profileImg" />
+            </div>
           </div>
 
-          <div>
-            <p>닉네임 : {user.nickname}</p>
-            <p>간단 소개 : {user.introduction}</p>
-            <p>메일 : {user.email}</p>
+          <div className={styles.profileDetail}>
+            <p>
+              <label>닉네임 </label>
+              <span>{user.nickname}</span>
+            </p>
+            <p>
+              <label>email </label>
+              <span>{user.email}</span>
+            </p>
+            <p>{user.introduction}</p>
           </div>
         </div>
       </div>
@@ -62,7 +70,7 @@ MainCp.posts = () => {
 
 MainCp.inst = () => {
   return (
-    <div className={styles.profileDetail}>
+    <div>
       <h3>소개</h3>
     </div>
   );
