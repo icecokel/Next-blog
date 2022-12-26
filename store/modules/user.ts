@@ -20,24 +20,20 @@ export type UserAction = ReturnType<typeof setUser>;
 
 // 유저정보 타입
 export type UserVO = {
-  userNo: string;
   email: string;
-  userName: string;
-  userEnglishName: string;
-  status: string;
-  userAuthority: boolean;
-  userNickName: string;
+  id: string;
+  introduction: string;
+  nickname: string;
+  profileImgPath: string;
 };
 
 // 초기 값 선언
 const initialState: UserVO = {
-  userNo: "",
   email: "",
-  userName: "",
-  userEnglishName: "",
-  status: "",
-  userAuthority: false,
-  userNickName: "",
+  id: "",
+  introduction: "",
+  nickname: "",
+  profileImgPath: "",
 };
 
 // 리듀서 반환

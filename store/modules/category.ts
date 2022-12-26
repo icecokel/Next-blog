@@ -20,8 +20,9 @@ export type CategoryAction = ReturnType<typeof setCategory>;
 
 // 카테고리 타입
 export type CategoryVO = {
-  categoryNo: string;
-  categoryName: string;
+  blogId: string;
+  id: string;
+  name: string;
 };
 
 // 초기 값 선언
