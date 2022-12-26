@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { login } from "../../common/ApiOptions";
 import RequestUtil from "../../common/RequestUtil";
 import BaseModal from "../common/BaseModal";
 import SessionUtil from "../../common/SessionUtil";
@@ -36,9 +35,7 @@ const LoginIcon = () => {
   }, [currentUser]);
 
   const handleClickModalOpen = () => {
-    isLogined
-      ? setIsOpenLogOutModal(!isOpenLogOutModel)
-      : setIsOpenLogInModal(!isOpenLogInModal);
+    isLogined ? setIsOpenLogOutModal(!isOpenLogOutModel) : setIsOpenLogInModal(!isOpenLogInModal);
   };
 
   const handleClickLogOut = () => {
@@ -56,7 +53,6 @@ const LoginIcon = () => {
       return;
     }
 
-    tempUser["userAuthority"] = userAuthority;
     dispatch(setUser(tempUser));
   };
 
@@ -145,30 +141,6 @@ const LoginBox = ({
       setIsEmptyInfo(true);
       return;
     }
-
-    postLogin({ email, password });
-  };
-
-  const postLogin = async (param: LoginForm) => {
-    const { data } = await RequestUtil(login, param);
-    if (!data) {
-      return;
-    }
-
-    const test = {
-      userNo: "",
-      email: param.email,
-      userName: "",
-      userEnglishName: "",
-      status: "",
-      userAuthority: false,
-      userNickName: "",
-    } as UserVO;
-
-    SessionUtil.setSession(SessionEnum.userInfo, test);
-    setCurrentUser(test);
-    setIsOpenSignInModal(false);
-    setIsLogined(true);
   };
 
   const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -179,9 +151,7 @@ const LoginBox = ({
   return (
     <div className="login-wrap">
       <form onSubmit={handleClickSignIn}>
-        {isEmptyInfo && (
-          <span className="error"> 로그인 정보를 입력해 주세요.</span>
-        )}
+        {isEmptyInfo && <span className="error"> 로그인 정보를 입력해 주세요.</span>}
         <BaseInput
           type="email"
           placeholder="email@email.com"
