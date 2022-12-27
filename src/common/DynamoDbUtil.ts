@@ -1,19 +1,17 @@
-import {
-  DynamoDBClient,
-  GetItemCommand,
-  QueryCommand,
-} from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, GetItemCommand, QueryCommand } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 
-export const client = new DynamoDBClient({
+const clientConfig = {
   region: process.env.NEXT_PUBLIC_AWS_S3_REGION,
-  credentials: {
-    accessKeyId:
-      process.env.NEXT_PUBLIC_AWS_S3_CREDENTTIALS_ACCESS_KEY_ID ?? "",
-    secretAccessKey:
-      process.env.NEXT_PUBLIC_AWS_S3_CREDENTTIALS_SECRET_ACCESS_KEY ?? "",
-  },
-});
+} as any;
+if (process.env.NEXT_PUBLIC_AWS_S3_REGION !== "local") {
+  const credentials = {
+    accessKeyId: process.env.NEXT_PUBLIC_AWS_S3_CREDENTTIALS_ACCESS_KEY_ID ?? "",
+    secretAccessKey: process.env.NEXT_PUBLIC_AWS_S3_CREDENTTIALS_SECRET_ACCESS_KEY ?? "",
+  };
+  clientConfig.credentials = credentials;
+}
+const client = new DynamoDBClient(clientConfig);
 
 export const getItem = (tableName: string, key: any) => {
   return client.send(
