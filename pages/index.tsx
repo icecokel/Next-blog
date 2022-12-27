@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 const Home: NextPage = () => {
   useEffect(() => {
-    window.location.replace(window.location.search + "/blog/solo");
+    window.location.replace(window.location.search + "/blog/leemon");
   }, []);
 
   return <div></div>;

@@ -1,13 +1,23 @@
 import type { NextPage } from "next";
 import MainCt from "../../../src/components/containers/MainCt";
 import { getItem, unmarshallByItem, getCategorys } from "../../../src/common/DynamoDbUtil";
+import { useEffect } from "react";
 
 export async function getServerSideProps(context: any) {
   const blogs = await getItem("BLOG", {
     name: {
-      S: "leemon",
+      S: context.query.nickname,
     },
   });
+
+  if (!blogs.Item) {
+    return {
+      props: {
+        code: 404,
+      },
+    };
+  }
+
   const blogItem = unmarshallByItem(blogs.Item);
 
   const profiles = await getItem("USERS", { id: { S: blogItem.userId } });
@@ -23,6 +33,12 @@ export async function getServerSideProps(context: any) {
 }
 
 const BlogMainPage: NextPage = (props: any) => {
+  useEffect(() => {
+    if (props.code === 404) {
+      window.location.replace(window.location.origin + "/404");
+    }
+  }, []);
+
   return <MainCt {...props} />;
 };
 

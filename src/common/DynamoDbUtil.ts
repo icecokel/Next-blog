@@ -7,7 +7,7 @@ const clientConfig = {
   secretAccessKey: process.env.NEXT_PUBLIC_AWS_S3_CREDENTTIALS_SECRET_ACCESS_KEY ?? "",
 } as any;
 if (process.env.NEXT_PUBLIC_AWS_S3_REGION === "local") {
-  clientConfig.endpoint = "http://localhost:8000";
+  clientConfig.endpoint = process.env.NEXT_PUBLIC_AWS_S3_DYNAMODB_ENDPOINT;
 }
 const client = new DynamoDBClient(clientConfig);
 
@@ -22,7 +22,7 @@ export const getItem = (tableName: string, key: any) => {
 
 export const unmarshallByItem = (item: any): any => {
   if (!item) {
-    throw "Not Found";
+    return {};
   }
 
   if (Array.isArray(item)) {
