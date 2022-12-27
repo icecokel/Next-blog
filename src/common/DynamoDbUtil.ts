@@ -3,13 +3,11 @@ import { unmarshall } from "@aws-sdk/util-dynamodb";
 
 const clientConfig = {
   region: process.env.NEXT_PUBLIC_AWS_S3_REGION,
+  accessKeyId: process.env.NEXT_PUBLIC_AWS_S3_CREDENTTIALS_ACCESS_KEY_ID ?? "",
+  secretAccessKey: process.env.NEXT_PUBLIC_AWS_S3_CREDENTTIALS_SECRET_ACCESS_KEY ?? "",
 } as any;
-if (process.env.NEXT_PUBLIC_AWS_S3_REGION !== "local") {
-  const credentials = {
-    accessKeyId: process.env.NEXT_PUBLIC_AWS_S3_CREDENTTIALS_ACCESS_KEY_ID ?? "",
-    secretAccessKey: process.env.NEXT_PUBLIC_AWS_S3_CREDENTTIALS_SECRET_ACCESS_KEY ?? "",
-  };
-  clientConfig.credentials = credentials;
+if (process.env.NEXT_PUBLIC_AWS_S3_REGION === "local") {
+  clientConfig.endpoint = "http://localhost:8000";
 }
 const client = new DynamoDBClient(clientConfig);
 
@@ -37,8 +35,6 @@ export const unmarshallByItem = (item: any): any => {
 };
 
 export const getCategorys = async (blogId: string) => {
-  console.log(blogId);
-
   const categorys = await client.send(
     new QueryCommand({
       TableName: "CATEGORY",
