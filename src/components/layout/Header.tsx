@@ -1,40 +1,37 @@
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
-import LoginIcon from "./LoginIcon";
 import MenuIcon from "./MenuIcon";
 import styles from "./Header.module.scss";
 
 const Header = () => {
-  const { userNickName, userAuthority } = useSelector(
-    (state: RootState) => state.user
-  );
+  const { nickname } = useSelector((state: RootState) => state.user);
   const router = useRouter();
 
   const handleClickLogo = () => {
-    userNickName && router.push("/blog/" + userNickName);
+    nickname && router.push("/blog/" + nickname);
   };
 
   const handleClickSettings = () => {
-    router.push("/blog/" + userNickName + "/category/management");
+    router.push("/blog/" + nickname + "/category/management");
   };
 
   return (
     <header className={styles.wrapper}>
       <article className={styles.headerWrapper}>
         <div className={styles.logo} onClick={handleClickLogo}>
-          {userNickName}
+          {nickname}
           <i className="material-icons">spa</i>
         </div>
         <div className={styles.iconsWrapper}>
           <MenuIcon />
-          {userAuthority && (
+          {/* {nickname && (
             <div className={styles.icon}>
               <i className="material-icons" onClick={handleClickSettings}>
                 settings
               </i>
             </div>
-          )}
+          )} */}
         </div>
       </article>
     </header>

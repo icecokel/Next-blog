@@ -25,6 +25,7 @@ export type BlogVO = {
   faviconPath: string;
   id: string;
   userId: string;
+  githubAddress: string;
 };
 
 // 초기 값 선언
@@ -34,6 +35,7 @@ const initialState: BlogVO = {
   faviconPath: "",
   id: "",
   userId: "",
+  githubAddress: "",
 };
 
 // 리듀서 반환
