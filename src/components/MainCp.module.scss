@@ -70,3 +70,28 @@
     }
   }
 }
+
+.blogInfo {
+  div {
+    border-radius: 5px;
+    background-color: $color-green1;
+    padding: 1em;
+    min-height: 10em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p {
+      margin: 0px;
+    }
+  }
+  section {
+    display: flex;
+    justify-content: center;
+    padding: 2em;
+
+    img {
+      width: 60px;
+      cursor: pointer;
+    }
+  }
+}
