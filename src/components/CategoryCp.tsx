@@ -7,7 +7,7 @@ const TITLE_MAX_LENGTH = 20;
 
 interface ICatogoryProps {
   nickname: string | string[];
-  categoryName: string;
+  categoryName: string | string[];
   postList: PostVO[];
 }
 
@@ -30,7 +30,7 @@ const CategoryCp = ({ categoryName, postList, nickname }: ICatogoryProps) => {
                 }
 
                 return (
-                  <CategoryCp.item
+                  <CategoryCp.itemByPost
                     boardNo={post.boardNo}
                     title={title}
                     hits={hits}
@@ -58,13 +58,7 @@ interface IItemProps {
   registDate: string | Date;
 }
 
-CategoryCp.item = ({
-  boardNo,
-  hits,
-  registDate,
-  title,
-  nickname,
-}: IItemProps) => {
+CategoryCp.itemByPost = ({ boardNo, hits, registDate, title, nickname }: IItemProps) => {
   return (
     <Link href={"/blog/" + nickname + "/post/" + boardNo}>
       <a>
