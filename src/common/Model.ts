@@ -1,12 +1,12 @@
 export interface NewPostVO {
   title: string;
   contents: string;
-  registDate: Date;
+  registDate: Number;
 }
 
 export interface PostVO extends NewPostVO {
-  boardNo: string;
-  categoryNo: string;
+  id: string;
+  menuId: string;
   hits: string;
-  registId: string;
+  registName: string;
 }
