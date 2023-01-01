@@ -22,12 +22,12 @@ export async function getServerSideProps(context: any) {
 
   const profiles = await getItem("USERS", { id: { S: blogItem.userId } });
   const profileItem = unmarshallByItem(profiles.Item);
-  const categoryItem = await getCategorys(blogItem.id);
+  const categoryItems = await getCategorys(blogItem.id);
   return {
     props: {
       blog: blogItem,
       users: profileItem,
-      categorys: categoryItem,
+      categorys: categoryItems,
     },
   };
 }
@@ -38,6 +38,8 @@ const BlogMainPage: NextPage = (props: any) => {
       window.location.replace(window.location.origin + "/404");
     }
   }, []);
+
+  console.log(props);
 
   return <MainCt {...props} />;
 };
