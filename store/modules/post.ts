@@ -23,7 +23,7 @@ export type PostAction = ReturnType<typeof setPost>;
 const initialState: NewPostVO = {
   title: "",
   contents: "",
-  registDate: new Date(),
+  registDate: new Date().getTime(),
 };
 
 // 리듀서 반환
