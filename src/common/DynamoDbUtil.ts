@@ -49,3 +49,19 @@ export const getCategorys = async (blogId: string) => {
 
   return unmarshallByItem(categorys.Items);
 };
+
+export const getPosts = async (menuId: string) => {
+  const posts = await client.send(
+    new QueryCommand({
+      TableName: "POSTS",
+      IndexName: "menuIdIndex",
+      KeyConditionExpression: "menuId = :menuId",
+      ExpressionAttributeValues: {
+        ":menuId": { S: menuId },
+      },
+      ScanIndexForward: false,
+    })
+  );
+
+  return unmarshallByItem(posts.Items);
+};
