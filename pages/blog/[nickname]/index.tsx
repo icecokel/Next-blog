@@ -38,9 +38,6 @@ const BlogMainPage: NextPage = (props: any) => {
       window.location.replace(window.location.origin + "/404");
     }
   }, []);
-
-  console.log(props);
-
   return <MainCt {...props} />;
 };
 
