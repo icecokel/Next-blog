@@ -40,16 +40,14 @@ const initialState: ClientStateVO = {
 
 // 리듀서 반환
 // eslint-disable-next-line import/no-anonymous-default-export
-export default (
-  state: ClientStateVO = initialState,
-  action: ClientStateAction
-) => {
+export default (state: ClientStateVO = initialState, action: ClientStateAction) => {
   switch (action.type) {
     case SET_ERROR:
       return {
         ...state,
         error: action.payload,
       };
+
     default:
       return state;
   }
