@@ -40,7 +40,7 @@ MenuIcon.content = ({ category, handleClick, nickname }: IMenuContentsProps) => 
   return (
     <article className={styles.memuWarpper} onClick={handleClick}>
       <div className={styles.menuList}>
-        <div className={styles.profile}>Solo님의 블로그</div>
+        <div className={styles.profile}>{nickname}님의 블로그</div>
         <ul>
           {category.map((item) => {
             const linkUrl = `/blog/${nickname.trim()}/category/${item.name.trim()}`;
