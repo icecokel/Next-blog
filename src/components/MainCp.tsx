@@ -60,10 +60,10 @@ MainCp.posts = () => {
   return (
     <section className={styles.recentList}>
       <div>
-        <h3>최근 게시한 글 (30)</h3>
+        <h3>최근 게시한 글</h3>
       </div>
       <div>
-        <h3>인기 글 (30)</h3>
+        <h3>인기 글</h3>
       </div>
     </section>
   );

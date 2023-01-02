@@ -2,6 +2,7 @@ import React from "react";
 import Loader from "./common/Loader";
 import { PostVO } from "../common/Model";
 import Link from "next/link";
+import { formatDateToString } from "../common/DateUtil";
 
 const TITLE_MAX_LENGTH = 20;
 
@@ -31,7 +32,7 @@ const CategoryCp = ({ categoryName, postList, nickname }: ICatogoryProps) => {
 
                 return (
                   <CategoryCp.itemByPost
-                    boardNo={post.boardNo}
+                    postId={post.id}
                     title={title}
                     hits={hits}
                     registDate={post.registDate}
@@ -52,23 +53,23 @@ export default CategoryCp;
 
 interface IItemProps {
   nickname: string | string[];
-  boardNo: string;
+  postId: string;
   title: string;
   hits: number;
-  registDate: string | Date;
+  registDate: string | Date | Number;
 }
 
-CategoryCp.itemByPost = ({ boardNo, hits, registDate, title, nickname }: IItemProps) => {
+CategoryCp.itemByPost = ({ postId, hits, registDate, title, nickname }: IItemProps) => {
   return (
-    <Link href={"/blog/" + nickname + "/post/" + boardNo}>
+    <Link href={"/blog/" + nickname + "/post/" + postId}>
       <a>
         <li>
           <div>
-            <span className="post-no">{boardNo}</span>
+            <span className="post-no">{postId}</span>
             <span className="post-title">{title}</span>
             <span className="post-hits">{hits}</span>
           </div>
-          <span className="post-registDate">{registDate}</span>
+          <span className="post-registDate">{formatDateToString(new Date(registDate))}</span>
         </li>
       </a>
     </Link>
