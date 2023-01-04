@@ -56,7 +56,7 @@ interface IItemProps {
   postId: string;
   title: string;
   hits: number;
-  registDate: string | Date | Number;
+  registDate: number;
 }
 
 CategoryCp.itemByPost = ({ postId, hits, registDate, title, nickname }: IItemProps) => {
