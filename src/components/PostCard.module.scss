@@ -7,48 +7,26 @@
 
 .titleWarpper {
   border-radius: 5px;
-  height: 300px;
   background-color: $color-white;
-  padding: 1em;
 }
-.imageWarpper {
-  height: calc(300px - 2em);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  border: 1px solid $color-green1;
-  border-radius: 5px;
-  img {
-    width: 100%;
-    max-height: initial;
-    margin-top: -30%;
-  }
-}
+
 .postTitle {
-  margin-top: -200px;
-  height: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba($color-gray, 0.9);
-  color: $color-white;
-  font-weight: 500;
-  font-size: 1em;
-  p {
+  h1 {
     margin-right: 1em;
-    font-size: 1.5em;
+    font-size: 3em;
+    font-weight: bold;
   }
+}
+
+.postDetailInfo {
+  font-size: 0.8em;
 }
 .contentsWrapper {
-  background-color: $color-white;
-  border-radius: 5px;
-  padding: 1em;
-  margin-top: 1em;
+  margin-top: 10px;
+  border-top: 1px solid $color-green1;
+  padding-top: 10px;
 }
 
 .contents {
-  border: 1px solid rgba($color-gray, 0.2);
   border-radius: 4px;
-  padding: 1em;
 }
