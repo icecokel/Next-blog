@@ -13,7 +13,7 @@ const converDateType = (target: Date | string): Date => {
   return typeof target === "string" ? new Date(target) : target;
 };
 
-export const formatDateToString = (date: Date, format: string = "YYYY-MM-DD"): string => {
+export const formatDateToString = (date: Date | string, format: string = "YYYY-MM-DD"): string => {
   return format
     .replaceAll(/YYYY/gi, converDateType(date).getFullYear().toString())
     .replaceAll(/YY/gi, converDateType(date).getFullYear().toString().slice(-2))
