@@ -1,7 +1,7 @@
 export interface NewPostVO {
   title: string;
   contents: string;
-  registDate: Number;
+  registDate: number;
 }
 
 export interface PostVO extends NewPostVO {
