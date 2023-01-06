@@ -15,9 +15,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   const postItem = unmarshallByItem(post.Item);
+
+  const profiles = await getItem("USERS", { id: { S: postItem.registId } });
+  const profileItem = unmarshallByItem(profiles.Item);
   return {
     props: {
       post: postItem,
+      user: profileItem,
     },
   };
 };
@@ -28,7 +32,7 @@ const PostPage = (props: any) => {
       window.location.replace(window.location.origin + "/404");
     }
   }, []);
-  return <PostCard {...props.post} />;
+  return <PostCard {...props} />;
 };
 
 export default PostPage;
