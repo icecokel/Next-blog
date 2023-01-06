@@ -8,5 +8,5 @@ export interface PostVO extends NewPostVO {
   id: string;
   menuId: string;
   hits: string;
-  registName: string;
+  registId: string;
 }
