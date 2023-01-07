@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/modules";
 import { BlogVO } from "../../store/modules/blog";
+import LinkIcons from "./LinkIcons";
 
 const MainCp = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -20,12 +21,7 @@ const MainCp = () => {
       <div>
         <h2>프로필</h2>
         <div className={styles.profile}>
-          <div>
-            <div className={styles.profileImg}>
-              <img src={user.profileImgPath} alt="profileImg" />
-            </div>
-          </div>
-
+          <img className={styles.profileImg} src={user.profileImgPath} alt="profileImg" />
           <div className={styles.profileDetail}>
             <p>
               <label>닉네임 </label>
@@ -70,25 +66,13 @@ MainCp.posts = () => {
 };
 
 MainCp.inst = ({ description, githubAddress }: BlogVO) => {
-  const handleClickGitHub = () => {
-    window.open(githubAddress);
-  };
   return (
     <article className={styles.blogInfo}>
       <h3>소개</h3>
       <div>
         <p>{description}</p>
       </div>
-
-      <section>
-        {githubAddress && (
-          <img
-            onClick={handleClickGitHub}
-            src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-            alt="git"
-          />
-        )}
-      </section>
+      <LinkIcons githubAddress={githubAddress} />
     </article>
   );
 };
