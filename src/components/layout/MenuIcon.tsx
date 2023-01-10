@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import { CategoryVO } from "../../../store/modules/category";
@@ -15,6 +15,16 @@ const MenuIcon = () => {
       setOpenMenu(!openMenu);
     }
   };
+
+  useEffect(() => {
+    const handleEscape = ({ key }: any) => {
+      if (key === "Escape") {
+        setOpenMenu(false);
+      }
+    };
+    window.addEventListener("keydown", handleEscape, false);
+    return () => window.removeEventListener("keydown", handleEscape, false);
+  }, []);
 
   return (
     <>
