@@ -8,9 +8,7 @@ import { RootState } from "../../../store/modules";
 import { setUser } from "../../../store/modules/user";
 import BaseInput from "../common/BaseInput";
 import ErrorLabel from "../common/ErrorLabel";
-import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
-
-const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? "";
+import { signIn, useSession } from "next-auth/react";
 
 const LoginIcon = () => {
   const [isOpenLogInModal, setIsOpenLogInModal] = useState<boolean>(false);
@@ -81,11 +79,7 @@ const LoginIcon = () => {
       </label>
 
       <BaseModal isOpen={isOpenLogInModal} setIsOpen={setIsOpenLogInModal}>
-        <LoginBox
-          setCurrentUser={setCurrentUser}
-          setIsOpenSignInModal={setIsOpenLogInModal}
-          setIsLogined={setIsLogined}
-        />
+        <LoginBox />
       </BaseModal>
       <BaseModal isOpen={isOpenLogOutModel} setIsOpen={setIsOpenLogOutModal}>
         <div className="logout-wrap">
@@ -113,15 +107,7 @@ interface LoginFormVO {
   password: string;
 }
 
-const LoginBox = ({
-  setCurrentUser,
-  setIsOpenSignInModal,
-  setIsLogined,
-}: {
-  setCurrentUser: Function;
-  setIsOpenSignInModal: Function;
-  setIsLogined: Function;
-}) => {
+const LoginBox = () => {
   const [isEmptyInfo, setIsEmptyInfo] = useState<boolean>();
   const [formData, setFormData] = useState<LoginFormVO>({
     email: "",
@@ -147,14 +133,6 @@ const LoginBox = ({
     setFormData({ ...formData, [name]: value });
   };
 
-  const onSuccessLogin = (response: any) => {
-    console.log("success", response);
-  };
-
-  const onFailureLogin = () => {
-    console.log("fail");
-  };
-
   return (
     <div className="login-wrap">
       <form onSubmit={handleClickSignIn}>
@@ -176,10 +154,9 @@ const LoginBox = ({
         <button>Sign In</button>
       </form>
       <p> Social Sign In</p>
-      <GoogleOAuthProvider clientId={clientId}>
-        {/* <button className="sns-google">Google</button> */}
-        <GoogleLogin onSuccess={onSuccessLogin} onError={onFailureLogin} />
-      </GoogleOAuthProvider>
+      <button className="sns-google" onClick={() => signIn()}>
+        Google
+      </button>
     </div>
   );
 };
