@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import MenuIcon from "./MenuIcon";
 import styles from "./Header.module.scss";
+import LoginIcon from "./LoginIcon";
 
 const Header = () => {
   const { nickname } = useSelector((state: RootState) => state.user);
@@ -28,6 +29,7 @@ const Header = () => {
           <i className="material-icons">spa</i>
         </div>
         <div className={styles.iconsWrapper}>
+          <LoginIcon />
           <MenuIcon />
           {/* {nickname && (
             <div className={styles.icon}>
