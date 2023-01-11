@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import RequestUtil from "../../common/RequestUtil";
+import React, { useCallback, useEffect, useState } from "react";
 import BaseModal from "../common/BaseModal";
 import SessionUtil from "../../common/SessionUtil";
 import { SessionEnum } from "../../common/SessionEnum";
@@ -8,11 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import { setUser } from "../../../store/modules/user";
 import BaseInput from "../common/BaseInput";
+import ErrorLabel from "../common/ErrorLabel";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 
-interface LoginForm {
-  email: string;
-  password: string;
-}
+const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? "";
 
 const LoginIcon = () => {
   const [isOpenLogInModal, setIsOpenLogInModal] = useState<boolean>(false);
@@ -129,6 +127,7 @@ const LoginBox = ({
     email: "",
     password: "",
   });
+
   const handleClickSignIn = (e: any) => {
     e.preventDefault();
 
@@ -148,10 +147,18 @@ const LoginBox = ({
     setFormData({ ...formData, [name]: value });
   };
 
+  const onSuccessLogin = (response: any) => {
+    console.log("success", response);
+  };
+
+  const onFailureLogin = () => {
+    console.log("fail");
+  };
+
   return (
     <div className="login-wrap">
       <form onSubmit={handleClickSignIn}>
-        {isEmptyInfo && <span className="error"> 로그인 정보를 입력해 주세요.</span>}
+        {isEmptyInfo && <ErrorLabel text="로그인 정보를 입력해 주세요." />}
         <BaseInput
           type="email"
           placeholder="email@email.com"
@@ -169,7 +176,10 @@ const LoginBox = ({
         <button>Sign In</button>
       </form>
       <p> Social Sign In</p>
-      <button className="sns-google"> Google</button>
+      <GoogleOAuthProvider clientId={clientId}>
+        {/* <button className="sns-google">Google</button> */}
+        <GoogleLogin onSuccess={onSuccessLogin} onError={onFailureLogin} />
+      </GoogleOAuthProvider>
     </div>
   );
 };
