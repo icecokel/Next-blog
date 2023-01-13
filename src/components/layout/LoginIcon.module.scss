@@ -1,1 +1,32 @@
 @import "../../../styles/color.scss";
+
+.loginWrapper {
+  $size: 300px;
+
+  button {
+    margin: 0px auto;
+    display: block;
+    width: $size;
+    height: 2em;
+    padding: 0px;
+    margin-top: 0.5em;
+  }
+
+  .snsLogin {
+    background-color: #ea4335;
+    color: $color-white;
+  }
+}
+
+.logoutWrapper {
+  div {
+    margin-top: 1em;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  button {
+    display: inline-block;
+    width: 50%;
+  }
+}
