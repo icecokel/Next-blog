@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import BaseModal from "../common/BaseModal";
-
 import { signIn, signOut, useSession } from "next-auth/react";
+import styles from "./LoginIcon.module.scss";
 
 const LOGIN_MESSAGE = "authenticated";
 
@@ -20,13 +20,9 @@ const LoginIcon = () => {
   };
 
   return (
-    <div className="header-icon">
+    <div>
       <label onClick={handleClickModalOpen}>
-        {isLogined ? (
-          <i className="material-icons">logout</i>
-        ) : (
-          <i className="material-icons">account_circle</i>
-        )}
+        <i className="material-icons"> {isLogined ? "logout" : "account_circle"}</i>
       </label>
 
       <BaseModal isOpen={isOpenLogInModal} setIsOpen={setIsOpenLogInModal}>
@@ -40,8 +36,8 @@ const LoginIcon = () => {
 };
 LoginIcon.loginBox = () => {
   return (
-    <div className="login-wrap">
-      <button className="sns-google" onClick={() => signIn()}>
+    <div className={styles.loginWrapper}>
+      <button className={styles.snsLogin} onClick={() => signIn()}>
         소셜 로그인 하기
       </button>
     </div>
@@ -54,7 +50,7 @@ interface ILogoutProps {
 
 LoginIcon.logoutBox = ({ closeModel }: ILogoutProps) => {
   return (
-    <div className="logout-wrap">
+    <div className={styles.logoutWrapper}>
       로그아웃을 진행할까요?
       <div>
         <button onClick={closeModel}>취소</button>
