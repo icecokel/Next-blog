@@ -25,6 +25,7 @@ export type UserVO = {
   introduction: string;
   nickname: string;
   profileImgPath: string;
+  googleEmail?: string;
 };
 
 // 초기 값 선언
