@@ -8,19 +8,22 @@ import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import React from "react";
 import ErrorModal from "../src/components/common/ErrorModal";
+import { SessionProvider } from "next-auth/react";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
   return (
     <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <Header />
-        <div className="main-wrap">
-          <Component {...pageProps} />
-        </div>
-        <Footer />
-      </Hydrate>
-      <ErrorModal />
+      <SessionProvider session={session}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <Header />
+          <div className="main-wrap">
+            <Component {...pageProps} />
+          </div>
+          <Footer />
+        </Hydrate>
+        <ErrorModal />
+      </SessionProvider>
       <ReactQueryDevtools />
     </QueryClientProvider>
   );
