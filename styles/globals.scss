@@ -119,56 +119,6 @@ a {
   }
 }
 
-.login-wrap {
-  $size: 300px;
-
-  input {
-    display: block;
-    margin-top: 5px;
-    width: $size;
-    height: 2em;
-    padding-left: 1em;
-
-    margin: 0.5em auto;
-    border-radius: 5px;
-    border: 1px solid $color-green4;
-
-    &:focus {
-      outline: 1.5px solid $color-active;
-    }
-  }
-  button {
-    margin: 0px auto;
-    display: block;
-    width: $size;
-    height: 2em;
-    padding: 0px;
-    margin-top: 0.5em;
-  }
-
-  .error {
-    color: $color-red;
-    font-size: 1.25em;
-  }
-
-  .sns-google {
-    background-color: #ea4335;
-    color: $color-white;
-  }
-}
-
-.logout-wrap {
-  div {
-    margin-top: 1em;
-    display: flex;
-    justify-content: space-around;
-  }
-
-  button {
-    display: inline-block;
-    width: 50%;
-  }
-}
 .footer-wrap {
   text-align: center;
   border-top: 1px solid $color-black;
