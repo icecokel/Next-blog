@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import { setPost } from "../../../store/modules/post";
 import { HOURS, MINUTES } from "../../common/DateUtil";
+import styles from "./NewPost.module.scss";
 
 const BaseEditor = dynamic(import("../common/BaseEditor"), { ssr: false });
 
@@ -42,26 +43,27 @@ const NewPost = () => {
   };
 
   return (
-    <div className="editor-wrap">
+    <div className={styles.wrapper}>
       <input
         type="text"
         placeholder="제목을 입력해주세요"
         name="title"
+        className={styles.input}
         onChange={handleChangeText}
         value={state.title}
       />
       <BaseEditor getEditorHTML={handleChangeContents} />
       <div>
         <p>발행일</p>
-        <div className="editor-date-wrap">
-          <div className="editor-date">
+        <div className={styles.dateWrapper}>
+          <div className={styles.date}>
             <DatePicker
               selected={new Date(state.registDate)}
               dateFormat={"yyyy년 MM월 dd일"}
               onChange={handleChangeDatePicker}
             />
           </div>
-          <div className="editor-time">
+          <div className={styles.time}>
             <select onChange={handleChangeTime} name={"postTimehour"} value={registDate.getHours()}>
               {HOURS.map((code) => {
                 return (
@@ -87,7 +89,7 @@ const NewPost = () => {
           </div>
         </div>
       </div>
-      <div className="button-wrap">
+      <div className={styles.buttonWrapper}>
         <button onClick={handleClickPostButton}>발행</button>
       </div>
     </div>
