@@ -10,6 +10,7 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.145.0",
     "@aws-sdk/util-dynamodb": "^3.234.0",
+    "@toast-ui/react-editor": "^3.2.2",
     "@types/crypto-js": "^4.1.1",
     "@types/next-redux-wrapper": "^3.0.0",
     "@types/react-datepicker": "^4.4.0",

@@ -1,6 +1,6 @@
 export interface NewPostVO {
   title: string;
-  contents: string;
+  contents: string | undefined;
   registDate: number;
 }
 

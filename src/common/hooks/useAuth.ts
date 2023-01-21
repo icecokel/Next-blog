@@ -6,7 +6,7 @@ const useAuth = () => {
   const user = useSelector((state: RootState) => state.user);
   const { data } = useSession();
   return {
-    isOwner: user.googleEmail === data?.user?.email,
+    isOwner: user.email === data?.user?.email,
   };
 };
 

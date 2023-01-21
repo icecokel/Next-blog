@@ -53,9 +53,7 @@ MenuIcon.content = ({ category, handleClick, nickname }: IMenuContentsProps) => 
         <div className={styles.profile}>{nickname}님의 블로그</div>
         <ul>
           {category.map((item) => {
-            const encodedUri = `/blog/${nickname.trim()}/category/${encodeURIComponent(
-              item.name.trim()
-            )}`;
+            const encodedUri = `/blog/${nickname.trim()}/m/${encodeURIComponent(item.name.trim())}`;
             return (
               <Link href={encodedUri} key={item.id}>
                 <a onClick={() => {}}>

@@ -4,9 +4,11 @@ import { RootState } from "../../../store/modules";
 import MenuIcon from "./MenuIcon";
 import styles from "./Header.module.scss";
 import LoginIcon from "./LoginIcon";
+import useAuth from "../../common/hooks/useAuth";
 
 const Header = () => {
   const { nickname } = useSelector((state: RootState) => state.user);
+  const { isOwner } = useAuth();
   const router = useRouter();
 
   const handleClickLogo = () => {
@@ -31,13 +33,13 @@ const Header = () => {
         <div className={styles.iconsWrapper}>
           <LoginIcon />
           <MenuIcon />
-          {/* {nickname && (
+          {isOwner && (
             <div className={styles.icon}>
               <i className="material-icons" onClick={handleClickSettings}>
                 settings
               </i>
             </div>
-          )} */}
+          )}
         </div>
       </article>
     </header>

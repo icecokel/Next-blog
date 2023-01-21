@@ -71,11 +71,10 @@ a {
           margin-bottom: 0.5em;
 
           &:hover {
-            transition-duration: 0.2s;
-            font-size: 1.15em;
-            color: $color-white;
+            transition-duration: 0.15s;
+            font-size: 1.05em;
             cursor: pointer;
-            background-color: $color-active;
+            background-color: rgba($color-active, 0.5);
           }
           div {
             display: flex;
