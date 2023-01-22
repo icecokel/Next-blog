@@ -1,4 +1,9 @@
-import { DynamoDBClient, GetItemCommand, QueryCommand } from "@aws-sdk/client-dynamodb";
+import {
+  DynamoDBClient,
+  GetItemCommand,
+  QueryCommand,
+  ScanCommand,
+} from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 
 const clientConfig = {
@@ -16,6 +21,15 @@ export const getItem = (tableName: string, key: any) => {
     new GetItemCommand({
       TableName: tableName,
       Key: key,
+    })
+  );
+};
+
+export const scanItem = (tableName: string) => {
+  return client.send(
+    new ScanCommand({
+      TableName: tableName,
+      Select: "COUNT",
     })
   );
 };
