@@ -20,7 +20,7 @@ const Header = () => {
   };
 
   const handleClickSettings = () => {
-    router.push("/blog/" + nickname + "/category/management");
+    router.push("/blog/" + nickname + "/m/management");
   };
 
   return (
