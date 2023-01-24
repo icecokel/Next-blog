@@ -168,67 +168,6 @@ a {
       background-color: $color-white;
       border-radius: 5px;
 
-      .editor-wrap {
-        padding: 0.5em;
-
-        input[type="text"] {
-          width: 100%;
-          border: 2px solid $color-green4;
-          margin-bottom: 5px;
-          &:active,
-          &:focus {
-            outline: none;
-            border: 2px solid $color-active;
-          }
-        }
-
-        .editor-date-wrap {
-          display: flex;
-          .editor-date {
-            width: 30%;
-            input {
-              height: 2em;
-              font-size: 16px;
-              text-align: center;
-            }
-          }
-          .editor-time {
-            width: 30%;
-            select {
-              padding: 0px;
-              border: 2px solid $color-green4;
-              margin-left: 0.5em;
-              height: 2em;
-              font-size: 16px;
-            }
-          }
-        }
-      }
-
-      .ql-toolbar {
-        padding: 0px;
-        margin-bottom: 5px;
-        border-radius: 3px;
-        border: 1px solid $color-green4;
-      }
-
-      .ql-container {
-        border-radius: 3px;
-        border: 1px solid $color-green4;
-        padding: 0.1em;
-        height: fit-content;
-
-        .ql-editor {
-          height: fit-content;
-          min-height: 30em;
-          &:active,
-          &:focus {
-            outline: 2px solid $color-active;
-            border-radius: 2px;
-          }
-        }
-      }
-
       .button-wrap {
         width: 100%;
         display: flex;

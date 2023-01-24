@@ -26,6 +26,7 @@ export type BlogVO = {
   id: string;
   userId: string;
   githubAddress: string;
+  postsCount: number;
 };
 
 // 초기 값 선언
@@ -36,6 +37,7 @@ const initialState: BlogVO = {
   id: "",
   userId: "",
   githubAddress: "",
+  postsCount: 0,
 };
 
 // 리듀서 반환

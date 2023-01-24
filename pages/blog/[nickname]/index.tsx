@@ -1,6 +1,11 @@
 import type { NextPage } from "next";
 import MainCt from "../../../src/components/containers/MainCt";
-import { getItem, unmarshallByItem, getCategorys } from "../../../src/common/DynamoDbUtil";
+import {
+  getItem,
+  unmarshallByItem,
+  getCategorys,
+  scanItem,
+} from "../../../src/common/DynamoDbUtil";
 import { useEffect } from "react";
 
 export async function getServerSideProps(context: any) {
@@ -23,9 +28,11 @@ export async function getServerSideProps(context: any) {
   const profiles = await getItem("USERS", { id: { S: blogItem.userId } });
   const profileItem = unmarshallByItem(profiles.Item);
   const categoryItems = await getCategorys(blogItem.id);
+  const posts = await scanItem("POSTS");
+
   return {
     props: {
-      blog: blogItem,
+      blog: { ...blogItem, postsCount: posts.Count },
       users: profileItem,
       categorys: categoryItems,
     },

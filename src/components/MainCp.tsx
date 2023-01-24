@@ -45,21 +45,24 @@ const MainCp = () => {
           </li>
         </ul>
       </section>
-      {tab === "posts" ? <MainCp.posts /> : <MainCp.inst {...blog} />}
+      {tab === "posts" ? <MainCp.posts blog={blog} /> : <MainCp.inst {...blog} />}
     </article>
   );
 };
 
 export default MainCp;
 
-MainCp.posts = () => {
+interface IPostsProps {
+  blog: BlogVO;
+}
+
+MainCp.posts = ({ blog }: IPostsProps) => {
+  console.log(blog);
+
   return (
     <section className={styles.recentList}>
       <div>
-        <h3>최근 게시한 글</h3>
-      </div>
-      <div>
-        <h3>인기 글</h3>
+        <h3>전체 게시글 ( {blog.postsCount} )</h3>
       </div>
     </section>
   );

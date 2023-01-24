@@ -4,7 +4,7 @@ import { RootState } from "../../../store/modules";
 import { CategoryVO } from "../../../store/modules/category";
 import ErrorLabel from "../common/ErrorLabel";
 
-const EditCategory = () => {
+const EditMenu = () => {
   const category = useSelector((state: RootState) => state.category);
   const [categoryList, setCategoryList] = useState<CategoryVO[]>();
 
@@ -43,33 +43,34 @@ const EditCategory = () => {
 
   return (
     <article className="edit-category-wrap">
-      <section>
-        {categoryList?.map((item, index) => {
-          return (
-            <EditCategory.item
-              key={"category_management_" + index}
-              categoryNo={item.categoryNo}
-              categoryName={item.categoryName}
-              moveUp={() => {
-                handleChangeItemIndex(index, "up");
-              }}
-              moveDown={() => {
-                handleChangeItemIndex(index, "down");
-              }}
-            />
-          );
-        })}
-      </section>
-      <ErrorLabel text="저장하지 않으면 변경되지 않습니다." />
-      <div className="button-wrap">
-        <button onClick={handleCancelButton}>작업취소</button>
-        <button>저장</button>
-      </div>
+      <section></section>
+      {/* //   <section>
+    //     {categoryList?.map((item, index) => {
+    //       return (
+    //         <EditMenu.item
+    //           key={"category_management_" + index}
+    //           categoryNo={item.categoryNo}
+    //           categoryName={item.categoryName}
+    //           moveUp={() => {
+    //             handleChangeItemIndex(index, "up");
+    //           }}
+    //           moveDown={() => {
+    //             handleChangeItemIndex(index, "down");
+    //           }}
+    //         />
+    //       );
+    //     })}
+    //   </section>
+    //   <ErrorLabel text="저장하지 않으면 변경되지 않습니다." />
+    //   <div className="button-wrap">
+    //     <button onClick={handleCancelButton}>작업취소</button>
+    //     <button>저장</button>
+    //   </div> */}
     </article>
   );
 };
 
-export default EditCategory;
+export default EditMenu;
 
 interface ICategoryProps {
   categoryNo: string;
@@ -78,7 +79,7 @@ interface ICategoryProps {
   moveDown: MouseEventHandler<HTMLElement>;
 }
 
-EditCategory.item = ({
+EditMenu.item = ({
   categoryNo,
   categoryName,
   moveUp: handleMoveUp,
