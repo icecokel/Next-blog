@@ -12,7 +12,9 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-const ManagementPage: NextPage = () => {
+const ManagementPage: NextPage = (props: any) => {
+  console.log(props);
+
   return <MamagementCt />;
 };
 

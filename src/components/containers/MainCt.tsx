@@ -2,19 +2,19 @@ import React, { useEffect } from "react";
 import MainCp from "../MainCp";
 import { BlogVO } from "../../../store/modules/blog";
 import { UserVO } from "../../../store/modules/user";
-import { CategoryVO } from "../../../store/modules/category";
+import { MenuVo } from "../../../store/modules/menu";
 import { useDispatch } from "react-redux";
 import { setBlog } from "../../../store/modules/blog";
-import { setCategory } from "../../../store/modules/category";
+import { setMenu } from "../../../store/modules/menu";
 import { setUser } from "../../../store/modules/user";
 
 interface IProps {
   blog: BlogVO;
   users: UserVO;
-  categorys: CategoryVO[];
+  menus: MenuVo[];
 }
 
-const MainCt = ({ blog, categorys, users }: IProps) => {
+const MainCt = ({ blog, menus, users }: IProps) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const MainCt = ({ blog, categorys, users }: IProps) => {
 
   const setRedux = () => {
     dispatch(setBlog(blog));
-    dispatch(setCategory(categorys));
+    dispatch(setMenu(menus));
     dispatch(setUser(users));
   };
 

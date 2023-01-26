@@ -1,24 +1,12 @@
-import React, { MouseEventHandler, useEffect, useState } from "react";
+import React, { MouseEventHandler, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
-import { CategoryVO } from "../../../store/modules/category";
+import { MenuVo } from "../../../store/modules/menu";
 import ErrorLabel from "../common/ErrorLabel";
 
 const EditMenu = () => {
   const category = useSelector((state: RootState) => state.category);
-  const [categoryList, setCategoryList] = useState<CategoryVO[]>();
-
-  useEffect(() => {
-    setCategorys();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category, categoryList]);
-
-  const setCategorys = () => {
-    if (categoryList) {
-      return;
-    }
-    setCategoryList(category);
-  };
+  const [categoryList, setCategoryList] = useState<MenuVo[]>();
 
   const handleChangeItemIndex = (index: number, sign: "up" | "down") => {
     const list = [...(categoryList ?? [])];

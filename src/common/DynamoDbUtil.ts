@@ -48,7 +48,7 @@ export const unmarshallByItem = (item: any): any => {
   }
 };
 
-export const getCategorys = async (blogId: string) => {
+export const getMenus = async (blogId: string) => {
   const categorys = await client.send(
     new QueryCommand({
       TableName: "CATEGORY",
