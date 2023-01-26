@@ -25,11 +25,11 @@ export const getItem = (tableName: string, key: any) => {
   );
 };
 
-export const scanItem = (tableName: string) => {
+export const scanItem = (tableName: string, select: string[]) => {
   return client.send(
     new ScanCommand({
       TableName: tableName,
-      Select: "COUNT",
+      Select: select.toString(),
     })
   );
 };

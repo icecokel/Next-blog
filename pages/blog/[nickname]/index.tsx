@@ -28,7 +28,7 @@ export async function getServerSideProps(context: any) {
   const profiles = await getItem("USERS", { id: { S: blogItem.userId } });
   const profileItem = unmarshallByItem(profiles.Item);
   const categoryItems = await getCategorys(blogItem.id);
-  const posts = await scanItem("POSTS");
+  const posts = await scanItem("POSTS", ["COUNT"]);
 
   return {
     props: {
