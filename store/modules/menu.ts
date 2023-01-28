@@ -7,19 +7,19 @@
  */
 
 // 액션 타입 선언
-export const SET_CATEGORY = "category/SET_CATEGORY" as const;
+export const SET_MENU = "menu/SET_MENU" as const;
 
 // 액션 함수 선언
-export const setCategory = (category: CategoryVO[]) => ({
-  type: SET_CATEGORY,
-  payload: category,
+export const setMenu = (menu: MenuVo[]) => ({
+  type: SET_MENU,
+  payload: menu,
 });
 
 // 액센 객체들에 대한 타입 선언
-export type CategoryAction = ReturnType<typeof setCategory>;
+export type MenuAction = ReturnType<typeof setMenu>;
 
 // 카테고리 타입
-export type CategoryVO = {
+export type MenuVo = {
   blogId: string;
   id: string;
   name: string;
@@ -27,13 +27,13 @@ export type CategoryVO = {
 
 // 초기 값 선언
 // 배열로 선언
-const initialState: CategoryVO[] = [];
+const initialState: MenuVo[] = [];
 
 // 리듀서 반환
 // eslint-disable-next-line import/no-anonymous-default-export
-export default (state: CategoryVO[] = initialState, action: CategoryAction) => {
+export default (state: MenuVo[] = initialState, action: MenuAction) => {
   switch (action.type) {
-    case SET_CATEGORY:
+    case SET_MENU:
       state = action.payload;
       return state;
     default:

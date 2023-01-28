@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
-import { CategoryVO } from "../../../store/modules/category";
+import { MenuVo } from "../../../store/modules/menu";
 import styles from "./MenuIcon.module.scss";
 import Link from "next/link";
 
@@ -41,7 +41,7 @@ const MenuIcon = () => {
 export default React.memo(MenuIcon);
 
 interface IMenuContentsProps {
-  category: CategoryVO[];
+  category: MenuVo[];
   handleClick: (e: any) => void;
   nickname: string;
 }

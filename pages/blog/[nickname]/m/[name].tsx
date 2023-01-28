@@ -1,13 +1,8 @@
 import { NextPage } from "next";
 import { PostVO } from "../../../../src/common/Model";
 import CategoryCt from "../../../../src/components/containers/CategoryCt";
-import { CategoryVO } from "../../../../store/modules/category";
-import {
-  getItem,
-  unmarshallByItem,
-  getCategorys,
-  getPosts,
-} from "../../../../src/common/DynamoDbUtil";
+import { MenuVo } from "../../../../store/modules/menu";
+import { getItem, unmarshallByItem, getMenus, getPosts } from "../../../../src/common/DynamoDbUtil";
 import { useEffect } from "react";
 
 export async function getServerSideProps(context: any) {
@@ -26,7 +21,7 @@ export async function getServerSideProps(context: any) {
   }
 
   const blogItem = unmarshallByItem(blogs.Item);
-  const categoryItems: CategoryVO[] = await getCategorys(blogItem.id);
+  const categoryItems: MenuVo[] = await getMenus(blogItem.id);
 
   const currentMenu = categoryItems.find((item) => {
     return item.name === context.query.name;
