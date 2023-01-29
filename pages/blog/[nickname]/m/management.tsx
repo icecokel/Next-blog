@@ -4,7 +4,7 @@ import MamagementCt from "../../../../src/components/containers/MamagementCt";
 import { scanItem } from "../../../../src/common/DynamoDbUtil";
 
 export async function getServerSideProps(context: any) {
-  const item = await scanItem("CATEGORY", ["ALL_ATTRIBUTES"]);
+  const item = await scanItem("MENU", ["ALL_ATTRIBUTES"]);
   return {
     props: {
       menu: item.Items,

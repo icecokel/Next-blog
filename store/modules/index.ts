@@ -1,7 +1,7 @@
 import { AnyAction, CombinedState, combineReducers } from "redux";
 import { HYDRATE } from "next-redux-wrapper";
 import blog, { BlogVO } from "./blog";
-import category, { MenuVo } from "./menu";
+import menu, { MenuVo } from "./menu";
 import user, { UserVO } from "./user";
 import post from "./post";
 import { NewPostVO } from "../../src/common/Model";
@@ -18,7 +18,7 @@ const rootReducer = (
     default: {
       const combineReducer = combineReducers({
         blog,
-        category,
+        menu,
         user,
         post,
         clientState,
@@ -33,7 +33,7 @@ export default rootReducer;
 
 export interface IndexState {
   blog: BlogVO;
-  category: MenuVo[];
+  menu: MenuVo[];
   user: UserVO;
   post: NewPostVO;
   clientState: ClientStateVO;

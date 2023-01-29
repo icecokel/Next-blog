@@ -49,7 +49,7 @@ export const unmarshallByItem = (item: any): any => {
 };
 
 export const getMenus = async (blogId: string) => {
-  const categorys = await client.send(
+  const menus = await client.send(
     new QueryCommand({
       TableName: "CATEGORY",
       IndexName: "blogIdIndex",
@@ -61,7 +61,7 @@ export const getMenus = async (blogId: string) => {
     })
   );
 
-  return unmarshallByItem(categorys.Items);
+  return unmarshallByItem(menus.Items);
 };
 
 export const getPosts = async (menuId: string) => {

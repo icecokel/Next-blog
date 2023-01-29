@@ -12,7 +12,7 @@ interface ICatogoryProps {
   postList: PostVO[];
 }
 
-const CategoryCp = ({ categoryName, postList, nickname }: ICatogoryProps) => {
+const MenuCp = ({ categoryName, postList, nickname }: ICatogoryProps) => {
   return (
     <div className="category-wrap">
       <h2>{categoryName}</h2>
@@ -31,7 +31,7 @@ const CategoryCp = ({ categoryName, postList, nickname }: ICatogoryProps) => {
                 }
 
                 return (
-                  <CategoryCp.itemByPost
+                  <MenuCp.itemByPost
                     postId={post.id}
                     title={title}
                     hits={hits}
@@ -49,7 +49,7 @@ const CategoryCp = ({ categoryName, postList, nickname }: ICatogoryProps) => {
   );
 };
 
-export default CategoryCp;
+export default MenuCp;
 
 interface IItemProps {
   nickname: string | string[];
@@ -59,7 +59,7 @@ interface IItemProps {
   registDate: number;
 }
 
-CategoryCp.itemByPost = ({ postId, hits, registDate, title, nickname }: IItemProps) => {
+MenuCp.itemByPost = ({ postId, hits, registDate, title, nickname }: IItemProps) => {
   return (
     <Link href={"/blog/" + nickname + "/post/" + postId}>
       <a>

@@ -5,11 +5,11 @@ import { MenuVo } from "../../../store/modules/menu";
 import ErrorLabel from "../common/ErrorLabel";
 
 const EditMenu = () => {
-  const category = useSelector((state: RootState) => state.category);
-  const [categoryList, setCategoryList] = useState<MenuVo[]>();
+  const menu = useSelector((state: RootState) => state.menu);
+  const [menuList, setMenuList] = useState<MenuVo[]>();
 
   const handleChangeItemIndex = (index: number, sign: "up" | "down") => {
-    const list = [...(categoryList ?? [])];
+    const list = [...(menuList ?? [])];
 
     switch (sign) {
       case "up":
@@ -22,11 +22,11 @@ const EditMenu = () => {
         break;
     }
 
-    setCategoryList(list);
+    setMenuList(list);
   };
 
   const handleCancelButton = () => {
-    setCategoryList(category);
+    setMenuList(menu);
   };
 
   return (

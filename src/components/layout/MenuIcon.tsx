@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const MenuIcon = () => {
   const user = useSelector((state: RootState) => state.user);
-  const category = useSelector((state: RootState) => state.category);
+  const menu = useSelector((state: RootState) => state.menu);
   const [openMenu, setOpenMenu] = useState<boolean>(false);
 
   const handleToggle = ({ target: { tagName } }: any) => {
@@ -32,7 +32,7 @@ const MenuIcon = () => {
         <i className="material-icons">menu</i>
       </div>
       {openMenu && (
-        <MenuIcon.content category={category} handleClick={handleToggle} nickname={user.nickname} />
+        <MenuIcon.content menu={menu} handleClick={handleToggle} nickname={user.nickname} />
       )}
     </>
   );
@@ -41,18 +41,18 @@ const MenuIcon = () => {
 export default React.memo(MenuIcon);
 
 interface IMenuContentsProps {
-  category: MenuVo[];
+  menu: MenuVo[];
   handleClick: (e: any) => void;
   nickname: string;
 }
 
-MenuIcon.content = ({ category, handleClick, nickname }: IMenuContentsProps) => {
+MenuIcon.content = ({ menu, handleClick, nickname }: IMenuContentsProps) => {
   return (
     <article className={styles.memuWarpper} onClick={handleClick}>
       <div className={styles.menuList}>
         <div className={styles.profile}>{nickname}님의 블로그</div>
         <ul>
-          {category.map((item) => {
+          {menu.map((item) => {
             const encodedUri = `/blog/${nickname.trim()}/m/${encodeURIComponent(item.name.trim())}`;
             return (
               <Link href={encodedUri} key={item.id}>
