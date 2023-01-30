@@ -5,11 +5,11 @@ import { MenuVo } from "../../../store/modules/menu";
 import ErrorLabel from "../common/ErrorLabel";
 
 const EditMenu = () => {
-  const category = useSelector((state: RootState) => state.category);
-  const [categoryList, setCategoryList] = useState<MenuVo[]>();
+  const menu = useSelector((state: RootState) => state.menu);
+  const [menuList, setMenuList] = useState<MenuVo[]>();
 
   const handleChangeItemIndex = (index: number, sign: "up" | "down") => {
-    const list = [...(categoryList ?? [])];
+    const list = [...(menuList ?? [])];
 
     switch (sign) {
       case "up":
@@ -22,11 +22,11 @@ const EditMenu = () => {
         break;
     }
 
-    setCategoryList(list);
+    setMenuList(list);
   };
 
   const handleCancelButton = () => {
-    setCategoryList(category);
+    setMenuList(menu);
   };
 
   return (
@@ -61,23 +61,23 @@ const EditMenu = () => {
 export default EditMenu;
 
 interface ICategoryProps {
-  categoryNo: string;
-  categoryName: string;
+  menuNo: string;
+  menuName: string;
   moveUp: MouseEventHandler<HTMLElement>;
   moveDown: MouseEventHandler<HTMLElement>;
 }
 
 EditMenu.item = ({
-  categoryNo,
-  categoryName,
+  menuNo,
+  menuName,
   moveUp: handleMoveUp,
   moveDown: handleMoveDown,
 }: ICategoryProps) => {
   return (
-    <div className="edit-category-item">
-      <span className="edit-category-no">{categoryNo}</span>
-      <span className="edit-category-name">{categoryName}</span>
-      <div contextMenu="edit-category-arrow-wrap">
+    <div className="edit-menu-item">
+      <span className="edit-menu-no">{menuNo}</span>
+      <span className="edit-menu-name">{menuName}</span>
+      <div contextMenu="edit-menu-arrow-wrap">
         <i className="material-icons" onClick={handleMoveUp}>
           expand_less
         </i>

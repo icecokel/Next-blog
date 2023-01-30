@@ -8,17 +8,17 @@ const TITLE_MAX_LENGTH = 20;
 
 interface ICatogoryProps {
   nickname: string | string[];
-  categoryName: string | string[];
+  menuName: string | string[];
   postList: PostVO[];
 }
 
-const CategoryCp = ({ categoryName, postList, nickname }: ICatogoryProps) => {
+const MenuCp = ({ menuName, postList, nickname }: ICatogoryProps) => {
   return (
-    <div className="category-wrap">
-      <h2>{categoryName}</h2>
+    <div className="menu-wrap">
+      <h2>{menuName}</h2>
       <hr />
-      <section className="category-contents-wrap">
-        <div className="category-contents">
+      <section className="menu-contents-wrap">
+        <div className="menu-contents">
           <label>게시글 리스트</label>
           <Loader isLoading={postList.length === 0}>
             <ul>
@@ -31,12 +31,12 @@ const CategoryCp = ({ categoryName, postList, nickname }: ICatogoryProps) => {
                 }
 
                 return (
-                  <CategoryCp.itemByPost
+                  <MenuCp.itemByPost
                     postId={post.id}
                     title={title}
                     hits={hits}
                     registDate={post.registDate}
-                    key={"category_" + index}
+                    key={"menu_" + index}
                     nickname={nickname}
                   />
                 );
@@ -49,7 +49,7 @@ const CategoryCp = ({ categoryName, postList, nickname }: ICatogoryProps) => {
   );
 };
 
-export default CategoryCp;
+export default MenuCp;
 
 interface IItemProps {
   nickname: string | string[];
@@ -59,7 +59,7 @@ interface IItemProps {
   registDate: number;
 }
 
-CategoryCp.itemByPost = ({ postId, hits, registDate, title, nickname }: IItemProps) => {
+MenuCp.itemByPost = ({ postId, hits, registDate, title, nickname }: IItemProps) => {
   return (
     <Link href={"/blog/" + nickname + "/post/" + postId}>
       <a>

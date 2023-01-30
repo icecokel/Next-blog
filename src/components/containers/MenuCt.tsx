@@ -1,18 +1,18 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { PostVO } from "../../common/Model";
-import CategoryCp from "../CategoryCp";
+import MenuCp from "../MenuCp";
 
 interface IProp {
   postList: PostVO[];
 }
 
-const CategoryCt = ({ postList }: IProp) => {
+const MenuCt = ({ postList }: IProp) => {
   const router = useRouter();
   const categoryName = router.query.name ?? "";
   const nickname = router.query.nickname ?? "";
 
-  return <CategoryCp categoryName={categoryName} postList={postList} nickname={nickname} />;
+  return <MenuCp categoryName={categoryName} postList={postList} nickname={nickname} />;
 };
 
-export default CategoryCt;
+export default MenuCt;
