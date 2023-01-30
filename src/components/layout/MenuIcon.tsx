@@ -57,7 +57,7 @@ MenuIcon.content = ({ menu, handleClick, nickname }: IMenuContentsProps) => {
             return (
               <Link href={encodedUri} key={item.id}>
                 <a onClick={() => {}}>
-                  <li id={"category_id_" + item.name}>{item.name}</li>
+                  <li>{item.name}</li>
                 </a>
               </Link>
             );

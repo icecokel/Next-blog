@@ -8,17 +8,17 @@ const TITLE_MAX_LENGTH = 20;
 
 interface ICatogoryProps {
   nickname: string | string[];
-  categoryName: string | string[];
+  menuName: string | string[];
   postList: PostVO[];
 }
 
-const MenuCp = ({ categoryName, postList, nickname }: ICatogoryProps) => {
+const MenuCp = ({ menuName, postList, nickname }: ICatogoryProps) => {
   return (
-    <div className="category-wrap">
-      <h2>{categoryName}</h2>
+    <div className="menu-wrap">
+      <h2>{menuName}</h2>
       <hr />
-      <section className="category-contents-wrap">
-        <div className="category-contents">
+      <section className="menu-contents-wrap">
+        <div className="menu-contents">
           <label>게시글 리스트</label>
           <Loader isLoading={postList.length === 0}>
             <ul>
@@ -36,7 +36,7 @@ const MenuCp = ({ categoryName, postList, nickname }: ICatogoryProps) => {
                     title={title}
                     hits={hits}
                     registDate={post.registDate}
-                    key={"category_" + index}
+                    key={"menu_" + index}
                     nickname={nickname}
                   />
                 );

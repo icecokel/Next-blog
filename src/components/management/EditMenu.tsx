@@ -61,23 +61,23 @@ const EditMenu = () => {
 export default EditMenu;
 
 interface ICategoryProps {
-  categoryNo: string;
-  categoryName: string;
+  menuNo: string;
+  menuName: string;
   moveUp: MouseEventHandler<HTMLElement>;
   moveDown: MouseEventHandler<HTMLElement>;
 }
 
 EditMenu.item = ({
-  categoryNo,
-  categoryName,
+  menuNo,
+  menuName,
   moveUp: handleMoveUp,
   moveDown: handleMoveDown,
 }: ICategoryProps) => {
   return (
-    <div className="edit-category-item">
-      <span className="edit-category-no">{categoryNo}</span>
-      <span className="edit-category-name">{categoryName}</span>
-      <div contextMenu="edit-category-arrow-wrap">
+    <div className="edit-menu-item">
+      <span className="edit-menu-no">{menuNo}</span>
+      <span className="edit-menu-name">{menuName}</span>
+      <div contextMenu="edit-menu-arrow-wrap">
         <i className="material-icons" onClick={handleMoveUp}>
           expand_less
         </i>
