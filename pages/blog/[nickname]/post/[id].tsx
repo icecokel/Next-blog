@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const profiles = await getItem("USERS", { id: { S: blogItem.userId } });
   const profileItem = unmarshallByItem(profiles.Item);
-  const categoryItems = await getMenus(blogItem.id);
+  const menuItems = await getMenus(blogItem.id);
 
   const post = await getItem("POSTS", { id: { S: context.query.id } });
 
@@ -44,12 +44,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       blog: blogItem,
       post: postItem,
       user: profileItem,
-      categorys: categoryItems,
+      menus: menuItems,
     },
   };
 };
 
-const PostPage = ({ blog, post, user, categorys, code }: any) => {
+const PostPage = ({ blog, post, user, menus, code }: any) => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (code === 404) {
@@ -61,7 +61,7 @@ const PostPage = ({ blog, post, user, categorys, code }: any) => {
 
   const setRedux = () => {
     dispatch(setBlog(blog));
-    dispatch(setMenu(categorys));
+    dispatch(setMenu(menus));
     dispatch(setUser(user));
   };
 
