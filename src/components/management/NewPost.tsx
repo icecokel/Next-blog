@@ -29,8 +29,7 @@ const NewPost = () => {
   const handleChangeDatePicker = (date: any) => {
     dispatch(setPost({ ...state, registDate: date }));
   };
-  const handleChangeTime = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { value, name } = e.target;
+  const handleChangeTime = ({ target: { value, name } }: React.ChangeEvent<HTMLSelectElement>) => {
     const time = Number.parseInt(value);
 
     if (name === "postTimehour") {
