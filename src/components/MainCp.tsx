@@ -1,20 +1,19 @@
 import styles from "./MainCp.module.scss";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/modules";
 import { BlogVO } from "../../store/modules/blog";
 import LinkIcons from "./LinkIcons";
 
+type tabType = "posts" | "inst";
+
 const MainCp = () => {
   const user = useSelector((state: RootState) => state.user);
   const blog = useSelector((state: RootState) => state.blog);
-  const [tab, setTab] = useState<"posts" | "inst">("posts");
+  const [tab, setTab] = useState<tabType>("posts");
 
-  const handleClickPostsTabs = () => {
-    setTab("posts");
-  };
-  const handleClickInstTabs = () => {
-    setTab("inst");
+  const handleClickTab: React.MouseEventHandler<HTMLLIElement> = ({ currentTarget: { id } }) => {
+    setTab(id as tabType);
   };
   return (
     <article className={styles.mainWrap}>
@@ -37,10 +36,18 @@ const MainCp = () => {
       </div>
       <section className={styles.tabs}>
         <ul>
-          <li className={tab === "posts" ? styles.activedTab : ""} onClick={handleClickPostsTabs}>
+          <li
+            className={tab === "posts" ? styles.activedTab : ""}
+            id={"posts"}
+            onClick={handleClickTab}
+          >
             글
           </li>
-          <li className={tab === "inst" ? styles.activedTab : ""} onClick={handleClickInstTabs}>
+          <li
+            className={tab === "inst" ? styles.activedTab : ""}
+            id={"inst"}
+            onClick={handleClickTab}
+          >
             소개
           </li>
         </ul>

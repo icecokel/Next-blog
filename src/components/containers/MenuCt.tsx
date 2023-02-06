@@ -9,10 +9,10 @@ interface IProp {
 
 const MenuCt = ({ postList }: IProp) => {
   const router = useRouter();
-  const categoryName = router.query.name ?? "";
+  const menuName = router.query.name ?? "";
   const nickname = router.query.nickname ?? "";
 
-  return <MenuCp categoryName={categoryName} postList={postList} nickname={nickname} />;
+  return <MenuCp menuName={menuName} postList={postList} nickname={nickname} />;
 };
 
 export default MenuCt;

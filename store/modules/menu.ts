@@ -1,9 +1,9 @@
 /**
- * category 리덕스 모듈
+ * menu 리덕스 모듈
  *
- * @description category 전역 상태 관리
+ * @description menu 전역 상태 관리
  * @author LeeSangmin
- * @since 2022/02/23
+ * @since 2023/01/30
  */
 
 // 액션 타입 선언

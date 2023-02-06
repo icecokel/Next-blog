@@ -23,7 +23,7 @@ const MenuIcon = () => {
       }
     };
     window.addEventListener("keydown", handleEscape, false);
-    return () => window.removeEventListener("keydown", handleEscape, false);
+    return window.removeEventListener("keydown", handleEscape, false);
   }, []);
 
   return (

@@ -12,11 +12,7 @@ const Header = () => {
   const router = useRouter();
 
   const handleClickLogo = () => {
-    if (nickname) {
-      router.push("/blog/" + nickname);
-    } else {
-      router.push("/");
-    }
+    router.push(`${nickname ? `/blog/"${nickname}` : "/"}`);
   };
 
   const handleClickSettings = () => {
