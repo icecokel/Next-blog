@@ -1,12 +1,12 @@
 import React, { MouseEventHandler, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
-import { MenuVo } from "../../../store/modules/menu";
+import { MenuVO } from "../../../store/modules/menu";
 import ErrorLabel from "../common/ErrorLabel";
 
 const EditMenu = () => {
   const menu = useSelector((state: RootState) => state.menu);
-  const [menuList, setMenuList] = useState<MenuVo[]>();
+  const [menuList, setMenuList] = useState<MenuVO[]>();
 
   const handleChangeItemIndex = (index: number, sign: "up" | "down") => {
     const list = [...(menuList ?? [])];

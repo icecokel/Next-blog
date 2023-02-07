@@ -10,7 +10,7 @@
 export const SET_MENU = "menu/SET_MENU" as const;
 
 // 액션 함수 선언
-export const setMenu = (menu: MenuVo[]) => ({
+export const setMenu = (menu: MenuVO[]) => ({
   type: SET_MENU,
   payload: menu,
 });
@@ -19,7 +19,7 @@ export const setMenu = (menu: MenuVo[]) => ({
 export type MenuAction = ReturnType<typeof setMenu>;
 
 // 카테고리 타입
-export type MenuVo = {
+export type MenuVO = {
   blogId: string;
   id: string;
   name: string;
@@ -27,11 +27,11 @@ export type MenuVo = {
 
 // 초기 값 선언
 // 배열로 선언
-const initialState: MenuVo[] = [];
+const initialState: MenuVO[] = [];
 
 // 리듀서 반환
 // eslint-disable-next-line import/no-anonymous-default-export
-export default (state: MenuVo[] = initialState, action: MenuAction) => {
+export default (state: MenuVO[] = initialState, action: MenuAction) => {
   switch (action.type) {
     case SET_MENU:
       state = action.payload;
