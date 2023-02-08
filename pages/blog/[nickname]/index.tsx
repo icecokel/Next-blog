@@ -1,6 +1,11 @@
 import type { NextPage } from "next";
 import MainCt from "../../../src/components/containers/MainCt";
-import { getItem, unmarshallByItem, getMenus, scanItem } from "../../../src/common/DynamoDbUtil";
+import {
+  getItem,
+  unmarshallByItem,
+  getMenus,
+  scanItem,
+} from "../../../src/common/service/DynamoService";
 import { useEffect } from "react";
 import useDispatchInitialization, {
   IInitializationProps,

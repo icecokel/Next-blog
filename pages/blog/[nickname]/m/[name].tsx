@@ -2,7 +2,12 @@ import { NextPage } from "next";
 import { PostVO } from "../../../../src/common/Model";
 import MenuCt from "../../../../src/components/containers/MenuCt";
 import { MenuVO } from "../../../../store/modules/menu";
-import { getItem, unmarshallByItem, getMenus, getPosts } from "../../../../src/common/DynamoDbUtil";
+import {
+  getItem,
+  unmarshallByItem,
+  getMenus,
+  getPosts,
+} from "../../../../src/common/service/DynamoService";
 import { useEffect } from "react";
 import useDispatchInitialization, {
   IInitializationProps,
