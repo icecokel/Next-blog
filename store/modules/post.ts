@@ -24,6 +24,7 @@ const initialState: NewPostVO = {
   title: "",
   contents: "",
   registDate: new Date().getTime(),
+  menuId: "",
 };
 
 // 리듀서 반환
