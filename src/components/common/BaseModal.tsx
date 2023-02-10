@@ -36,9 +36,9 @@ const BaseModal = ({ children, isOpen, setIsOpen }: IBaseModalProps) => {
         style={customStyles}
       >
         <div className={styles.close}>
-          <i className="material-icons" onClick={() => setIsOpen(false)}>
+          <span className="material-icons" onClick={() => setIsOpen(false)}>
             highlight_off
-          </i>
+          </span>
         </div>
         <div>{children && children}</div>
       </ReactModal>

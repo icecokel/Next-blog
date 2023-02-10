@@ -4,6 +4,7 @@ import { RootState } from "../../../store/modules";
 import { MenuVO } from "../../../store/modules/menu";
 import styles from "./MenuIcon.module.scss";
 import Link from "next/link";
+import { sortByKey } from "../../common/util/ArrayUtil";
 
 const MenuIcon = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -29,7 +30,7 @@ const MenuIcon = () => {
   return (
     <>
       <div onClick={handleClickOther}>
-        <i className="material-icons">menu</i>
+        <span className="material-icons">menu</span>
       </div>
       {openMenu && (
         <MenuIcon.content menu={menu} handleClick={handleClickOther} nickname={user.nickname} />
@@ -47,12 +48,13 @@ interface IMenuContentsProps {
 }
 
 MenuIcon.content = ({ menu, handleClick, nickname }: IMenuContentsProps) => {
+  const sortedMenu = sortByKey(menu, "index");
   return (
     <article className={styles.memuWarpper} onClick={handleClick}>
       <div className={styles.menuList}>
         <div className={styles.profile}>{nickname}님의 블로그</div>
         <ul>
-          {menu.map((item) => {
+          {sortedMenu.map((item) => {
             const encodedUri = `/blog/${nickname.trim()}/m/${encodeURIComponent(item.name.trim())}`;
             return (
               <Link href={encodedUri} key={item.id}>
