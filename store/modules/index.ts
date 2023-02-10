@@ -4,7 +4,7 @@ import blog, { BlogVO } from "./blog";
 import menu, { MenuVO } from "./menu";
 import user, { UserVO } from "./user";
 import post from "./post";
-import { NewPostVO } from "../../src/common/Model";
+import { NewPostVO } from "../../src/common/constant/Model";
 import clientState, { ClientStateVO } from "./clientState";
 
 const rootReducer = (

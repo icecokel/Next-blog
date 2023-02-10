@@ -1,5 +1,5 @@
 import React from "react";
-import { PostVO } from "../common/Model";
+import { PostVO } from "../common/constant/Model";
 import { fromNow } from "../common/DateUtil";
 import styles from "./PostCard.module.scss";
 import { UserVO } from "../../store/modules/user";

@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { PostVO } from "../../../../src/common/Model";
+import { PostVO } from "../../../../src/common/constant/Model";
 import MenuCt from "../../../../src/components/containers/MenuCt";
 import { MenuVO } from "../../../../store/modules/menu";
 import {
