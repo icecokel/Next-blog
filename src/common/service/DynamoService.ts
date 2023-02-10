@@ -1,10 +1,11 @@
 import {
   DynamoDBClient,
   GetItemCommand,
+  PutItemCommand,
   QueryCommand,
   ScanCommand,
 } from "@aws-sdk/client-dynamodb";
-import { unmarshall } from "@aws-sdk/util-dynamodb";
+import { unmarshall, marshall } from "@aws-sdk/util-dynamodb";
 
 type tableName = "BLOG" | "USERS" | "POSTS" | "MENU";
 
@@ -80,4 +81,13 @@ export const getPosts = async (menuId: string) => {
   );
 
   return unmarshallByItem(posts.Items);
+};
+
+export const putData = async (tableName: tableName, data: any) => {
+  return await client.send(
+    new PutItemCommand({
+      TableName: tableName,
+      Item: marshall(data),
+    })
+  );
 };
