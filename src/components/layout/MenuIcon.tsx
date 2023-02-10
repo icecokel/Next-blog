@@ -10,7 +10,7 @@ const MenuIcon = () => {
   const menu = useSelector((state: RootState) => state.menu);
   const [openMenu, setOpenMenu] = useState<boolean>(false);
 
-  const handleToggle = ({ target: { tagName } }: any) => {
+  const handleClickOther = ({ target: { tagName } }: any) => {
     if (tagName === "ARTICLE" || tagName === "I") {
       setOpenMenu(!openMenu);
     }
@@ -28,11 +28,11 @@ const MenuIcon = () => {
 
   return (
     <>
-      <div onClick={handleToggle}>
+      <div onClick={handleClickOther}>
         <i className="material-icons">menu</i>
       </div>
       {openMenu && (
-        <MenuIcon.content menu={menu} handleClick={handleToggle} nickname={user.nickname} />
+        <MenuIcon.content menu={menu} handleClick={handleClickOther} nickname={user.nickname} />
       )}
     </>
   );
