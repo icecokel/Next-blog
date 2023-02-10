@@ -9,6 +9,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import React from "react";
 import ErrorModal from "../src/components/common/ErrorModal";
 import { SessionProvider } from "next-auth/react";
+import styles from "../styles/app.module.scss";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
@@ -17,7 +18,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
       <SessionProvider session={session}>
         <Hydrate state={pageProps.dehydratedState}>
           <Header />
-          <div className="main-wrap">
+          <div className={styles.mainWrap}>
             <Component {...pageProps} />
           </div>
           <Footer />
