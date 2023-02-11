@@ -11,23 +11,23 @@ import styles from "./NewPost.module.scss";
 const BaseEditor = dynamic(import("../common/BaseEditor"), { ssr: false });
 
 const NewPost = () => {
-  const stateForUser = useSelector((state: RootState) => state.user);
-  const stateForPost = useSelector((state: RootState) => state.post);
-  const stateForMenu = useSelector((state: RootState) => state.menu);
-  const [selectedMenu, setSelectedMenu] = useState<string>(stateForMenu[0].id);
-  const registDate = new Date(stateForPost.registDate);
+  const user = useSelector((state: RootState) => state.user);
+  const post = useSelector((state: RootState) => state.post);
+  const menu = useSelector((state: RootState) => state.menu);
+  const [selectedMenu, setSelectedMenu] = useState<string>("");
+  const registDate = new Date(post.registDate);
   const dispatch = useDispatch();
 
   const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
-    dispatch(setPost({ ...stateForPost, [name]: value }));
+    dispatch(setPost({ ...post, [name]: value }));
   };
 
   const handleClickPostButton = async () => {
     const { status } = await axios.post("/api/registPost", {
-      ...stateForPost,
+      ...post,
       menuId: selectedMenu,
-      registId: stateForUser.id,
+      registId: user.id,
     });
 
     if (status !== 200) {
@@ -41,10 +41,10 @@ const NewPost = () => {
   };
 
   const handleChangeContents = (value: string | undefined) => {
-    dispatch(setPost({ ...stateForPost, contents: value }));
+    dispatch(setPost({ ...post, contents: value }));
   };
   const handleChangeDatePicker = (date: any) => {
-    dispatch(setPost({ ...stateForPost, registDate: date }));
+    dispatch(setPost({ ...post, registDate: date }));
   };
   const handleChangeTime = ({ target: { value, name } }: React.ChangeEvent<HTMLSelectElement>) => {
     const time = Number.parseInt(value);
@@ -55,7 +55,7 @@ const NewPost = () => {
       registDate.setMinutes(time);
     }
 
-    dispatch(setPost({ ...stateForPost, registDate: registDate.getTime() }));
+    dispatch(setPost({ ...post, registDate: registDate.getTime() }));
   };
 
   return (
@@ -66,14 +66,19 @@ const NewPost = () => {
         name="title"
         className={styles.input}
         onChange={handleChangeText}
-        value={stateForPost.title}
+        value={post.title}
       />
       <BaseEditor getEditorHTML={handleChangeContents} />
       <div className={styles.menu}>
         <p>메뉴 선택</p>
-        <select onSelect={handleSelectMenu} value={selectedMenu}>
-          {stateForMenu.map(({ id, name }) => {
-            return <option key={id}>{name}</option>;
+        <select onChange={handleSelectMenu} value={selectedMenu}>
+          <option value={""}>선택 해주세요.</option>
+          {menu.map(({ id, name }) => {
+            return (
+              <option key={id} value={id}>
+                {name}
+              </option>
+            );
           })}
         </select>
       </div>
@@ -82,7 +87,7 @@ const NewPost = () => {
         <div className={styles.dateWrapper}>
           <div className={styles.date}>
             <DatePicker
-              selected={new Date(stateForPost.registDate)}
+              selected={new Date(post.registDate)}
               dateFormat={"yyyy년 MM월 dd일"}
               onChange={handleChangeDatePicker}
             />
