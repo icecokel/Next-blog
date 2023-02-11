@@ -1,0 +1,68 @@
+@import "../../../styles/color.scss";
+
+.wrapper {
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid $color-brown2;
+  padding: 10px;
+  height: 50px;
+  border-radius: 3px;
+  margin-bottom: 5px;
+
+  .index {
+    width: 50px;
+    margin-right: 50px;
+  }
+  p {
+    flex: 1;
+    font-size: 1.1em;
+    font-weight: bold;
+  }
+  .arrows {
+    width: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    span {
+      font-size: 26px;
+      &:hover {
+        color: $color-active;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.addMenu {
+  @extend .menu;
+  justify-content: space-between;
+  padding: 10px 20px;
+  input {
+    width: 24em;
+    border: 0px;
+    border-radius: 0px;
+    border-bottom: 1px solid $color-gray;
+    font-size: 1em;
+  }
+  button {
+    border: 0px;
+    font-size: 1em;
+  }
+}
+
+.buttonWrapper {
+  border-top: 1px solid $color-gray;
+  border-bottom: 1px solid $color-gray;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  button {
+    width: 15em;
+  }
+}
