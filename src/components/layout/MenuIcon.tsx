@@ -12,7 +12,7 @@ const MenuIcon = () => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
 
   const handleClickOther = ({ target: { tagName } }: any) => {
-    if (tagName === "ARTICLE" || tagName === "I") {
+    if (tagName === "ARTICLE" || tagName === "SPAN") {
       setOpenMenu(!openMenu);
     }
   };
@@ -49,6 +49,7 @@ interface IMenuContentsProps {
 
 MenuIcon.content = ({ menu, handleClick, nickname }: IMenuContentsProps) => {
   const sortedMenu = sortByKey(menu, "index");
+
   return (
     <article className={styles.memuWarpper} onClick={handleClick}>
       <div className={styles.menuList}>
