@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { putData } from "../../src/common/service/DynamoService";
+import { insertItem } from "../../src/common/service/DynamoService";
 import { generateRandomString } from "../../src/common/util/stringUtil";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     id: generateRandomString(32),
   };
 
-  const response = await putData("POSTS", param);
+  const response = await insertItem("POSTS", param);
 
   res.status(response.$metadata.httpStatusCode ?? 500).json({
     status: "Ok",
