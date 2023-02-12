@@ -24,16 +24,16 @@ const Header = () => {
       <article className={styles.headerWrapper}>
         <div className={styles.logo} onClick={handleClickLogo}>
           {nickname}
-          <i className="material-icons">spa</i>
+          <span className="material-icons">spa</span>
         </div>
         <div className={styles.iconsWrapper}>
           <LoginIcon />
           <MenuIcon />
           {isOwner && (
             <div className={styles.icon}>
-              <i className="material-icons" onClick={handleClickSettings}>
+              <span className="material-icons" onClick={handleClickSettings}>
                 settings
-              </i>
+              </span>
             </div>
           )}
         </div>

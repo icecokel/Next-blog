@@ -20,7 +20,9 @@
 }
 
 .date {
-  width: 30%;
+  width: fit-content;
+  flex: 0 !important;
+
   input {
     height: 2em;
     font-size: 16px;
@@ -28,8 +30,9 @@
   }
 }
 .time {
-  width: 30%;
+  width: fit-content;
   select {
+    width: fit-content;
     padding: 0px;
     border: 1px solid $color-green4;
     margin-left: 0.5em;
@@ -37,6 +40,14 @@
     font-size: 16px;
   }
 }
+.menu {
+  @extend .time;
+  select {
+    width: 20em;
+    text-align: center;
+  }
+}
+
 .buttonWrapper {
   width: 100%;
   display: flex;

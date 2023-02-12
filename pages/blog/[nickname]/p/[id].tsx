@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getItem, unmarshallByItem, getMenus } from "../../../../src/common/DynamoDbUtil";
+import { getItem, unmarshallByItem, getMenus } from "../../../../src/common/service/DynamoService";
 import PostCard from "../../../../src/components/PostCard";
 import { setBlog } from "../../../../store/modules/blog";
 import { setMenu } from "../../../../store/modules/menu";

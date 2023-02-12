@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { PostVO } from "../../common/Model";
+import { PostVO } from "../../common/constant/Model";
 import MenuCp from "../MenuCp";
 
 interface IProp {

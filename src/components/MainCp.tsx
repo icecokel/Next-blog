@@ -64,8 +64,6 @@ interface IPostsProps {
 }
 
 MainCp.posts = ({ blog }: IPostsProps) => {
-  console.log(blog);
-
   return (
     <section className={styles.recentList}>
       <div>

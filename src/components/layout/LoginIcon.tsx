@@ -22,7 +22,7 @@ const LoginIcon = () => {
   return (
     <div>
       <label onClick={handleClickModalOpen}>
-        <i className="material-icons"> {isLogined ? "logout" : "account_circle"}</i>
+        <span className="material-icons"> {isLogined ? "logout" : "account_circle"}</span>
       </label>
 
       <BaseModal isOpen={isOpenLogInModal} setIsOpen={setIsOpenLogInModal}>

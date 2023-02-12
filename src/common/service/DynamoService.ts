@@ -1,10 +1,14 @@
 import {
   DynamoDBClient,
   GetItemCommand,
+  PutItemCommand,
   QueryCommand,
   ScanCommand,
+  UpdateItemCommand,
 } from "@aws-sdk/client-dynamodb";
-import { unmarshall } from "@aws-sdk/util-dynamodb";
+import { unmarshall, marshall } from "@aws-sdk/util-dynamodb";
+
+type tableName = "BLOG" | "USERS" | "POSTS" | "MENU";
 
 const clientConfig = {
   region: process.env.NEXT_PUBLIC_AWS_S3_REGION,
@@ -16,7 +20,7 @@ if (process.env.NEXT_PUBLIC_AWS_S3_REGION === "local") {
 }
 const client = new DynamoDBClient(clientConfig);
 
-export const getItem = (tableName: string, key: any) => {
+export const getItem = (tableName: tableName, key: any) => {
   return client.send(
     new GetItemCommand({
       TableName: tableName,
@@ -25,7 +29,7 @@ export const getItem = (tableName: string, key: any) => {
   );
 };
 
-export const scanItem = (tableName: string, select: string[]) => {
+export const scanItem = (tableName: tableName, select: string[]) => {
   return client.send(
     new ScanCommand({
       TableName: tableName,
@@ -51,7 +55,7 @@ export const unmarshallByItem = (item: any): any => {
 export const getMenus = async (blogId: string) => {
   const menus = await client.send(
     new QueryCommand({
-      TableName: "CATEGORY",
+      TableName: "MENU",
       IndexName: "blogIdIndex",
       KeyConditionExpression: "blogId = :blogId",
       ExpressionAttributeValues: {
@@ -78,4 +82,24 @@ export const getPosts = async (menuId: string) => {
   );
 
   return unmarshallByItem(posts.Items);
+};
+
+export const insertItem = async (tableName: tableName, data: any) => {
+  return await client.send(
+    new PutItemCommand({
+      TableName: tableName,
+      Item: marshall(data),
+    })
+  );
+};
+
+export const updateItem = async (tableName: tableName, key: string, data: any) => {
+  return client.send(
+    new UpdateItemCommand({
+      TableName: tableName,
+      Key: marshall(key),
+      AttributeUpdates: { value: marshall(data) },
+      ReturnValues: "ALL_NEW",
+    })
+  );
 };

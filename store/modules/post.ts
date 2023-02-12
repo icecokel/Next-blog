@@ -1,4 +1,4 @@
-import { NewPostVO } from "../../src/common/Model";
+import { NewPostVO } from "../../src/common/constant/Model";
 /**
  * post 리덕스 모듈
  *
@@ -24,6 +24,7 @@ const initialState: NewPostVO = {
   title: "",
   contents: "",
   registDate: new Date().getTime(),
+  menuId: "",
 };
 
 // 리듀서 반환

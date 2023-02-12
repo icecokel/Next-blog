@@ -14,9 +14,9 @@ const SearchIcon = () => {
   return (
     <div className={styles.searchWrapper}>
       <input type="text" value={kerword} onChange={handleChange} />
-      <i className="material-icons" onClick={handleClickSearch}>
+      <span className="material-icons" onClick={handleClickSearch}>
         search
-      </i>
+      </span>
     </div>
   );
 };

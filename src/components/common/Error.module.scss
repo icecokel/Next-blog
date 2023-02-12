@@ -7,8 +7,10 @@ $color-red: #d23203;
   width: fit-content;
   display: inline-flex;
   align-items: center;
-  i {
-    font-size: 1.5em;
-    margin-right: 0.2em;
+  span {
+    &:first-child {
+      font-size: 1.5em;
+      margin-right: 0.2em;
+    }
   }
 }

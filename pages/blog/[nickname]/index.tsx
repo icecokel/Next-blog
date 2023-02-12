@@ -1,7 +1,15 @@
 import type { NextPage } from "next";
 import MainCt from "../../../src/components/containers/MainCt";
-import { getItem, unmarshallByItem, getMenus, scanItem } from "../../../src/common/DynamoDbUtil";
+import {
+  getItem,
+  unmarshallByItem,
+  getMenus,
+  scanItem,
+} from "../../../src/common/service/DynamoService";
 import { useEffect } from "react";
+import useDispatchInitialization, {
+  IInitializationProps,
+} from "../../../src/common/hooks/useDispatchInitialization";
 
 export async function getServerSideProps(context: any) {
   const blogs = await getItem("BLOG", {
@@ -34,14 +42,9 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-const BlogMainPage: NextPage = (props: any) => {
-  useEffect(() => {
-    if (props.code === 404) {
-      window.location.replace(window.location.origin + "/404");
-    }
-  }, []);
-
-  return <MainCt {...props} />;
+const BlogMainPage: NextPage<IInitializationProps> = (props) => {
+  useDispatchInitialization(props);
+  return <MainCt />;
 };
 
 export default BlogMainPage;

@@ -1,8 +1,8 @@
 import React from "react";
 import Loader from "./common/Loader";
-import { PostVO } from "../common/Model";
+import { PostVO } from "../common/constant/Model";
 import Link from "next/link";
-import { formatDateToString } from "../common/DateUtil";
+import { formatDateToString } from "../common/util/DateUtil";
 
 const TITLE_MAX_LENGTH = 20;
 
@@ -61,11 +61,10 @@ interface IItemProps {
 
 MenuCp.itemByPost = ({ postId, hits, registDate, title, nickname }: IItemProps) => {
   return (
-    <Link href={"/blog/" + nickname + "/post/" + postId}>
+    <Link href={"/blog/" + nickname + "/p/" + postId}>
       <a>
         <li>
           <div>
-            <span className="post-no">{postId}</span>
             <span className="post-title">{title}</span>
             <span className="post-hits">{hits}</span>
           </div>

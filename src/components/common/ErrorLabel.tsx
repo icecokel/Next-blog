@@ -9,7 +9,7 @@ interface IErrorLabelProps {
 const ErrorLabel = ({ text, className }: IErrorLabelProps) => {
   return (
     <span className={className ?? styles.errorLabel}>
-      <i className="material-icons">error</i>
+      <span className="material-icons">error</span>
       <span>{text}</span>
     </span>
   );

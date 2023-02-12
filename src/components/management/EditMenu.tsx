@@ -1,90 +1,86 @@
-import React, { MouseEventHandler, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
-import { MenuVo } from "../../../store/modules/menu";
-import ErrorLabel from "../common/ErrorLabel";
+import { MenuVO } from "../../../store/modules/menu";
+import styles from "./EditMenu.module.scss";
+import { generateRandomString } from "../../common/util/stringUtil";
 
 const EditMenu = () => {
   const menu = useSelector((state: RootState) => state.menu);
-  const [menuList, setMenuList] = useState<MenuVo[]>();
+  const blog = useSelector((state: RootState) => state.blog);
+  const [menuList, setMenuList] = useState<MenuVO[]>(menu);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleChangeItemIndex = (index: number, sign: "up" | "down") => {
-    const list = [...(menuList ?? [])];
-
-    switch (sign) {
-      case "up":
-        list.splice(index - 1, 0, list[index]);
-        list.splice(index + 1, 1);
-        break;
-      case "down":
-        list.splice(index + 2, 0, list[index]);
-        list.splice(index, 1);
-        break;
+  const handleClickUp = (index: number) => {};
+  const handleClickDown = (index: number) => {};
+  const handleClickAddMenu = () => {
+    if (!inputRef.current) {
+      return;
     }
+    const lastIndex = menuList.reduce((acc, currentValue) => {
+      return acc < currentValue.index ? currentValue.index : acc;
+    }, 0);
 
-    setMenuList(list);
+    const newMenu: MenuVO = {
+      blogId: blog.id,
+      id: generateRandomString(32),
+      name: inputRef.current.value,
+      index: lastIndex + 1,
+    };
+    setMenuList([...menuList, newMenu]);
+    inputRef.current.value = "";
   };
 
-  const handleCancelButton = () => {
+  const handleClickMenuRest = () => {
     setMenuList(menu);
   };
-
   return (
-    <article className="edit-category-wrap">
-      <section></section>
-      {/* //   <section>
-    //     {categoryList?.map((item, index) => {
-    //       return (
-    //         <EditMenu.item
-    //           key={"category_management_" + index}
-    //           categoryNo={item.categoryNo}
-    //           categoryName={item.categoryName}
-    //           moveUp={() => {
-    //             handleChangeItemIndex(index, "up");
-    //           }}
-    //           moveDown={() => {
-    //             handleChangeItemIndex(index, "down");
-    //           }}
-    //         />
-    //       );
-    //     })}
-    //   </section>
-    //   <ErrorLabel text="저장하지 않으면 변경되지 않습니다." />
-    //   <div className="button-wrap">
-    //     <button onClick={handleCancelButton}>작업취소</button>
-    //     <button>저장</button>
-    //   </div> */}
+    <article className={styles.wrapper}>
+      <ul>
+        {menuList.map((item, index) => {
+          return (
+            <li key={"menu_" + index} className={styles.menu}>
+              <EditMenu.menu
+                {...item}
+                handleClickUp={handleClickUp}
+                handleClickDown={handleClickDown}
+              />
+            </li>
+          );
+        })}
+        <li className={styles.addMenu}>
+          <input type="text" placeholder="추가할 메뉴 명을 입력해주세요." ref={inputRef} />
+          <button onClick={handleClickAddMenu}>추가</button>
+        </li>
+      </ul>
+      <div className={styles.buttonWrapper}>
+        <button onClick={handleClickMenuRest}>원래대로</button>
+        <button className="btn-success">저장</button>
+      </div>
     </article>
   );
 };
 
 export default EditMenu;
 
-interface ICategoryProps {
-  menuNo: string;
-  menuName: string;
-  moveUp: MouseEventHandler<HTMLElement>;
-  moveDown: MouseEventHandler<HTMLElement>;
+interface IMenuProps extends MenuVO {
+  handleClickUp: (index: number) => void;
+  handleClickDown: (index: number) => void;
 }
 
-EditMenu.item = ({
-  menuNo,
-  menuName,
-  moveUp: handleMoveUp,
-  moveDown: handleMoveDown,
-}: ICategoryProps) => {
+EditMenu.menu = ({ index, name, handleClickUp, handleClickDown }: IMenuProps) => {
   return (
-    <div className="edit-menu-item">
-      <span className="edit-menu-no">{menuNo}</span>
-      <span className="edit-menu-name">{menuName}</span>
-      <div contextMenu="edit-menu-arrow-wrap">
-        <i className="material-icons" onClick={handleMoveUp}>
-          expand_less
-        </i>
-        <i className="material-icons" onClick={handleMoveDown}>
-          expand_more
-        </i>
+    <>
+      <span className={styles.index}>{index}</span>
+      <p>{name}</p>
+      <div className={styles.arrows}>
+        <span className="material-icons" onClick={() => handleClickUp(index)}>
+          keyboard_arrow_up
+        </span>
+        <span className="material-icons" onClick={() => handleClickDown(index)}>
+          keyboard_arrow_down
+        </span>
       </div>
-    </div>
+    </>
   );
 };
