@@ -4,6 +4,7 @@ import {
   PutItemCommand,
   QueryCommand,
   ScanCommand,
+  UpdateItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { unmarshall, marshall } from "@aws-sdk/util-dynamodb";
 
@@ -83,11 +84,22 @@ export const getPosts = async (menuId: string) => {
   return unmarshallByItem(posts.Items);
 };
 
-export const putData = async (tableName: tableName, data: any) => {
+export const insertItem = async (tableName: tableName, data: any) => {
   return await client.send(
     new PutItemCommand({
       TableName: tableName,
       Item: marshall(data),
+    })
+  );
+};
+
+export const updateItem = async (tableName: tableName, key: string, data: any) => {
+  return client.send(
+    new UpdateItemCommand({
+      TableName: tableName,
+      Key: marshall(key),
+      AttributeUpdates: { value: marshall(data) },
+      ReturnValues: "ALL_NEW",
     })
   );
 };
