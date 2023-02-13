@@ -4,6 +4,7 @@ import { RootState } from "../../../store/modules";
 import { MenuVO } from "../../../store/modules/menu";
 import styles from "./EditMenu.module.scss";
 import { generateRandomString } from "../../common/util/stringUtil";
+import axios from "axios";
 
 const EditMenu = () => {
   const menu = useSelector((state: RootState) => state.menu);
@@ -31,8 +32,11 @@ const EditMenu = () => {
     inputRef.current.value = "";
   };
 
-  const handleClickMenuRest = () => {
+  const handleClickMenuReset = () => {
     setMenuList(menu);
+  };
+  const handleClickSaveMenus = async () => {
+    await axios.put("/api/putMenus", { menus: menuList });
   };
   return (
     <article className={styles.wrapper}>
@@ -54,8 +58,10 @@ const EditMenu = () => {
         </li>
       </ul>
       <div className={styles.buttonWrapper}>
-        <button onClick={handleClickMenuRest}>원래대로</button>
-        <button className="btn-success">저장</button>
+        <button onClick={handleClickMenuReset}>원래대로</button>
+        <button onClick={handleClickSaveMenus} className="btn-success">
+          저장
+        </button>
       </div>
     </article>
   );

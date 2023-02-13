@@ -23,6 +23,7 @@ export type MenuVO = {
   blogId: string;
   id: string;
   name: string;
+  index: number;
 };
 
 // 초기 값 선언
