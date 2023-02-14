@@ -1,0 +1,45 @@
+@import "../../../styles/color.scss";
+.wrapper {
+  padding: 1em;
+  display: flex;
+
+  .menu {
+    position: fixed;
+    left: 0%;
+    width: 8em;
+    margin-left: calc(((100vw - 740px) / 2) - 6.5em);
+
+    ul {
+      text-align: center;
+
+      li {
+        border-radius: 5px;
+        padding: 0.5em;
+        font-size: 20px;
+        background-color: $color-green3;
+        color: $color-black;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .contentWrapper {
+    padding: 1em;
+    margin-left: 8.3em;
+    width: 80%;
+    .contentTitle {
+      min-height: 3em;
+      border-bottom: 2px solid $color-gray;
+      margin-bottom: 1em;
+      padding-left: 0.5em;
+      line-height: 2em;
+    }
+
+    .content {
+      padding: 0.5em;
+      flex: 1;
+      background-color: $color-white;
+      border-radius: 5px;
+    }
+  }
+}

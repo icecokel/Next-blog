@@ -1,12 +1,7 @@
-import React, {
-  ChangeEventHandler,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { ChangeEventHandler, useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import RequireLabel from "../common/RequireLabel";
+import styles from "./EditBlogInfo.module.scss";
 
 interface BlogInfoVo {
   blogName: string;
@@ -37,9 +32,7 @@ const EditBlogInfo = () => {
     if (!formData.blogFavicon) {
       return "";
     }
-    faviconSrc.current = window.URL.createObjectURL(
-      formData.blogFavicon
-    ).toString();
+    faviconSrc.current = window.URL.createObjectURL(formData.blogFavicon).toString();
   }, [formData.blogFavicon]);
 
   const handleClickFavicon = () => {
@@ -80,7 +73,7 @@ const EditBlogInfo = () => {
   };
 
   return (
-    <article className="edit-bloginfo">
+    <article className={styles.wrapper}>
       <EditBlogInfo.item
         lable="블로그 이름"
         name="blogName"
@@ -99,29 +92,24 @@ const EditBlogInfo = () => {
         onChange={handleChangeText}
         value={formData.blogDescription}
       />
-      <div className="edit-bloginfo-item">
-        <div className="title">
+      <div className={styles.item}>
+        <div className={styles.title}>
           <RequireLabel isShowing={!favicon?.name} />
           <label>파비콘 설정</label>
         </div>
-        <div className="edit-bloginfo-favicon">
+        <div className={styles.favicon}>
           <label>{favicon?.name}</label>
           <button onClick={handleClickFavicon}>선택</button>
         </div>
       </div>
-      <div className="edit-bloginfo-item">
-        <div className="title">
+      <div className={styles.item}>
+        <div className={styles.title}>
           <label>미리보기</label>
         </div>
-        <Image
-          alt="preview"
-          src={faviconSrc.current}
-          width={128}
-          height={128}
-        />
+        <Image alt="preview" src={faviconSrc.current} width={128} height={128} />
       </div>
-      <div className="button-wrap">
-        <button className="button-half" onClick={hamdleClickSave}>
+      <div className={styles.buttonWrapper}>
+        <button className={styles.half} onClick={hamdleClickSave}>
           저장
         </button>
       </div>
@@ -140,8 +128,8 @@ interface IItemProps {
 
 EditBlogInfo.item = ({ name, onChange, value, lable }: IItemProps) => {
   return (
-    <div className="edit-bloginfo-item">
-      <div className="title">
+    <div className={styles.item}>
+      <div className={styles.title}>
         <RequireLabel isShowing={value.length < 1} />
         <label>{lable}</label>
       </div>
