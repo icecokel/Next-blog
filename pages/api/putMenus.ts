@@ -14,21 +14,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const updateMenus: MenuVO[] = req.body.menus;
   const blogId = updateMenus[0].blogId;
   const menuItem: MenuVO[] = await getMenus(blogId);
-
-  updateMenus.forEach((item) => {
-    const isIncludes = isIncludesFromTargetByKey(item, menuItem, "id");
-    if (isIncludes) {
-      // 수정
-    } else {
-      console.log(item);
-      // 추가
+  updateMenus.forEach(async (item) => {
+    try {
+      const isIncludes = isIncludesFromTargetByKey(item, menuItem, "id");
+      if (isIncludes) {
+        await updateItem("MENU", "id", item);
+      } else {
+        await insertItem("MENU", item);
+      }
+    } catch (error) {
+      res.status(500).json({
+        status: "NG",
+        item: error,
+      });
     }
   });
 
-  //   const response = await putData("MENU", param);
-
-  // res.status(response.$metadata.httpStatusCode ?? 500).json({
-  //   status: "Ok",
-  //   item: response,
-  // });
+  res.status(200).json({
+    status: "Ok",
+  });
 }
