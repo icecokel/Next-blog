@@ -1,4 +1,6 @@
 import {
+  AttributeValue,
+  AttributeValueUpdate,
   DynamoDBClient,
   GetItemCommand,
   PutItemCommand,
@@ -7,6 +9,7 @@ import {
   UpdateItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { unmarshall, marshall } from "@aws-sdk/util-dynamodb";
+import { capitalizeFirstLetter } from "../util/StringUtil";
 
 type tableName = "BLOG" | "USERS" | "POSTS" | "MENU";
 
@@ -93,13 +96,37 @@ export const insertItem = async (tableName: tableName, data: any) => {
   );
 };
 
-export const updateItem = async (tableName: tableName, key: string, data: any) => {
-  return client.send(
-    new UpdateItemCommand({
-      TableName: tableName,
-      Key: marshall(key),
-      AttributeUpdates: { value: marshall(data) },
-      ReturnValues: "ALL_NEW",
-    })
-  );
+export const updateItem = async (
+  tableName: tableName,
+  key: string,
+  updateNames: string[],
+  data: any
+) => {
+  const updateExpression = `set ${updateNames
+    .map((item) => `#${item} = :new${capitalizeFirstLetter(item)}`)
+    .toString()}`.replaceAll(",", ", ");
+
+  const expressionAttributeNames = {} as any;
+  Object.values(updateNames).forEach((value) => {
+    expressionAttributeNames[`#${value}`] = value;
+  });
+
+  const expressionAttributeValues: Record<string, AttributeValue> = {};
+
+  Object.entries(data).forEach(([key, value]) => {
+    if (updateNames.includes(key)) {
+      expressionAttributeValues[`:new${capitalizeFirstLetter(key)}`] = marshall(value);
+    }
+  });
+
+  const params = {
+    TableName: tableName,
+    Key: marshall({ id: data[key] }),
+    UpdateExpression: updateExpression,
+    ExpressionAttributeNames: expressionAttributeNames,
+    ExpressionAttributeValues: expressionAttributeValues,
+    ReturnValues: "ALL_NEW",
+  };
+
+  return await client.send(new UpdateItemCommand(params));
 };

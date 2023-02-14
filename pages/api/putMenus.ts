@@ -1,6 +1,11 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getMenus, insertItem, updateItem } from "../../src/common/service/DynamoService";
+import {
+  getMenus,
+  insertItem,
+  unmarshallByItem,
+  updateItem,
+} from "../../src/common/service/DynamoService";
 import { isIncludesFromTargetByKey } from "../../src/common/util/ArrayUtil";
 import { MenuVO } from "../../store/modules/menu";
 
@@ -14,23 +19,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const updateMenus: MenuVO[] = req.body.menus;
   const blogId = updateMenus[0].blogId;
   const menuItem: MenuVO[] = await getMenus(blogId);
-  updateMenus.forEach(async (item) => {
-    try {
-      const isIncludes = isIncludesFromTargetByKey(item, menuItem, "id");
-      if (isIncludes) {
-        await updateItem("MENU", "id", item);
-      } else {
-        await insertItem("MENU", item);
-      }
-    } catch (error) {
-      res.status(500).json({
-        status: "NG",
-        item: error,
-      });
-    }
+
+  const promises = updateMenus.map(async (item) => {
+    const isIncludes = isIncludesFromTargetByKey(item, menuItem, "id");
+    return isIncludes
+      ? updateItem("MENU", "id", ["name", "index"], item)
+      : insertItem("MENU", item);
   });
 
-  res.status(200).json({
-    status: "Ok",
-  });
+  try {
+    const response = await Promise.all(promises);
+
+    res.status(200).json({
+      status: "Ok",
+      items: unmarshallByItem(response.map((menu) => menu.Attributes)),
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "NG",
+      item: error,
+    });
+  }
 }
