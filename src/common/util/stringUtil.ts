@@ -1,4 +1,4 @@
-export const generateRandomString = (length: number) => {
+export const generateRandomString = (length: number): string => {
   let result = "";
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   const charactersLength = characters.length;
@@ -6,4 +6,8 @@ export const generateRandomString = (length: number) => {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
+};
+
+export const capitalizeFirstLetter = (s: string): string => {
+  return s.charAt(0).toUpperCase() + s.slice(1);
 };
