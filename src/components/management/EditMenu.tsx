@@ -3,7 +3,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import { MenuVO } from "../../../store/modules/menu";
 import styles from "./EditMenu.module.scss";
-import { generateRandomString } from "../../common/util/stringUtil";
+import { generateRandomString } from "../../common/util/StringUtil";
+import axios from "axios";
+import { sortByKey } from "../../common/util/ArrayUtil";
 
 const EditMenu = () => {
   const menu = useSelector((state: RootState) => state.menu);
@@ -11,8 +13,19 @@ const EditMenu = () => {
   const [menuList, setMenuList] = useState<MenuVO[]>(menu);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const handleChangeMenuName = ({ target: { id, value } }: React.ChangeEvent<HTMLInputElement>) => {
+    const menuToUpdate = menuList.find((item) => item.id === id);
+    if (!menuToUpdate) {
+      return;
+    }
+    const updatedList = menuList.filter((item) => item.id !== id);
+    updatedList.push({ ...menuToUpdate, name: value });
+    const sortedList = sortByKey(updatedList, "index");
+    setMenuList(sortedList);
+  };
   const handleClickUp = (index: number) => {};
   const handleClickDown = (index: number) => {};
+
   const handleClickAddMenu = () => {
     if (!inputRef.current) {
       return;
@@ -31,8 +44,11 @@ const EditMenu = () => {
     inputRef.current.value = "";
   };
 
-  const handleClickMenuRest = () => {
+  const handleClickMenuReset = () => {
     setMenuList(menu);
+  };
+  const handleClickSaveMenus = async () => {
+    await axios.put("/api/putMenus", { menus: menuList });
   };
   return (
     <article className={styles.wrapper}>
@@ -42,6 +58,7 @@ const EditMenu = () => {
             <li key={"menu_" + index} className={styles.menu}>
               <EditMenu.menu
                 {...item}
+                handleChangeMenuName={handleChangeMenuName}
                 handleClickUp={handleClickUp}
                 handleClickDown={handleClickDown}
               />
@@ -54,8 +71,10 @@ const EditMenu = () => {
         </li>
       </ul>
       <div className={styles.buttonWrapper}>
-        <button onClick={handleClickMenuRest}>원래대로</button>
-        <button className="btn-success">저장</button>
+        <button onClick={handleClickMenuReset}>원래대로</button>
+        <button onClick={handleClickSaveMenus} className="btn-success">
+          저장
+        </button>
       </div>
     </article>
   );
@@ -64,15 +83,29 @@ const EditMenu = () => {
 export default EditMenu;
 
 interface IMenuProps extends MenuVO {
+  handleChangeMenuName: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleClickUp: (index: number) => void;
   handleClickDown: (index: number) => void;
 }
 
-EditMenu.menu = ({ index, name, handleClickUp, handleClickDown }: IMenuProps) => {
+EditMenu.menu = ({
+  id,
+  index,
+  name,
+  handleClickUp,
+  handleClickDown,
+  handleChangeMenuName,
+}: IMenuProps) => {
   return (
     <>
       <span className={styles.index}>{index}</span>
-      <p>{name}</p>
+      <input
+        id={id}
+        className={styles.name}
+        type="text"
+        value={name}
+        onChange={handleChangeMenuName}
+      />
       <div className={styles.arrows}>
         <span className="material-icons" onClick={() => handleClickUp(index)}>
           keyboard_arrow_up

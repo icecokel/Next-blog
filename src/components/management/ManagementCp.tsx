@@ -1,4 +1,5 @@
 import React, { ReactElement } from "react";
+import styles from "./ManagementCp.module.scss";
 
 interface IProp {
   menuList: string[];
@@ -14,8 +15,8 @@ const ManagementCp = ({
   currentMenuComponent: cureentMenuComponent,
 }: IProp) => {
   return (
-    <div className="management-wrap">
-      <div className="management-menu">
+    <div className={styles.wrapper}>
+      <div className={styles.menu}>
         <ul>
           {menuList.map((menu, index) => {
             return (
@@ -32,11 +33,11 @@ const ManagementCp = ({
           })}
         </ul>
       </div>
-      <div className="management-content-wrap">
-        <div className="management-content-title">
+      <div className={styles.contentWrapper}>
+        <div className={styles.contentTitle}>
           <h2>{currentMenu}</h2>
         </div>
-        <div className="management-content">{cureentMenuComponent}</div>
+        <div className={styles.content}>{cureentMenuComponent}</div>
       </div>
     </div>
   );

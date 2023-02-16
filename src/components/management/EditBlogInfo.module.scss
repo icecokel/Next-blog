@@ -1,0 +1,55 @@
+@import "../../../styles/color.scss";
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .item {
+    width: 70%;
+    display: flex;
+    margin: 0.5em 1em;
+    align-items: center;
+    .title {
+      width: 8em;
+      font-size: 1.1em;
+      text-align: right;
+      margin-right: 2em;
+    }
+
+    .favicon {
+      width: 260px;
+      display: flex;
+      justify-content: space-between;
+      height: 40px;
+
+      label {
+        border: 1px solid $color-green3;
+        border-radius: 3px;
+        padding: 0.5em 1em;
+        font-size: 18px;
+        flex: 1;
+        margin-right: 0.5em;
+      }
+      button {
+        width: 30%;
+        height: 40px;
+        border: 1px solid $color-green3;
+        border-radius: 3px;
+        padding: 0.5em 1em;
+        font-size: 18px;
+        margin: 0px;
+      }
+    }
+  }
+
+  .buttonWrapper {
+    margin-top: 2em;
+    margin-bottom: 1em;
+
+    .half {
+      flex: none;
+      width: 50%;
+    }
+  }
+}

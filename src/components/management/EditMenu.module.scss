@@ -16,11 +16,15 @@
     width: 50px;
     margin-right: 50px;
   }
-  p {
+  .name {
     flex: 1;
-    font-size: 1.1em;
-    font-weight: bold;
+    margin-right: 2em;
+    border: 0px;
+    border-radius: 0px;
+    border-bottom: 1px solid $color-gray;
+    font-size: 1em;
   }
+
   .arrows {
     width: 15px;
     display: flex;
