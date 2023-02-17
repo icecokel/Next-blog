@@ -62,13 +62,11 @@ const EditBlogInfo = () => {
     };
   };
 
-  const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
+  const handleChangeText = ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const hamdleClickSave = () => {
+  const handleClickSave = () => {
     window.URL.revokeObjectURL(faviconSrc.current);
   };
 
@@ -93,23 +91,27 @@ const EditBlogInfo = () => {
         value={formData.blogDescription}
       />
       <div className={styles.item}>
-        <div className={styles.title}>
+        <div className={styles.label}>
           <RequireLabel isShowing={!favicon?.name} />
           <label>파비콘 설정</label>
         </div>
         <div className={styles.favicon}>
-          <label>{favicon?.name}</label>
+          <input type="text" readOnly>
+            {favicon?.name}
+          </input>
           <button onClick={handleClickFavicon}>선택</button>
         </div>
       </div>
-      <div className={styles.item}>
-        <div className={styles.title}>
+      <div className={styles.preview}>
+        <div className={styles.label}>
           <label>미리보기</label>
         </div>
-        <Image alt="preview" src={faviconSrc.current} width={128} height={128} />
+        <div className={styles.input}>
+          <Image id={styles.image} alt="preview" src={faviconSrc.current} width={64} height={64} />
+        </div>
       </div>
       <div className={styles.buttonWrapper}>
-        <button className={styles.half} onClick={hamdleClickSave}>
+        <button className={styles.half} onClick={handleClickSave}>
           저장
         </button>
       </div>
@@ -129,11 +131,13 @@ interface IItemProps {
 EditBlogInfo.item = ({ name, onChange, value, lable }: IItemProps) => {
   return (
     <div className={styles.item}>
-      <div className={styles.title}>
+      <div className={styles.label}>
         <RequireLabel isShowing={value.length < 1} />
         <label>{lable}</label>
       </div>
-      <input type="text" name={name} onChange={onChange} value={value} />
+      <div className={styles.input}>
+        <input type="text" name={name} onChange={onChange} value={value} />
+      </div>
     </div>
   );
 };
