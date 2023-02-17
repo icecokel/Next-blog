@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
-import { MenuVO } from "../../../store/modules/menu";
+import { MenuVO, setMenu } from "../../../store/modules/menu";
 import styles from "./EditMenu.module.scss";
 import { generateRandomString } from "../../common/util/StringUtil";
 import axios from "axios";
@@ -10,8 +10,9 @@ import { sortByKey } from "../../common/util/ArrayUtil";
 const EditMenu = () => {
   const menu = useSelector((state: RootState) => state.menu);
   const blog = useSelector((state: RootState) => state.blog);
-  const [menuList, setMenuList] = useState<MenuVO[]>(menu);
+  const [menuList, setMenuList] = useState<MenuVO[]>(sortByKey(menu, "index"));
   const inputRef = useRef<HTMLInputElement>(null);
+  const dispatch = useDispatch();
 
   const handleChangeMenuName = ({ target: { id, value } }: React.ChangeEvent<HTMLInputElement>) => {
     const menuToUpdate = menuList.find((item) => item.id === id);
@@ -20,11 +21,43 @@ const EditMenu = () => {
     }
     const updatedList = menuList.filter((item) => item.id !== id);
     updatedList.push({ ...menuToUpdate, name: value });
-    const sortedList = sortByKey(updatedList, "index");
-    setMenuList(sortedList);
+    sortByKey(updatedList, "index");
+
+    setMenuList(updatedList);
   };
-  const handleClickUp = (index: number) => {};
-  const handleClickDown = (index: number) => {};
+  const handleClickUp: React.MouseEventHandler<HTMLSpanElement> = ({ currentTarget: { id } }) => {
+    handleClickArrow(id, true);
+  };
+  const handleClickDown: React.MouseEventHandler<HTMLSpanElement> = ({ currentTarget: { id } }) => {
+    handleClickArrow(id, false);
+  };
+
+  const handleClickArrow = (id: string, isUp: boolean) => {
+    let updateIndex = 0;
+    const updateMenu: MenuVO[] = [];
+
+    const menusToLoop = isUp ? menuList.reverse() : menuList;
+
+    menusToLoop.forEach((menu) => {
+      if (menu.id !== id) {
+        if (updateIndex > 0 && menu.index === updateIndex) {
+          updateMenu.push({ ...menu, index: isUp ? updateIndex + 1 : updateIndex - 1 });
+        } else {
+          updateMenu.push(menu);
+        }
+      } else {
+        if (isUp) {
+          updateIndex = menu.index - 1 <= 1 ? 1 : menu.index - 1;
+        } else {
+          updateIndex = menu.index + 1 >= menuList.length ? menuList.length : menu.index + 1;
+        }
+        updateMenu.push({ ...menu, index: updateIndex });
+      }
+    });
+
+    sortByKey(updateMenu, "index");
+    setMenuList(updateMenu);
+  };
 
   const handleClickAddMenu = () => {
     if (!inputRef.current) {
@@ -45,11 +78,16 @@ const EditMenu = () => {
   };
 
   const handleClickMenuReset = () => {
-    setMenuList(menu);
+    const sortedMenu = [...menu];
+    sortByKey(sortedMenu, "index");
+    setMenuList(sortedMenu);
   };
   const handleClickSaveMenus = async () => {
-    await axios.put("/api/putMenus", { menus: menuList });
+    const { data, status } = await axios.put("/api/putMenus", { menus: menuList });
+    if (status !== 200) return;
+    dispatch(setMenu(data.items));
   };
+
   return (
     <article className={styles.wrapper}>
       <ul>
@@ -84,8 +122,8 @@ export default EditMenu;
 
 interface IMenuProps extends MenuVO {
   handleChangeMenuName: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleClickUp: (index: number) => void;
-  handleClickDown: (index: number) => void;
+  handleClickUp: React.MouseEventHandler<HTMLSpanElement>;
+  handleClickDown: React.MouseEventHandler<HTMLSpanElement>;
 }
 
 EditMenu.menu = ({
@@ -107,10 +145,10 @@ EditMenu.menu = ({
         onChange={handleChangeMenuName}
       />
       <div className={styles.arrows}>
-        <span className="material-icons" onClick={() => handleClickUp(index)}>
+        <span id={id} className="material-icons" onClick={handleClickUp}>
           keyboard_arrow_up
         </span>
-        <span className="material-icons" onClick={() => handleClickDown(index)}>
+        <span id={id} className="material-icons" onClick={handleClickDown}>
           keyboard_arrow_down
         </span>
       </div>
