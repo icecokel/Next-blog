@@ -117,6 +117,18 @@ input[type="text"] {
     border: 1.5px solid $color-active;
   }
 }
+textarea {
+  border: 1px solid $color-green3;
+  border-radius: 3px;
+  padding: 0.5em 1em;
+  font-size: 18px;
+
+  &:active,
+  &:focus {
+    outline: none;
+    border: 1.5px solid $color-active;
+  }
+}
 select {
   border: 1px solid $color-green3;
   border-radius: 3px;

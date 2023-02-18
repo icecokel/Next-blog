@@ -2,6 +2,8 @@ import React, { ChangeEventHandler, useCallback, useEffect, useRef, useState } f
 import Image from "next/image";
 import RequireLabel from "../common/RequireLabel";
 import styles from "./EditBlogInfo.module.scss";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/modules";
 
 interface BlogInfoVo {
   blogName: string;
@@ -12,6 +14,8 @@ interface BlogInfoVo {
 }
 
 const EditBlogInfo = () => {
+  const blog = useSelector((state: RootState) => state.blog);
+  const user = useSelector((state: RootState) => state.user);
   const [formData, setFormData] = useState<BlogInfoVo>({
     blogName: "",
     blogNickName: "",
@@ -20,13 +24,27 @@ const EditBlogInfo = () => {
     blogFavicon: undefined,
   });
   const [favicon, setFavicon] = useState<File>();
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const faviconSrc = useRef<string>("/resources/images/dafault.png");
 
+  useEffect(() => {
+    memoInitialization();
+  }, []);
   useEffect(() => {
     memoPreviewSrc();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
+
+  const memoInitialization = useCallback(() => {
+    setFormData({
+      blogDescription: blog.description,
+      blogFavicon: undefined,
+      blogName: blog.name,
+      blogNickName: user.nickname,
+      blogFaviconName: "",
+    });
+  }, []);
 
   const memoPreviewSrc = useCallback(() => {
     if (!formData.blogFavicon) {
@@ -62,7 +80,12 @@ const EditBlogInfo = () => {
     };
   };
 
-  const handleChangeText = ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeText = ({
+    target: { name, value, tagName, scrollHeight, style },
+  }: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (tagName === "TEXTAREA") {
+      style.height = scrollHeight + "px";
+    }
     setFormData({ ...formData, [name]: value });
   };
 
@@ -84,12 +107,21 @@ const EditBlogInfo = () => {
         onChange={handleChangeText}
         value={formData.blogNickName}
       />
-      <EditBlogInfo.item
-        lable="블로그 설명"
-        name="blogDescription"
-        onChange={handleChangeText}
-        value={formData.blogDescription}
-      />
+      <div className={styles.item}>
+        <div className={styles.label}>
+          <RequireLabel isShowing={formData.blogDescription.length < 1} />
+          <label>블로그 설명</label>
+        </div>
+        <div className={styles.input}>
+          <textarea
+            name={"blogDescription"}
+            onChange={handleChangeText}
+            value={formData.blogDescription}
+            ref={textareaRef}
+            rows={1}
+          />
+        </div>
+      </div>
       <div className={styles.item}>
         <div className={styles.label}>
           <RequireLabel isShowing={!favicon?.name} />
