@@ -9,8 +9,6 @@ interface BlogInfoVo {
   blogName: string;
   blogNickName: string;
   blogDescription: string;
-  blogFaviconName: string;
-  blogFavicon: File | undefined;
 }
 
 const EditBlogInfo = () => {
@@ -20,64 +18,42 @@ const EditBlogInfo = () => {
     blogName: "",
     blogNickName: "",
     blogDescription: "",
-    blogFaviconName: "",
-    blogFavicon: undefined,
   });
   const [favicon, setFavicon] = useState<File>();
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const faviconSrc = useRef<string>("/resources/images/dafault.png");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const faviconFileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    memoInitialization();
+    initialization();
   }, []);
-  useEffect(() => {
-    memoPreviewSrc();
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formData]);
-
-  const memoInitialization = useCallback(() => {
+  const initialization = () => {
     setFormData({
       blogDescription: blog.description,
-      blogFavicon: undefined,
       blogName: blog.name,
       blogNickName: user.nickname,
-      blogFaviconName: "",
     });
-  }, []);
+  };
 
-  const memoPreviewSrc = useCallback(() => {
-    if (!formData.blogFavicon) {
-      return "";
+  const handleChangeFavicon = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.currentTarget.files) {
+      return;
     }
-    faviconSrc.current = window.URL.createObjectURL(formData.blogFavicon).toString();
-  }, [formData.blogFavicon]);
+    let reader = new FileReader();
+    const file = e.currentTarget.files[0];
 
-  const handleClickFavicon = () => {
-    const input = document.createElement("input");
-
-    input.setAttribute("type", "file");
-    input.setAttribute("accept", "image/*");
-    input.setAttribute("class", "display-none");
-    document.body.appendChild(input);
-
-    input.click();
-    input.onchange = () => {
-      if (!input.files) {
-        return;
-      }
-
-      const file = input.files[0];
+    reader.onloadend = () => {
       const imgSrc = window.URL.createObjectURL(file);
       faviconSrc.current = imgSrc;
-
       setFavicon(file);
-      setFormData({
-        ...formData,
-        blogFavicon: file,
-        blogFaviconName: file.name,
-      });
     };
+    // reader.readAsDataURL(file);
+  };
+
+  const handleClickChooseFavicon = () => {
+    if (!faviconFileRef.current) return;
+    faviconFileRef.current.click();
   };
 
   const handleChangeText = ({
@@ -92,7 +68,6 @@ const EditBlogInfo = () => {
   const handleClickSave = () => {
     window.URL.revokeObjectURL(faviconSrc.current);
   };
-
   return (
     <article className={styles.wrapper}>
       <EditBlogInfo.item
@@ -127,11 +102,21 @@ const EditBlogInfo = () => {
           <RequireLabel isShowing={!favicon?.name} />
           <label>파비콘 설정</label>
         </div>
+
         <div className={styles.favicon}>
+          <input
+            type="file"
+            accept={"image/*"}
+            onChange={handleChangeFavicon}
+            className="display-none"
+            ref={faviconFileRef}
+          />
           <input type="text" readOnly>
-            {favicon?.name}
+            {faviconFileRef.current &&
+              faviconFileRef.current.files &&
+              faviconFileRef.current.files[0]?.name}
           </input>
-          <button onClick={handleClickFavicon}>선택</button>
+          <button onClick={handleClickChooseFavicon}>선택</button>
         </div>
       </div>
       <div className={styles.preview}>
@@ -142,10 +127,8 @@ const EditBlogInfo = () => {
           <Image id={styles.image} alt="preview" src={faviconSrc.current} width={64} height={64} />
         </div>
       </div>
-      <div className={styles.buttonWrapper}>
-        <button className={styles.half} onClick={handleClickSave}>
-          저장
-        </button>
+      <div className={styles.buttonWrapper} onClick={handleClickSave}>
+        <button className={styles.half}>저장</button>
       </div>
     </article>
   );
