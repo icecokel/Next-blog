@@ -11,9 +11,9 @@ const Loader = (props: ILoaderProps) => {
   return (
     <>
       {props.isLoading ? (
-        <div className={styles.loader} style={{ fontSize: props.size ?? 20 }}>
+        <i className={styles.loader} style={{ fontSize: props.size ?? 20 }}>
           Loading...
-        </div>
+        </i>
       ) : (
         props.children
       )}
