@@ -4,11 +4,16 @@ import RequireLabel from "../common/RequireLabel";
 import styles from "./EditBlogInfo.module.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
+import Loader from "../common/Loader";
+
+const DEFAULT_IMAGE_SRC = "/resources/images/dafault.png";
 
 interface BlogInfoVo {
   blogName: string;
   blogNickName: string;
   blogDescription: string;
+  favicon: File | undefined;
+  imageSrc: string;
 }
 
 const EditBlogInfo = () => {
@@ -18,9 +23,10 @@ const EditBlogInfo = () => {
     blogName: "",
     blogNickName: "",
     blogDescription: "",
+    favicon: undefined,
+    imageSrc: DEFAULT_IMAGE_SRC,
   });
-  const [favicon, setFavicon] = useState<File>();
-  const faviconSrc = useRef<string>("/resources/images/dafault.png");
+  const [isUploading, setIsUploading] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const faviconFileRef = useRef<HTMLInputElement>(null);
 
@@ -33,40 +39,41 @@ const EditBlogInfo = () => {
       blogDescription: blog.description,
       blogName: blog.name,
       blogNickName: user.nickname,
+      favicon: undefined,
+      imageSrc: blog.faviconPath || DEFAULT_IMAGE_SRC,
     });
   };
 
-  const handleChangeFavicon = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.currentTarget.files) {
+      setIsUploading(false);
       return;
     }
     let reader = new FileReader();
     const file = e.currentTarget.files[0];
+    const imgSrc = window.URL.createObjectURL(file);
 
-    reader.onloadend = () => {
-      const imgSrc = window.URL.createObjectURL(file);
-      faviconSrc.current = imgSrc;
-      setFavicon(file);
+    reader.onload = () => {
+      setFormData({ ...formData, favicon: file, imageSrc: imgSrc });
+      setIsUploading(false);
     };
-    // reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
   };
 
   const handleClickChooseFavicon = () => {
     if (!faviconFileRef.current) return;
+    setIsUploading(true);
     faviconFileRef.current.click();
   };
 
   const handleChangeText = ({
-    target: { name, value, tagName, scrollHeight, style },
+    target: { name, value },
   }: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (tagName === "TEXTAREA") {
-      style.height = scrollHeight + "px";
-    }
     setFormData({ ...formData, [name]: value });
   };
 
   const handleClickSave = () => {
-    window.URL.revokeObjectURL(faviconSrc.current);
+    window.URL.revokeObjectURL(formData.imageSrc);
   };
   return (
     <article className={styles.wrapper}>
@@ -99,7 +106,7 @@ const EditBlogInfo = () => {
       </div>
       <div className={styles.item}>
         <div className={styles.label}>
-          <RequireLabel isShowing={!favicon?.name} />
+          <RequireLabel isShowing={!formData.favicon} />
           <label>파비콘 설정</label>
         </div>
 
@@ -107,15 +114,11 @@ const EditBlogInfo = () => {
           <input
             type="file"
             accept={"image/*"}
-            onChange={handleChangeFavicon}
+            onChange={handleImageUpload}
             className="display-none"
             ref={faviconFileRef}
           />
-          <input type="text" readOnly>
-            {faviconFileRef.current &&
-              faviconFileRef.current.files &&
-              faviconFileRef.current.files[0]?.name}
-          </input>
+          <input type="text" readOnly value={formData.favicon?.name} />
           <button onClick={handleClickChooseFavicon}>선택</button>
         </div>
       </div>
@@ -124,7 +127,15 @@ const EditBlogInfo = () => {
           <label>미리보기</label>
         </div>
         <div className={styles.input}>
-          <Image id={styles.image} alt="preview" src={faviconSrc.current} width={64} height={64} />
+          <Loader isLoading={isUploading}>
+            <Image
+              id={styles.image}
+              alt="preview"
+              src={`${formData.imageSrc ?? DEFAULT_IMAGE_SRC}`}
+              width={128}
+              height={128}
+            />
+          </Loader>
         </div>
       </div>
       <div className={styles.buttonWrapper} onClick={handleClickSave}>
