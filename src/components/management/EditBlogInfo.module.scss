@@ -7,7 +7,7 @@
   .item {
     display: flex;
     justify-content: space-between;
-    width: 400px;
+    width: 700px;
     margin-bottom: 10px;
     color: $color-gray;
     .label {
@@ -15,9 +15,18 @@
       font-size: 16px;
     }
     .input {
-      width: 280px;
+      width: 580px;
       input[type="text"] {
         width: 100%;
+        font-size: 1em;
+      }
+
+      textarea {
+        padding: 0.75em;
+        font-size: 1em;
+        width: 100%;
+        height: 150px;
+        resize: none;
       }
     }
   }

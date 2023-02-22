@@ -48,7 +48,8 @@ interface IMenuContentsProps {
 }
 
 MenuIcon.content = ({ menu, handleClick, nickname }: IMenuContentsProps) => {
-  const sortedMenu = sortByKey(menu, "index");
+  const sortedMenu = [...menu];
+  sortByKey(sortedMenu, "index");
 
   return (
     <article className={styles.memuWarpper} onClick={handleClick}>

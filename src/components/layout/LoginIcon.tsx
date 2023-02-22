@@ -12,11 +12,7 @@ const LoginIcon = () => {
   const isLogined = status === LOGIN_MESSAGE;
 
   const handleClickModalOpen = () => {
-    if (isLogined) {
-      setIsOpenLogOutModal(!isOpenLogOutModel);
-    } else {
-      setIsOpenLogInModal(!isOpenLogInModal);
-    }
+    isLogined ? setIsOpenLogOutModal(!isOpenLogOutModel) : setIsOpenLogInModal(!isOpenLogInModal);
   };
 
   return (
