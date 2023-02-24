@@ -5,6 +5,7 @@ import styles from "./EditBlogInfo.module.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import Loader from "../common/Loader";
+import axios from "axios";
 
 const DEFAULT_IMAGE_SRC = "/resources/images/dafault.png";
 
@@ -72,7 +73,16 @@ const EditBlogInfo = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleClickSave = () => {
+  const handleClickSave = async () => {
+    const params = {
+      id: blog.id,
+      name: formData.blogName,
+      description: formData.blogDescription,
+      faviconPath: "",
+    };
+    const { data } = await axios.post("/api/postBlogInfo", params);
+    console.log(data);
+
     window.URL.revokeObjectURL(formData.imageSrc);
   };
   return (
@@ -118,7 +128,7 @@ const EditBlogInfo = () => {
             className="display-none"
             ref={faviconFileRef}
           />
-          <input type="text" readOnly value={formData.favicon?.name} />
+          <input type="text" readOnly value={formData.favicon?.name || ""} />
           <button onClick={handleClickChooseFavicon}>선택</button>
         </div>
       </div>
@@ -129,7 +139,6 @@ const EditBlogInfo = () => {
         <div className={styles.input}>
           <Loader isLoading={isUploading}>
             <Image
-              id={styles.image}
               alt="preview"
               src={`${formData.imageSrc ?? DEFAULT_IMAGE_SRC}`}
               width={128}
@@ -139,7 +148,9 @@ const EditBlogInfo = () => {
         </div>
       </div>
       <div className={styles.buttonWrapper} onClick={handleClickSave}>
-        <button className={styles.half}>저장</button>
+        <button disabled={isUploading} className={styles.half}>
+          저장
+        </button>
       </div>
     </article>
   );

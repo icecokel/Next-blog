@@ -1,6 +1,5 @@
 import {
   AttributeValue,
-  AttributeValueUpdate,
   DynamoDBClient,
   GetItemCommand,
   PutItemCommand,
@@ -14,12 +13,12 @@ import { capitalizeFirstLetter } from "../util/StringUtil";
 type tableName = "BLOG" | "USERS" | "POSTS" | "MENU";
 
 const clientConfig = {
-  region: process.env.NEXT_PUBLIC_AWS_S3_REGION,
-  accessKeyId: process.env.NEXT_PUBLIC_AWS_S3_CREDENTTIALS_ACCESS_KEY_ID ?? "",
-  secretAccessKey: process.env.NEXT_PUBLIC_AWS_S3_CREDENTTIALS_SECRET_ACCESS_KEY ?? "",
+  region: process.env.NEXT_PUBLIC_AWS_DYNAMODB_REGION,
+  accessKeyId: process.env.NEXT_PUBLIC_AWS_CREDENTTIALS_ACCESS_KEY_ID ?? "",
+  secretAccessKey: process.env.NEXT_PUBLIC_AWS_CREDENTTIALS_SECRET_ACCESS_KEY ?? "",
 } as any;
-if (process.env.NEXT_PUBLIC_AWS_S3_REGION === "local") {
-  clientConfig.endpoint = process.env.NEXT_PUBLIC_AWS_S3_DYNAMODB_ENDPOINT;
+if (process.env.NEXT_PUBLIC_AWS_DYNAMODB_REGION === "local") {
+  clientConfig.endpoint = process.env.NEXT_PUBLIC_AWS_DYNAMODB_ENDPOINT;
 }
 const client = new DynamoDBClient(clientConfig);
 
