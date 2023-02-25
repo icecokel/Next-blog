@@ -2,13 +2,14 @@ import React, { ChangeEventHandler, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import RequireLabel from "../common/RequireLabel";
 import styles from "./EditBlogInfo.module.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import Loader from "../common/Loader";
 import axios from "axios";
 import { useS3Upload } from "next-s3-upload";
-import { BlogVO } from "../../../store/modules/blog";
+import { setBlog } from "../../../store/modules/blog";
 import { ApiStatus } from "../../common/constant/Enum";
+import { setUser } from "../../../store/modules/user";
 
 const DEFAULT_IMAGE_SRC = "/resources/images/dafault.png";
 
@@ -32,6 +33,7 @@ const EditBlogInfo = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const faviconFileRef = useRef<HTMLInputElement>(null);
   const { uploadToS3 } = useS3Upload();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     initialization();
@@ -82,10 +84,10 @@ const EditBlogInfo = () => {
       description: formData.description,
       faviconPath: "",
     };
-    // if (formData.favicon) {
-    //   const { url } = await uploadToS3(formData.favicon);
-    //   params.faviconPath = url;
-    // }
+    if (formData.favicon) {
+      const { url } = await uploadToS3(formData.favicon);
+      params.faviconPath = url;
+    }
 
     const {
       data: { status, item },
@@ -94,7 +96,8 @@ const EditBlogInfo = () => {
     if (status !== ApiStatus.OK) {
       return;
     }
-    console.log(item);
+    dispatch(setBlog({ ...blog, description: item.description, faviconPath: item.faviconPath }));
+    dispatch(setUser({ ...user, nickname: item.nickname }));
   };
   return (
     <article className={styles.wrapper}>
