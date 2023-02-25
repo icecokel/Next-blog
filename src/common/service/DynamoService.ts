@@ -22,13 +22,14 @@ if (process.env.NEXT_PUBLIC_AWS_DYNAMODB_REGION === "local") {
 }
 const client = new DynamoDBClient(clientConfig);
 
-export const getItem = (tableName: tableName, key: any) => {
-  return client.send(
+export const getItem = async (tableName: tableName, key: any) => {
+  const result = await client.send(
     new GetItemCommand({
       TableName: tableName,
       Key: key,
     })
   );
+  return unmarshallByItem(result.Item);
 };
 
 export const scanItem = (tableName: tableName, select: string[]) => {
@@ -87,12 +88,13 @@ export const getPosts = async (menuId: string) => {
 };
 
 export const insertItem = async (tableName: tableName, data: any) => {
-  return await client.send(
+  const result = await client.send(
     new PutItemCommand({
       TableName: tableName,
       Item: marshall(data),
     })
   );
+  return unmarshallByItem(result.Attributes);
 };
 
 export const updateItem = async (
@@ -120,12 +122,13 @@ export const updateItem = async (
 
   const params = {
     TableName: tableName,
-    Key: marshall({ id: data[key] }),
+    Key: marshall({ [key]: data[key] }),
     UpdateExpression: updateExpression,
     ExpressionAttributeNames: expressionAttributeNames,
     ExpressionAttributeValues: expressionAttributeValues,
     ReturnValues: "ALL_NEW",
   };
 
-  return await client.send(new UpdateItemCommand(params));
+  const result = await client.send(new UpdateItemCommand(params));
+  return unmarshallByItem(result.Attributes);
 };

@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import { setPost } from "../../../store/modules/post";
+import { ApiStatus } from "../../common/constant/Enum";
 import { HOURS, MINUTES } from "../../common/util/DateUtil";
 import styles from "./NewPost.module.scss";
 
@@ -24,13 +25,15 @@ const NewPost = () => {
   };
 
   const handleClickPostButton = async () => {
-    const { status } = await axios.post("/api/registPost", {
+    const {
+      data: { status },
+    } = await axios.post("/api/registPost", {
       ...post,
       menuId: selectedMenu,
       registId: user.id,
     });
 
-    if (status !== 200) {
+    if (status !== ApiStatus.OK) {
       // TODO 에러처리
       alert("!!");
     }

@@ -1,42 +1,25 @@
 import type { NextPage } from "next";
 import MainCt from "../../../src/components/containers/MainCt";
-import {
-  getItem,
-  unmarshallByItem,
-  getMenus,
-  scanItem,
-} from "../../../src/common/service/DynamoService";
-import { useEffect } from "react";
+import { getItem, getMenus, scanItem } from "../../../src/common/service/DynamoService";
 import useDispatchInitialization, {
   IInitializationProps,
 } from "../../../src/common/hooks/useDispatchInitialization";
 
 export async function getServerSideProps(context: any) {
   const blogs = await getItem("BLOG", {
-    name: {
+    url: {
       S: context.query.nickname,
     },
   });
 
-  if (!blogs.Item) {
-    return {
-      props: {
-        code: 404,
-      },
-    };
-  }
-
-  const blogItem = unmarshallByItem(blogs.Item);
-
-  const profiles = await getItem("USERS", { id: { S: blogItem.userId } });
-  const profileItem = unmarshallByItem(profiles.Item);
-  const menuItems = await getMenus(blogItem.id);
+  const profiles = await getItem("USERS", { id: { S: blogs.userId } });
+  const menuItems = await getMenus(blogs.id);
   const posts = await scanItem("POSTS", ["COUNT"]);
 
   return {
     props: {
-      blog: { ...blogItem, postsCount: posts.Count },
-      users: profileItem,
+      blog: { ...blogs, postsCount: posts.Count },
+      users: profiles,
       menus: menuItems,
     },
   };

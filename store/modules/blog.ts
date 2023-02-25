@@ -20,7 +20,7 @@ export type BlogAction = ReturnType<typeof setBlog>;
 
 // 블로그 타입
 export type BlogVO = {
-  name: string;
+  url: string;
   description: string;
   faviconPath: string;
   id: string;
@@ -31,7 +31,7 @@ export type BlogVO = {
 
 // 초기 값 선언
 const initialState: BlogVO = {
-  name: "",
+  url: "",
   description: "",
   faviconPath: "",
   id: "",
