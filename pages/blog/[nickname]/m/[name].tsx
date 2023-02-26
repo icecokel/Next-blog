@@ -2,13 +2,7 @@ import { NextPage } from "next";
 import { PostVO } from "../../../../src/common/constant/Model";
 import MenuCt from "../../../../src/components/containers/MenuCt";
 import { MenuVO } from "../../../../store/modules/menu";
-import {
-  getItem,
-  unmarshallByItem,
-  getMenus,
-  getPosts,
-} from "../../../../src/common/service/DynamoService";
-import { useEffect } from "react";
+import { getItem, getMenus, getPosts } from "../../../../src/common/service/DynamoService";
 import useDispatchInitialization, {
   IInitializationProps,
 } from "../../../../src/common/hooks/useDispatchInitialization";
@@ -20,19 +14,8 @@ export async function getServerSideProps(context: any) {
     },
   });
 
-  if (!blogs.Item) {
-    return {
-      props: {
-        code: 404,
-      },
-    };
-  }
-
-  const blogItem = unmarshallByItem(blogs.Item);
-
-  const profiles = await getItem("USERS", { id: { S: blogItem.userId } });
-  const profileItem = unmarshallByItem(profiles.Item);
-  const menuItems = await getMenus(blogItem.id);
+  const profiles = await getItem("USERS", { id: { S: blogs.userId } });
+  const menuItems = await getMenus(blogs.id);
 
   const currentMenu = menuItems.find((item: MenuVO) => {
     return item.name === context.query.name;
@@ -50,8 +33,8 @@ export async function getServerSideProps(context: any) {
 
   return {
     props: {
-      blog: blogItem,
-      users: profileItem,
+      blog: blogs,
+      users: profiles,
       menus: menuItems,
       posts: posts,
     },

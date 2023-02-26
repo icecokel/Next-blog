@@ -1,18 +1,21 @@
-import React, { ChangeEventHandler, useCallback, useEffect, useRef, useState } from "react";
+import React, { ChangeEventHandler, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import RequireLabel from "../common/RequireLabel";
 import styles from "./EditBlogInfo.module.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import Loader from "../common/Loader";
 import axios from "axios";
+import { useS3Upload } from "next-s3-upload";
+import { setBlog } from "../../../store/modules/blog";
+import { ApiStatus } from "../../common/constant/Enum";
+import { setUser } from "../../../store/modules/user";
 
 const DEFAULT_IMAGE_SRC = "/resources/images/dafault.png";
 
 interface BlogInfoVo {
-  blogName: string;
-  blogNickName: string;
-  blogDescription: string;
+  nickname: string;
+  description: string;
   favicon: File | undefined;
   imageSrc: string;
 }
@@ -21,15 +24,16 @@ const EditBlogInfo = () => {
   const blog = useSelector((state: RootState) => state.blog);
   const user = useSelector((state: RootState) => state.user);
   const [formData, setFormData] = useState<BlogInfoVo>({
-    blogName: "",
-    blogNickName: "",
-    blogDescription: "",
+    nickname: "",
+    description: "",
     favicon: undefined,
     imageSrc: DEFAULT_IMAGE_SRC,
   });
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const faviconFileRef = useRef<HTMLInputElement>(null);
+  const { uploadToS3 } = useS3Upload();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     initialization();
@@ -37,9 +41,8 @@ const EditBlogInfo = () => {
 
   const initialization = () => {
     setFormData({
-      blogDescription: blog.description,
-      blogName: blog.name,
-      blogNickName: user.nickname,
+      description: blog.description,
+      nickname: user.nickname,
       favicon: undefined,
       imageSrc: blog.faviconPath || DEFAULT_IMAGE_SRC,
     });
@@ -75,40 +78,45 @@ const EditBlogInfo = () => {
 
   const handleClickSave = async () => {
     const params = {
-      id: blog.id,
-      name: formData.blogName,
-      description: formData.blogDescription,
+      url: blog.url,
+      userId: user.id,
+      nickname: formData.nickname,
+      description: formData.description,
       faviconPath: "",
     };
-    const { data } = await axios.post("/api/postBlogInfo", params);
-    console.log(data);
+    if (formData.favicon) {
+      const { url } = await uploadToS3(formData.favicon);
+      params.faviconPath = url;
+    }
 
+    const {
+      data: { status, item },
+    } = await axios.post("/api/postBlogInfo", params);
     window.URL.revokeObjectURL(formData.imageSrc);
+    if (status !== ApiStatus.OK) {
+      return;
+    }
+    dispatch(setBlog({ ...blog, description: item.description, faviconPath: item.faviconPath }));
+    dispatch(setUser({ ...user, nickname: item.nickname }));
   };
   return (
     <article className={styles.wrapper}>
       <EditBlogInfo.item
-        lable="블로그 이름"
-        name="blogName"
-        onChange={handleChangeText}
-        value={formData.blogName}
-      />
-      <EditBlogInfo.item
         lable="블로그 활동명"
-        name="blogNickName"
+        name="nickname"
         onChange={handleChangeText}
-        value={formData.blogNickName}
+        value={formData.nickname}
       />
       <div className={styles.item}>
         <div className={styles.label}>
-          <RequireLabel isShowing={formData.blogDescription.length < 1} />
+          <RequireLabel isShowing={formData.description.length < 1} />
           <label>블로그 설명</label>
         </div>
         <div className={styles.input}>
           <textarea
-            name={"blogDescription"}
+            name={"description"}
             onChange={handleChangeText}
-            value={formData.blogDescription}
+            value={formData.description}
             ref={textareaRef}
             rows={1}
           />
