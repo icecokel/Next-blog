@@ -1,9 +1,10 @@
 type sortType = "ASC" | "DESC";
 
 export const sortByKey = (target: any[], key: string, type: sortType = "ASC"): any[] => {
-  return target.sort((a, b) => {
-    if (a[key] > b[key]) return 1;
-    if (a[key] < b[key]) return -1;
+  return [...target].sort((a, b) => {
+    const mark = type === "ASC" ? 1 : -1;
+    if (a[key] > b[key]) return 1 * mark;
+    if (a[key] < b[key]) return -1 * mark;
     return 0;
   });
 };
