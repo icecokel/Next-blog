@@ -113,18 +113,3 @@ a {
   font-size: 0.8em;
   font-weight: 100;
 }
-
-.error-wrap {
-  padding: 2em;
-  h3 {
-    font-size: 1.5em;
-  }
-  .error-box {
-    margin-top: 1em;
-    text-align: center;
-    color: $color-red;
-    padding: 2em;
-    border-top: 3px solid $color-red;
-    border-bottom: 3px solid $color-red;
-  }
-}
