@@ -3,6 +3,7 @@ import Loader from "./common/Loader";
 import { PostVO } from "../common/constant/Model";
 import Link from "next/link";
 import { formatDateToString } from "../common/util/DateUtil";
+import { sortByKey } from "../common/util/ArrayUtil";
 
 const TITLE_MAX_LENGTH = 20;
 
@@ -13,6 +14,8 @@ interface ICatogoryProps {
 }
 
 const MenuCp = ({ menuName, postList, nickname }: ICatogoryProps) => {
+  const filteredPostsByDate = postList.filter((post) => post.registDate <= Date.now());
+  const sortedPosts = sortByKey(filteredPostsByDate, "registDate", "DESC");
   return (
     <div className="menu-wrap">
       <h2>{menuName}</h2>
@@ -22,7 +25,7 @@ const MenuCp = ({ menuName, postList, nickname }: ICatogoryProps) => {
           <label>게시글 리스트</label>
           <Loader isLoading={postList.length === 0}>
             <ul>
-              {postList.map((post, index) => {
+              {sortedPosts.map((post, index) => {
                 const hits = !post.hits ? 0 : Number.parseInt(post.hits);
 
                 let title = post.title;
@@ -62,15 +65,13 @@ interface IItemProps {
 MenuCp.itemByPost = ({ postId, hits, registDate, title, nickname }: IItemProps) => {
   return (
     <Link href={"/blog/" + nickname + "/p/" + postId}>
-      <a>
-        <li>
-          <div>
-            <span className="post-title">{title}</span>
-            <span className="post-hits">{hits}</span>
-          </div>
-          <span className="post-registDate">{formatDateToString(new Date(registDate))}</span>
-        </li>
-      </a>
+      <li>
+        <div>
+          <span className="post-title">{title}</span>
+          <span className="post-hits">{hits}</span>
+        </div>
+        <span className="post-registDate">{formatDateToString(new Date(registDate))}</span>
+      </li>
     </Link>
   );
 };
