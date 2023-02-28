@@ -12,6 +12,7 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
     maxWidth: "800px",
     minWidth: "300px",
+    padding: "10px",
   },
   overlay: {
     background: "rgba(0,0,0,0.4)",
@@ -19,12 +20,13 @@ const customStyles = {
 };
 
 interface IBaseModalProps {
-  children: Element | ReactNode | React.ReactChildren;
+  title: string;
+  children: ReactNode;
   isOpen: boolean;
   setIsOpen: Function;
 }
 
-const BaseModal = ({ children, isOpen, setIsOpen }: IBaseModalProps) => {
+const BaseModal = ({ title, children, isOpen, setIsOpen }: IBaseModalProps) => {
   return (
     <div>
       <ReactModal
@@ -35,12 +37,14 @@ const BaseModal = ({ children, isOpen, setIsOpen }: IBaseModalProps) => {
         ariaHideApp={false}
         style={customStyles}
       >
-        <div className={styles.close}>
+        <div className={styles.title}>
+          <h2>{title}</h2>
           <span className="material-icons" onClick={() => setIsOpen(false)}>
             highlight_off
           </span>
         </div>
-        <div>{children && children}</div>
+        <hr />
+        <>{children}</>
       </ReactModal>
     </div>
   );
