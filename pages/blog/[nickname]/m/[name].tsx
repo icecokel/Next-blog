@@ -9,7 +9,7 @@ import useDispatchInitialization, {
 
 export async function getServerSideProps(context: any) {
   const blogs = await getItem("BLOG", {
-    name: {
+    url: {
       S: context.query.nickname,
     },
   });

@@ -9,6 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   if (req.method !== "PUT") {
     res.status(400).json({
       status: ApiStatus.NG,
+      message: "Invalid request method",
     });
   }
 

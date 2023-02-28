@@ -10,10 +10,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     });
   }
   const params = req.body;
+  const itemsToChange = params.faviconPath ? ["description", "faviconPath"] : ["description"];
 
   try {
     const requests = [
-      updateItem("BLOG", "url", ["description", "faviconPath"], params),
+      updateItem("BLOG", "url", itemsToChange, params),
       updateItem("USERS", "id", ["nickname"], { nickname: params.nickname, id: params.userId }),
     ];
     const [blog, user] = await Promise.all(requests);

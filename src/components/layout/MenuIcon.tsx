@@ -48,8 +48,7 @@ interface IMenuContentsProps {
 }
 
 MenuIcon.content = ({ menu, handleClick, nickname }: IMenuContentsProps) => {
-  const sortedMenu = [...menu];
-  sortByKey(sortedMenu, "index");
+  const sortedMenu = sortByKey(menu, "index");
 
   return (
     <article className={styles.memuWarpper} onClick={handleClick}>
@@ -60,9 +59,7 @@ MenuIcon.content = ({ menu, handleClick, nickname }: IMenuContentsProps) => {
             const encodedUri = `/blog/${nickname.trim()}/m/${encodeURIComponent(item.name.trim())}`;
             return (
               <Link href={encodedUri} key={item.id}>
-                <a onClick={() => {}}>
-                  <li>{item.name}</li>
-                </a>
+                <li>{item.name}</li>
               </Link>
             );
           })}

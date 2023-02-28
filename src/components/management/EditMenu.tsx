@@ -22,9 +22,8 @@ const EditMenu = () => {
     }
     const updatedList = menuList.filter((item) => item.id !== id);
     updatedList.push({ ...menuToUpdate, name: value });
-    sortByKey(updatedList, "index");
-
-    setMenuList(updatedList);
+    const sortedList = sortByKey(updatedList, "index");
+    setMenuList(sortedList);
   };
   const handleClickUp: React.MouseEventHandler<HTMLSpanElement> = ({ currentTarget: { id } }) => {
     handleClickArrow(id, true);
@@ -56,8 +55,8 @@ const EditMenu = () => {
       }
     });
 
-    sortByKey(updateMenu, "index");
-    setMenuList(updateMenu);
+    const sortedMenu = sortByKey(updateMenu, "index");
+    setMenuList(sortedMenu);
   };
 
   const handleClickAddMenu = () => {
@@ -79,8 +78,7 @@ const EditMenu = () => {
   };
 
   const handleClickMenuReset = () => {
-    const sortedMenu = [...menu];
-    sortByKey(sortedMenu, "index");
+    const sortedMenu = sortByKey(menu, "index");
     setMenuList(sortedMenu);
   };
   const handleClickSaveMenus = async () => {
