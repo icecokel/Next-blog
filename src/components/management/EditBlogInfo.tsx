@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import RequireLabel from "../common/RequireLabel";
 import styles from "./EditBlogInfo.module.scss";
@@ -10,6 +10,9 @@ import { useS3Upload } from "next-s3-upload";
 import { setBlog } from "../../../store/modules/blog";
 import { ApiStatus } from "../../common/constant/Enum";
 import { setUser } from "../../../store/modules/user";
+import BaseModal from "../common/BaseModal";
+import ErrorLabel from "../common/ErrorLabel";
+import { setCommonModal } from "../../../store/modules/clientState";
 
 const DEFAULT_IMAGE_SRC = "/resources/images/dafault.png";
 
@@ -30,8 +33,11 @@ const EditBlogInfo = () => {
     imageSrc: DEFAULT_IMAGE_SRC,
   });
   const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [isInvaildParams, setIsInvalidParams] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const textRef = useRef<HTMLInputElement>(null);
   const faviconFileRef = useRef<HTMLInputElement>(null);
+
   const { uploadToS3 } = useS3Upload();
   const dispatch = useDispatch();
 
@@ -76,90 +82,128 @@ const EditBlogInfo = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleClickSave = async () => {
-    const params = {
+  const getValidParams = async () => {
+    if (formData.nickname.length > 15 || formData.nickname.length < 1) {
+      textRef.current?.focus();
+      setIsInvalidParams(true);
+      return;
+    }
+    if (formData.description.length > 100) {
+      textareaRef.current?.focus();
+      setIsInvalidParams(true);
+      return;
+    }
+
+    const { url } = formData.favicon ? await uploadToS3(formData.favicon) : { url: "" };
+    window.URL.revokeObjectURL(formData.imageSrc);
+    return {
       url: blog.url,
       userId: user.id,
       nickname: formData.nickname,
       description: formData.description,
-      faviconPath: "",
+      faviconPath: url,
     };
-    if (formData.favicon) {
-      const { url } = await uploadToS3(formData.favicon);
-      params.faviconPath = url;
-    }
+  };
 
+  const handleClickSave = async () => {
+    const params = await getValidParams();
+    if (!params) {
+      return;
+    }
     const {
       data: { status, item },
     } = await axios.post("/api/postBlogInfo", params);
-    window.URL.revokeObjectURL(formData.imageSrc);
+
     if (status !== ApiStatus.OK) {
       return;
     }
+    dispatch(setCommonModal({ isShowing: true, text: "등록 했습니다", title: "블로그 정보" }));
     dispatch(setBlog({ ...blog, description: item.description, faviconPath: item.faviconPath }));
     dispatch(setUser({ ...user, nickname: item.nickname }));
   };
   return (
     <article className={styles.wrapper}>
-      <EditBlogInfo.item
-        lable="블로그 활동명"
-        name="nickname"
-        onChange={handleChangeText}
-        value={formData.nickname}
-      />
-      <div className={styles.item}>
-        <div className={styles.label}>
-          <RequireLabel isShowing={formData.description.length < 1} />
-          <label>블로그 설명</label>
-        </div>
-        <div className={styles.input}>
-          <textarea
-            name={"description"}
-            onChange={handleChangeText}
-            value={formData.description}
-            ref={textareaRef}
-            rows={1}
-          />
-        </div>
-      </div>
-      <div className={styles.item}>
-        <div className={styles.label}>
-          <RequireLabel isShowing={!formData.favicon} />
-          <label>파비콘 설정</label>
-        </div>
-
-        <div className={styles.favicon}>
-          <input
-            type="file"
-            accept={"image/*"}
-            onChange={handleImageUpload}
-            className="display-none"
-            ref={faviconFileRef}
-          />
-          <input type="text" readOnly value={formData.favicon?.name || ""} />
-          <button onClick={handleClickChooseFavicon}>선택</button>
-        </div>
-      </div>
-      <div className={styles.preview}>
-        <div className={styles.label}>
-          <label>미리보기</label>
-        </div>
-        <div className={styles.input}>
-          <Loader isLoading={isUploading}>
-            <Image
-              alt="preview"
-              src={`${formData.imageSrc ?? DEFAULT_IMAGE_SRC}`}
-              width={128}
-              height={128}
-            />
-          </Loader>
-        </div>
-      </div>
+      <section>
+        <EditBlogInfo.item
+          lable="블로그 활동명"
+          isValid={formData.nickname.length < 1}
+          inputElement={
+            <>
+              <input
+                type="text"
+                value={formData.nickname}
+                onChange={handleChangeText}
+                name="nickname"
+                ref={textRef}
+              />
+              <p className={styles.inputRule}>
+                최소 <b>1자</b> 부터 최대 <b>15자</b> 까지 가능합니다.
+              </p>
+            </>
+          }
+        />
+        <EditBlogInfo.item
+          lable="블로그 설명"
+          isValid={false}
+          inputElement={
+            <>
+              <textarea
+                name={"description"}
+                onChange={handleChangeText}
+                value={formData.description}
+                ref={textareaRef}
+                rows={1}
+              />
+              <p className={styles.inputRule}>
+                최대 <b>100자</b> 까지 가능합니다.
+              </p>
+            </>
+          }
+        />
+        <EditBlogInfo.item
+          lable="파비콘 설정"
+          isValid={false}
+          inputClassName="favicon"
+          inputElement={
+            <>
+              <input
+                type="file"
+                accept={"image/*"}
+                onChange={handleImageUpload}
+                className="display-none"
+                ref={faviconFileRef}
+              />
+              <input type="text" readOnly value={formData.favicon?.name || ""} />
+              <button onClick={handleClickChooseFavicon}>선택</button>
+            </>
+          }
+        />
+        <EditBlogInfo.item
+          lable="미리보기"
+          isValid={false}
+          inputClassName="preview"
+          inputElement={
+            <Loader isLoading={isUploading}>
+              <Image
+                alt="preview"
+                src={`${formData.imageSrc ?? DEFAULT_IMAGE_SRC}`}
+                width={128}
+                height={128}
+              />
+            </Loader>
+          }
+        />
+      </section>
       <div className={styles.buttonWrapper} onClick={handleClickSave}>
         <button disabled={isUploading} className={styles.half}>
           저장
         </button>
       </div>
+      <article>
+        <BaseModal isOpen={isInvaildParams} setIsOpen={setIsInvalidParams}>
+          <ErrorLabel text="입력 내용을 확인해주세요" />
+        </BaseModal>
+      </article>
     </article>
   );
 };
@@ -168,21 +212,19 @@ export default EditBlogInfo;
 
 interface IItemProps {
   lable: string;
-  name: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
-  value: string;
+  isValid: boolean;
+  inputElement: ReactNode;
+  inputClassName?: string;
 }
 
-EditBlogInfo.item = ({ name, onChange, value, lable }: IItemProps) => {
+EditBlogInfo.item = ({ isValid, lable, inputElement, inputClassName }: IItemProps) => {
   return (
     <div className={styles.item}>
       <div className={styles.label}>
-        <RequireLabel isShowing={value.length < 1} />
+        <RequireLabel isShowing={isValid} />
         <label>{lable}</label>
       </div>
-      <div className={styles.input}>
-        <input type="text" name={name} onChange={onChange} value={value} />
-      </div>
+      <div className={inputClassName ? styles[inputClassName] : styles.input}>{inputElement}</div>
     </div>
   );
 };
