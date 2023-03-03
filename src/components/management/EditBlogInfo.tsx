@@ -200,7 +200,7 @@ const EditBlogInfo = () => {
         </button>
       </div>
       <article>
-        <BaseModal isOpen={isInvaildParams} setIsOpen={setIsInvalidParams}>
+        <BaseModal isOpen={isInvaildParams} setIsOpen={setIsInvalidParams} title="확인 해주세요">
           <ErrorLabel text="입력 내용을 확인해주세요" />
         </BaseModal>
       </article>
