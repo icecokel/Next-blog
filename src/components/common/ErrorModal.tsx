@@ -1,20 +1,30 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
-import ErrorLabel from "./ErrorLabel";
+import { setErrorModal } from "../../../store/modules/clientState";
 import BaseModal from "./BaseModal";
+import ErrorLabel from "./ErrorLabel";
 
 const ErrorModal = () => {
-  const clientState = useSelector((state: RootState) => state.clientState);
+  const {
+    modal: {
+      error: { error, isShowing, title },
+    },
+  } = useSelector((state: RootState) => state.clientState);
+  const dispatch = useDispatch();
+  const handleClickErrorClose = () => {
+    dispatch(
+      setErrorModal({
+        isShowing: false,
+        error,
+        title,
+      })
+    );
+  };
 
   return (
-    <BaseModal isOpen={clientState.error.isShowing} setIsOpen={() => {}}>
-      <div className="error-wrap">
-        <h3>
-          <ErrorLabel text={clientState.error.title} />
-        </h3>
-        <div className="error-box">{clientState.error.error}</div>
-      </div>
+    <BaseModal title={title} isOpen={isShowing} setIsOpen={handleClickErrorClose}>
+      <ErrorLabel text={error} />
     </BaseModal>
   );
 };
