@@ -21,10 +21,10 @@ const LoginIcon = () => {
         <span className="material-icons"> {isLogined ? "logout" : "account_circle"}</span>
       </label>
 
-      <BaseModal isOpen={isOpenLogInModal} setIsOpen={setIsOpenLogInModal}>
+      <BaseModal isOpen={isOpenLogInModal} setIsOpen={setIsOpenLogInModal} title="로그인">
         <LoginIcon.loginBox />
       </BaseModal>
-      <BaseModal isOpen={isOpenLogOutModel} setIsOpen={setIsOpenLogOutModal}>
+      <BaseModal isOpen={isOpenLogOutModel} setIsOpen={setIsOpenLogOutModal} title="로그아웃">
         <LoginIcon.logoutBox closeModel={() => setIsOpenLogOutModal(!isOpenLogOutModel)} />
       </BaseModal>
     </div>

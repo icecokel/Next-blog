@@ -8,6 +8,7 @@ import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import React from "react";
 import ErrorModal from "../src/components/common/ErrorModal";
+import CommonModal from "../src/components/common/CommonModal";
 import { SessionProvider } from "next-auth/react";
 import styles from "../styles/app.module.scss";
 
@@ -24,6 +25,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
           <Footer />
         </Hydrate>
         <ErrorModal />
+        <CommonModal />
       </SessionProvider>
       <ReactQueryDevtools />
     </QueryClientProvider>

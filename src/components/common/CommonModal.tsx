@@ -1,32 +1,31 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
-import { setErrorModal } from "../../../store/modules/clientState";
+import { setCommonModal } from "../../../store/modules/clientState";
 import BaseModal from "./BaseModal";
-import ErrorLabel from "./ErrorLabel";
 
-const ErrorModal = () => {
+const CommonModal = () => {
   const {
     modal: {
-      error: { error, isShowing, title },
+      common: { isShowing, text, title },
     },
   } = useSelector((state: RootState) => state.clientState);
   const dispatch = useDispatch();
-  const handleClickErrorClose = () => {
+  const handleClickClose = () => {
     dispatch(
-      setErrorModal({
+      setCommonModal({
         isShowing: false,
-        error,
+        text,
         title,
       })
     );
   };
 
   return (
-    <BaseModal title={title} isOpen={isShowing} setIsOpen={handleClickErrorClose}>
-      <ErrorLabel text={error} />
+    <BaseModal title={title} isOpen={isShowing} setIsOpen={handleClickClose}>
+      <div style={{ textAlign: "center" }}>{text}</div>
     </BaseModal>
   );
 };
 
-export default ErrorModal;
+export default CommonModal;

@@ -1,8 +1,8 @@
 import React from "react";
-import { PostVO } from "../common/constant/Model";
-import { fromNow } from "../common/DateUtil";
+import { PostVO } from "../../common/constant/Model";
+import { fromNow } from "../../common/util/DateUtil";
 import styles from "./PostCard.module.scss";
-import { UserVO } from "../../store/modules/user";
+import { UserVO } from "../../../store/modules/user";
 
 interface IProps {
   post: PostVO;
@@ -19,7 +19,10 @@ const PostCard = ({ post, user }: IProps) => {
         <div className={styles.postDetailInfo}>{fromNow(new Date(post.registDate))}</div>
       </div>
       <div className={styles.contentsWrapper}>
-        <div className={styles.contents} dangerouslySetInnerHTML={{ __html: post.contents }} />
+        <div
+          className={styles.contents}
+          dangerouslySetInnerHTML={{ __html: post.contents ?? "" }}
+        />
       </div>
       <div className={styles.profile}>
         <img className={styles.profileImg} src={user.profileImgPath} alt="profileImg" />

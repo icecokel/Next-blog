@@ -2,14 +2,14 @@ import { GetServerSideProps } from "next";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getItem, getMenus } from "../../../../src/common/service/DynamoService";
-import PostCard from "../../../../src/components/PostCard";
+import PostCard from "../../../../src/components/containers/PostCard";
 import { setBlog } from "../../../../store/modules/blog";
 import { setMenu } from "../../../../store/modules/menu";
 import { setUser } from "../../../../store/modules/user";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const blog = await getItem("BLOG", {
-    name: {
+    url: {
       S: context.query.nickname,
     },
   });
