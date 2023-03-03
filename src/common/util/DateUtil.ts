@@ -3,15 +3,8 @@ import "moment/locale/ko";
 
 const _getTimeList = (type: "hours" | "minutes"): number[] => {
   const maxCount = type === "hours" ? 24 : 60;
-  const timeList = new Array();
-
-  for (let i = 0; i < maxCount; i++) {
-    timeList.push(i);
-  }
-
-  return timeList;
+  return Array.from({ length: maxCount }, (v, i) => i);
 };
-
 export const fromNow = (date: Date) => {
   return moment(date).fromNow();
 };
