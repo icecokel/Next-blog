@@ -128,7 +128,7 @@ const EditBlogInfo = () => {
           lable="블로그 활동명"
           isValid={formData.nickname.length < 1}
           inputElement={
-            <>
+            <div className={styles.input}>
               <input
                 type="text"
                 value={formData.nickname}
@@ -139,14 +139,14 @@ const EditBlogInfo = () => {
               <p className={styles.inputRule}>
                 최소 <b>1자</b> 부터 최대 <b>15자</b> 까지 가능합니다.
               </p>
-            </>
+            </div>
           }
         />
         <EditBlogInfo.item
           lable="블로그 설명"
           isValid={false}
           inputElement={
-            <>
+            <div className={styles.input}>
               <textarea
                 name={"description"}
                 onChange={handleChangeText}
@@ -157,15 +157,14 @@ const EditBlogInfo = () => {
               <p className={styles.inputRule}>
                 최대 <b>100자</b> 까지 가능합니다.
               </p>
-            </>
+            </div>
           }
         />
         <EditBlogInfo.item
           lable="파비콘 설정"
           isValid={false}
-          inputClassName="favicon"
           inputElement={
-            <>
+            <div className={styles.favicon}>
               <input
                 type="file"
                 accept={"image/*"}
@@ -175,22 +174,23 @@ const EditBlogInfo = () => {
               />
               <input type="text" readOnly value={formData.favicon?.name || ""} />
               <button onClick={handleClickChooseFavicon}>선택</button>
-            </>
+            </div>
           }
         />
         <EditBlogInfo.item
           lable="미리보기"
           isValid={false}
-          inputClassName="preview"
           inputElement={
-            <Loader isLoading={isUploading}>
-              <Image
-                alt="preview"
-                src={`${formData.imageSrc ?? DEFAULT_IMAGE_SRC}`}
-                width={128}
-                height={128}
-              />
-            </Loader>
+            <div className={styles.input}>
+              <Loader isLoading={isUploading}>
+                <Image
+                  alt="preview"
+                  src={`${formData.imageSrc ?? DEFAULT_IMAGE_SRC}`}
+                  width={128}
+                  height={128}
+                />
+              </Loader>
+            </div>
           }
         />
       </section>
@@ -214,17 +214,16 @@ interface IItemProps {
   lable: string;
   isValid: boolean;
   inputElement: ReactNode;
-  inputClassName?: string;
 }
 
-EditBlogInfo.item = ({ isValid, lable, inputElement, inputClassName }: IItemProps) => {
+EditBlogInfo.item = ({ isValid, lable, inputElement }: IItemProps) => {
   return (
     <div className={styles.item}>
       <div className={styles.label}>
         <RequireLabel isShowing={isValid} />
         <label>{lable}</label>
       </div>
-      <div className={inputClassName ? styles[inputClassName] : styles.input}>{inputElement}</div>
+      {inputElement}
     </div>
   );
 };
