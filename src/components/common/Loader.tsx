@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import styles from "./Loader.module.scss";
 
 interface ILoaderProps {
-  children: Element | ReactNode | React.ReactChildren;
+  children: ReactNode;
   isLoading: boolean;
   size?: number;
 }
@@ -11,9 +11,7 @@ const Loader = (props: ILoaderProps) => {
   return (
     <>
       {props.isLoading ? (
-        <i className={styles.loader} style={{ fontSize: props.size ?? 20 }}>
-          Loading...
-        </i>
+        <div className={styles.loader} style={{ fontSize: props.size ?? 20 }} />
       ) : (
         props.children
       )}
