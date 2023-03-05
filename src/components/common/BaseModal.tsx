@@ -28,7 +28,7 @@ interface IBaseModalProps {
 
 const BaseModal = ({ title, children, isOpen, setIsOpen }: IBaseModalProps) => {
   return (
-    <div>
+    <article>
       <ReactModal
         isOpen={isOpen}
         onRequestClose={() => {
@@ -46,7 +46,7 @@ const BaseModal = ({ title, children, isOpen, setIsOpen }: IBaseModalProps) => {
         <hr />
         <>{children}</>
       </ReactModal>
-    </div>
+    </article>
   );
 };
 
