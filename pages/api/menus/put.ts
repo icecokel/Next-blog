@@ -1,9 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { ApiStatus } from "../../src/common/constant/Enum";
-import { getMenus, insertItem, updateItem } from "../../src/common/service/DynamoService";
-import { isIncludesFromTargetByKey } from "../../src/common/util/ArrayUtil";
-import { MenuVO } from "../../store/modules/menu";
+import { ApiStatus } from "../../../src/common/constant/Enum";
+import { getMenus, insertItem, updateItem } from "../../../src/common/service/DynamoService";
+import { isIncludesFromTargetByKey } from "../../../src/common/util/ArrayUtil";
+import { MenuVO } from "../../../store/modules/menu";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   if (req.method !== "PUT") {

@@ -112,7 +112,7 @@ const EditBlogInfo = () => {
     }
     const {
       data: { status, item },
-    } = await axios.post("/api/postBlogInfo", params);
+    } = await axios.post("/api/blog/postInfo", params);
 
     if (status !== ApiStatus.OK) {
       return;
