@@ -27,7 +27,7 @@ const NewPost = () => {
   const handleClickPostButton = async () => {
     const {
       data: { status },
-    } = await axios.post("/api/registPost", {
+    } = await axios.post("/api/post/regist", {
       ...post,
       menuId: selectedMenu,
       registId: user.id,

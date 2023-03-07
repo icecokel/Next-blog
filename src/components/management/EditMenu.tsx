@@ -82,7 +82,7 @@ const EditMenu = () => {
     setMenuList(sortedMenu);
   };
   const handleClickSaveMenus = async () => {
-    const { data } = await axios.put("/api/putMenus", { menus: menuList });
+    const { data } = await axios.put("/api/menus/put", { menus: menuList });
     if (data.status !== ApiStatus.OK) return;
     dispatch(setMenu(data.items));
   };

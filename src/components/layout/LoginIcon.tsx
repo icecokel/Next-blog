@@ -33,8 +33,8 @@ const LoginIcon = () => {
 LoginIcon.loginBox = () => {
   return (
     <div className={styles.loginWrapper}>
-      <button className={styles.snsLogin} onClick={() => signIn()}>
-        소셜 로그인 하기
+      <button className={styles.snsLogin} onClick={() => signIn("google")}>
+        Google 로그인 하기
       </button>
     </div>
   );

@@ -1,6 +1,6 @@
 @import "../../../styles/color.scss";
 
-.memuWarpper {
+.wrapper {
   position: fixed;
   inset: 0px;
   height: 100vh;
@@ -39,10 +39,24 @@
     }
   }
 }
+.searchBar {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  input {
+    background-color: transparent;
+    border: 0px;
+    padding: 0px;
+    border-radius: 0px;
+    border-bottom: 1px solid black;
+    font-size: 0.9em;
+    padding: 5px;
+    min-width: 300px;
 
-.profile {
-  padding-bottom: 20px;
-  border-bottom: 1px solid $color-gray;
+    &:focus {
+      border-color: $color-green5;
+    }
+  }
 }
 
 @keyframes slidein {

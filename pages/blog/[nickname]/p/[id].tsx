@@ -17,6 +17,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const profile = await getItem("USERS", { id: { S: blog.userId } });
   const menuItems = await getMenus(blog.id);
   const post = await getItem("POSTS", { id: { S: context.query.id } });
+  if (!post) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
@@ -28,14 +33,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-const PostPage = ({ blog, post, user, menus, code }: any) => {
+const PostPage = ({ blog, post, user, menus }: any) => {
   const dispatch = useDispatch();
   useEffect(() => {
-    if (code === 404) {
-      window.location.replace(window.location.origin + "/404");
-    } else {
-      setRedux();
-    }
+    setRedux();
   }, []);
 
   const setRedux = () => {
