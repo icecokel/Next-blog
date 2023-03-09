@@ -1,26 +1,23 @@
-import type { NextPage } from "next";
+import type { GetServerSidePropsContext, NextPage } from "next";
 import MainCt from "../../../src/components/containers/MainCt";
-import { getItem, getMenus, scanItem } from "../../../src/common/service/DynamoService";
 import useDispatchInitialization, {
   IInitializationProps,
 } from "../../../src/common/hooks/useDispatchInitialization";
+import { searchData } from "../../../src/common/service/FireBaseService";
+import { FirebaseResponseVO } from "../../../src/common/constant/Model";
 
-export async function getServerSideProps(context: any) {
-  const blogs = await getItem("BLOG", {
-    url: {
-      S: context.query.nickname,
-    },
+export async function getServerSideProps({ query: { nickname } }: GetServerSidePropsContext<any>) {
+  const response: FirebaseResponseVO[] = await searchData("blog", {
+    fieldPath: "url",
+    opStr: "==",
+    value: nickname?.toString() || "",
   });
-
-  const profiles = await getItem("USERS", { id: { S: blogs.userId } });
-  const menuItems = await getMenus(blogs.id);
-  const posts = await scanItem("POSTS", ["COUNT"]);
 
   return {
     props: {
-      blog: { ...blogs, postsCount: posts.Count },
-      users: profiles,
-      menus: menuItems,
+      blog: response[0],
+      users: response[0].user,
+      menus: response[0].menu,
     },
   };
 }
