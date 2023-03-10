@@ -13,6 +13,7 @@ import { setUser } from "../../../store/modules/user";
 import BaseModal from "../common/BaseModal";
 import ErrorLabel from "../common/ErrorLabel";
 import { setCommonModal } from "../../../store/modules/clientState";
+import { requestApi } from "../../common/service/ApiService";
 
 const DEFAULT_IMAGE_SRC = "/resources/images/dafault.png";
 
@@ -112,7 +113,11 @@ const EditBlogInfo = () => {
     }
     const {
       data: { status, item },
-    } = await axios.post("/api/blog/postInfo", params);
+    } = await requestApi({
+      method: "POST",
+      url: "/api/blog/postInfo",
+      params: params,
+    });
 
     if (status !== ApiStatus.OK) {
       return;

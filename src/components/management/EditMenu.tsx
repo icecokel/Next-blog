@@ -7,6 +7,7 @@ import { generateRandomString } from "../../common/util/StringUtil";
 import axios from "axios";
 import { sortByKey } from "../../common/util/ArrayUtil";
 import { ApiStatus } from "../../common/constant/Enum";
+import { requestApi } from "../../common/service/ApiService";
 
 const EditMenu = () => {
   const menu = useSelector((state: RootState) => state.menu);
@@ -82,7 +83,12 @@ const EditMenu = () => {
     setMenuList(sortedMenu);
   };
   const handleClickSaveMenus = async () => {
-    const { data } = await axios.put("/api/menus/put", { menus: menuList });
+    const { data } = await requestApi({
+      method: "PUT",
+      url: "/api/menus/put",
+      params: { menus: menuList },
+    });
+
     if (data.status !== ApiStatus.OK) return;
     dispatch(setMenu(data.items));
   };

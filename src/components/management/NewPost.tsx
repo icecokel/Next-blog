@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import { setPost } from "../../../store/modules/post";
 import { ApiStatus } from "../../common/constant/Enum";
+import { requestApi } from "../../common/service/ApiService";
 import { HOURS, MINUTES } from "../../common/util/DateUtil";
 import styles from "./NewPost.module.scss";
 
@@ -27,10 +28,14 @@ const NewPost = () => {
   const handleClickPostButton = async () => {
     const {
       data: { status },
-    } = await axios.post("/api/post/regist", {
-      ...post,
-      menuId: selectedMenu,
-      registId: user.id,
+    } = await requestApi({
+      method: "POST",
+      url: "/api/post/regist",
+      params: {
+        ...post,
+        menuId: selectedMenu,
+        registId: user.id,
+      },
     });
 
     if (status !== ApiStatus.OK) {
