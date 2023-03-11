@@ -4,6 +4,8 @@ import { RootState } from "../../../store/modules";
 import { sortByKey } from "../../common/util/ArrayUtil";
 import styles from "./SideBar.module.scss";
 import Link from "next/link";
+import { ApiStatus } from "../../common/constant/Enum";
+import { API_OPTIONS, requestApi } from "../../common/service/ApiService";
 
 const OUT_SIDE_TAG_ID = "outSide";
 
@@ -12,7 +14,7 @@ interface ISideBarProps {
 }
 
 const SideBar = ({ handleToggle }: ISideBarProps) => {
-  const { nickname } = useSelector((state: RootState) => state.user);
+  const { nickname, id } = useSelector((state: RootState) => state.user);
   const menu = useSelector((state: RootState) => state.menu);
   const sortedMenu = sortByKey(menu, "index");
   const [keyword, setKeyword] = useState<string>("");
@@ -41,8 +43,20 @@ const SideBar = ({ handleToggle }: ISideBarProps) => {
     setKeyword(value);
   };
 
-  const handleSearch = () => {
-    console.log(keyword);
+  const handleSearch = async () => {
+    const { data } = await requestApi({
+      option: API_OPTIONS.searchPost,
+      params: {
+        keyword: keyword,
+        id: id,
+      },
+    });
+
+    if (data.status !== ApiStatus.OK) {
+      return;
+    }
+
+    console.log(data);
   };
 
   return (

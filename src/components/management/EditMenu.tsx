@@ -4,10 +4,9 @@ import { RootState } from "../../../store/modules";
 import { MenuVO, setMenu } from "../../../store/modules/menu";
 import styles from "./EditMenu.module.scss";
 import { generateRandomString } from "../../common/util/StringUtil";
-import axios from "axios";
 import { sortByKey } from "../../common/util/ArrayUtil";
 import { ApiStatus } from "../../common/constant/Enum";
-import { requestApi } from "../../common/service/ApiService";
+import { API_OPTIONS, requestApi } from "../../common/service/ApiService";
 
 const EditMenu = () => {
   const menu = useSelector((state: RootState) => state.menu);
@@ -84,8 +83,7 @@ const EditMenu = () => {
   };
   const handleClickSaveMenus = async () => {
     const { data } = await requestApi({
-      method: "PUT",
-      url: "/api/menus/put",
+      option: API_OPTIONS.editMenu,
       params: { menus: menuList },
     });
 

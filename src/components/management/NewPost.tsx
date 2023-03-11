@@ -1,4 +1,3 @@
-import axios from "axios";
 import dynamic from "next/dynamic";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
@@ -6,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import { setPost } from "../../../store/modules/post";
 import { ApiStatus } from "../../common/constant/Enum";
-import { requestApi } from "../../common/service/ApiService";
+import { API_OPTIONS, requestApi } from "../../common/service/ApiService";
 import { HOURS, MINUTES } from "../../common/util/DateUtil";
 import styles from "./NewPost.module.scss";
 
@@ -29,8 +28,7 @@ const NewPost = () => {
     const {
       data: { status },
     } = await requestApi({
-      method: "POST",
-      url: "/api/post/regist",
+      option: API_OPTIONS.registPost,
       params: {
         ...post,
         menuId: selectedMenu,

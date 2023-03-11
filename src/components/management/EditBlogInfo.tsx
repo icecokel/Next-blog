@@ -5,7 +5,6 @@ import styles from "./EditBlogInfo.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import Loader from "../common/Loader";
-import axios from "axios";
 import { useS3Upload } from "next-s3-upload";
 import { setBlog } from "../../../store/modules/blog";
 import { ApiStatus } from "../../common/constant/Enum";
@@ -13,7 +12,7 @@ import { setUser } from "../../../store/modules/user";
 import BaseModal from "../common/BaseModal";
 import ErrorLabel from "../common/ErrorLabel";
 import { setCommonModal } from "../../../store/modules/clientState";
-import { requestApi } from "../../common/service/ApiService";
+import { API_OPTIONS, requestApi } from "../../common/service/ApiService";
 
 const DEFAULT_IMAGE_SRC = "/resources/images/dafault.png";
 
@@ -111,11 +110,11 @@ const EditBlogInfo = () => {
     if (!params) {
       return;
     }
+
     const {
       data: { status, item },
     } = await requestApi({
-      method: "POST",
-      url: "/api/blog/postInfo",
+      option: API_OPTIONS.editBlog,
       params: params,
     });
 
