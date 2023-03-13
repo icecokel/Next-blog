@@ -27,7 +27,7 @@ export const requestApi = async ({ option: { method, url }, params }: IRequestPr
   const requestUrl = BASE_URL + url;
   switch (method) {
     case "GET":
-      return await axios.get(requestUrl, params);
+      return await axios.get(requestUrl, { params: params });
     case "POST":
       return await axios.post(requestUrl, params);
     case "PUT":
