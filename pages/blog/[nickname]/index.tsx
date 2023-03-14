@@ -3,8 +3,7 @@ import MainCt from "../../../src/components/containers/MainCt";
 import useDispatchInitialization, {
   IInitializationProps,
 } from "../../../src/common/hooks/useDispatchInitialization";
-import { searchData } from "../../../src/common/service/FireBaseService";
-import { FirebaseResponseVO } from "../../../src/common/constant/Model";
+import { getData } from "../../../src/common/service/FireBaseService";
 
 export async function getServerSideProps({ query: { nickname } }: GetServerSidePropsContext<any>) {
   if (!nickname) {
@@ -12,17 +11,18 @@ export async function getServerSideProps({ query: { nickname } }: GetServerSideP
       notFound: true,
     };
   }
-  const response: FirebaseResponseVO[] = await searchData("blog", {
-    fieldPath: "url",
-    opStr: "==",
-    value: nickname?.toString(),
-  });
+  const blog = await getData("blog", nickname.toString());
 
+  if (!blog) {
+    return {
+      notFound: true,
+    };
+  }
   return {
     props: {
-      blog: response[0],
-      users: response[0].user,
-      menus: response[0].menu,
+      blog: blog,
+      users: blog.user,
+      menus: blog.menu,
     },
   };
 }
