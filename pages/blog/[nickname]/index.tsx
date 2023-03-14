@@ -7,10 +7,15 @@ import { searchData } from "../../../src/common/service/FireBaseService";
 import { FirebaseResponseVO } from "../../../src/common/constant/Model";
 
 export async function getServerSideProps({ query: { nickname } }: GetServerSidePropsContext<any>) {
+  if (!nickname) {
+    return {
+      notFound: true,
+    };
+  }
   const response: FirebaseResponseVO[] = await searchData("blog", {
     fieldPath: "url",
     opStr: "==",
-    value: nickname?.toString() || "",
+    value: nickname?.toString(),
   });
 
   return {
