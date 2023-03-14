@@ -7,8 +7,27 @@ import {
   addDoc,
   writeBatch,
   deleteDoc,
+  query,
+  where,
 } from "firebase/firestore/lite";
 import db from "./firebase";
+
+type WhereFilterOp =
+  | "<"
+  | "<="
+  | "=="
+  | "!="
+  | ">="
+  | ">"
+  | "array-contains"
+  | "in"
+  | "array-contains-any"
+  | "not-in";
+interface Condition {
+  fieldPath: string;
+  opStr: WhereFilterOp;
+  value: unknown;
+}
 
 // 모든 문서 가져오기
 export const fetchData = async (docName: string) => {
@@ -25,7 +44,20 @@ export const fetchData = async (docName: string) => {
   return result;
 };
 
-export const searchData = async (docName: string, keyword: string) => {
+export const searchData = async (docName: string, { fieldPath, opStr, value }: Condition) => {
+  const q = query(collection(db, docName), where(fieldPath, opStr, value));
+  const querySnapshot = await getDocs(q);
+  const result: any[] = [];
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    // console.log(doc.id, " => ", doc.data());
+    result.push(doc.data());
+  });
+
+  return result;
+};
+
+export const getData = async (docName: string, keyword: string) => {
   const docRef = doc(db, docName, keyword);
   const docSnap = await getDoc(docRef);
 
@@ -33,6 +65,7 @@ export const searchData = async (docName: string, keyword: string) => {
     return docSnap.data();
   } else {
     console.log("No such document!");
+    return undefined;
   }
 };
 
