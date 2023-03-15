@@ -1,23 +1,26 @@
-import { GetServerSideProps } from "next";
+import { GetServerSidePropsContext } from "next";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getItem, getMenus } from "../../../../src/common/service/DynamoService";
+import { getData } from "../../../../src/common/service/FireBaseService";
 import PostCard from "../../../../src/components/containers/PostCard";
 import { setBlog } from "../../../../store/modules/blog";
 import { setMenu } from "../../../../store/modules/menu";
 import { setUser } from "../../../../store/modules/user";
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const blog = await getItem("BLOG", {
-    url: {
-      S: context.query.nickname,
-    },
-  });
+export const getServerSideProps = async ({
+  query: { nickname, id },
+}: GetServerSidePropsContext<any>) => {
+  if (!nickname || !id) {
+    return {
+      notFound: true,
+    };
+  }
 
-  const profile = await getItem("USERS", { id: { S: blog.userId } });
-  const menuItems = await getMenus(blog.id);
-  const post = await getItem("POSTS", { id: { S: context.query.id } });
-  if (!post) {
+  const [blog, post] = await Promise.all([
+    getData("blog", nickname.toString()),
+    getData("post", id.toString()),
+  ]);
+  if (!blog || !post) {
     return {
       notFound: true,
     };
@@ -27,8 +30,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       blog: blog,
       post: post,
-      user: profile,
-      menus: menuItems,
+      user: blog.user,
+      menus: blog.menu,
     },
   };
 };

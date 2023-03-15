@@ -1,41 +1,46 @@
-import { NextPage } from "next";
+import { GetServerSidePropsContext, NextPage } from "next";
 import { PostVO } from "../../../../src/common/constant/Model";
 import MenuCt from "../../../../src/components/containers/MenuCt";
 import { MenuVO } from "../../../../store/modules/menu";
-import { getItem, getMenus, getPosts } from "../../../../src/common/service/DynamoService";
 import useDispatchInitialization, {
   IInitializationProps,
 } from "../../../../src/common/hooks/useDispatchInitialization";
+import { searchData, getData } from "../../../../src/common/service/FireBaseService";
 
-export async function getServerSideProps(context: any) {
-  const blogs = await getItem("BLOG", {
-    url: {
-      S: context.query.nickname,
-    },
-  });
+export async function getServerSideProps({
+  query: { nickname, name },
+}: GetServerSidePropsContext<any>) {
+  if (!nickname || !name) {
+    return {
+      notfound: true,
+    };
+  }
+  const blog = await getData("blog", nickname.toString());
 
-  const profiles = await getItem("USERS", { id: { S: blogs.userId } });
-  const menuItems = await getMenus(blogs.id);
-
-  const currentMenu = menuItems.find((item: MenuVO) => {
-    return item.name === context.query.name;
-  });
+  if (!blog) {
+    return {
+      notfound: true,
+    };
+  }
+  const currentMenu = blog.menu.find((item: MenuVO) => item.name === name);
 
   if (!currentMenu) {
     return {
-      props: {
-        code: 404,
-      },
+      notfound: true,
     };
   }
 
-  const posts = await getPosts(currentMenu?.id);
+  const posts = await searchData("post", {
+    fieldPath: "menuId",
+    opStr: "==",
+    value: currentMenu.id,
+  });
 
   return {
     props: {
-      blog: blogs,
-      users: profiles,
-      menus: menuItems,
+      blog: blog,
+      users: blog.user,
+      menus: blog.menu,
       posts: posts,
     },
   };

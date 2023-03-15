@@ -97,7 +97,6 @@ const EditBlogInfo = () => {
     const { url } = formData.favicon ? await uploadToS3(formData.favicon) : { url: "" };
     window.URL.revokeObjectURL(formData.imageSrc);
     return {
-      url: blog.url,
       userId: user.id,
       nickname: formData.nickname,
       description: formData.description,

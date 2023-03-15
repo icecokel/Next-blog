@@ -20,22 +20,18 @@ export type BlogAction = ReturnType<typeof setBlog>;
 
 // 블로그 타입
 export type BlogVO = {
-  url: string;
   description: string;
   faviconPath: string;
   id: string;
-  userId: string;
   githubAddress: string;
   postsCount: number;
 };
 
 // 초기 값 선언
 const initialState: BlogVO = {
-  url: "",
   description: "",
   faviconPath: "",
   id: "",
-  userId: "",
   githubAddress: "",
   postsCount: 0,
 };
