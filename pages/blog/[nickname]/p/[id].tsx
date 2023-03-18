@@ -1,11 +1,8 @@
 import { GetServerSidePropsContext } from "next";
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
+import useDispatchInitialization from "../../../../src/common/hooks/useDispatchInitialization";
 import { getData } from "../../../../src/common/service/FireBaseService";
 import PostCard from "../../../../src/components/containers/PostCard";
-import { setBlog } from "../../../../store/modules/blog";
-import { setMenu } from "../../../../store/modules/menu";
-import { setUser } from "../../../../store/modules/user";
 
 export const getServerSideProps = async ({
   query: { nickname, id },
@@ -30,25 +27,15 @@ export const getServerSideProps = async ({
     props: {
       blog: blog,
       post: post,
-      user: blog.user,
+      users: blog.user,
       menus: blog.menu,
     },
   };
 };
 
-const PostPage = ({ blog, post, user, menus }: any) => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    setRedux();
-  }, []);
-
-  const setRedux = () => {
-    dispatch(setBlog(blog));
-    dispatch(setMenu(menus));
-    dispatch(setUser(user));
-  };
-
-  return <PostCard post={post} user={user} />;
+const PostPage = (props: any) => {
+  useDispatchInitialization(props);
+  return <PostCard post={props.post} user={props.users} />;
 };
 
 export default PostPage;
