@@ -11,6 +11,7 @@ import { API_OPTIONS, requestApi } from "../../common/service/ApiService";
 const EditMenu = () => {
   const menu = useSelector((state: RootState) => state.menu);
   const blog = useSelector((state: RootState) => state.blog);
+  const user = useSelector((state: RootState) => state.user);
   const [menuList, setMenuList] = useState<MenuVO[]>(sortByKey(menu, "index"));
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
@@ -68,7 +69,7 @@ const EditMenu = () => {
     }, 0);
 
     const newMenu: MenuVO = {
-      blogId: blog.id,
+      count: 0,
       id: generateRandomString(32),
       name: inputRef.current.value,
       index: lastIndex + 1,
@@ -84,7 +85,7 @@ const EditMenu = () => {
   const handleClickSaveMenus = async () => {
     const { data } = await requestApi({
       option: API_OPTIONS.editMenu,
-      params: { menus: menuList },
+      params: { menus: menuList, nickname: user.nickname },
     });
 
     if (data.status !== ApiStatus.OK) return;
