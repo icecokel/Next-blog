@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ApiStatus } from "../../../src/common/constant/Enum";
 import { searchPosts } from "../../../src/common/service/DynamoService";
 
+// TODO dynamoDb 와 Firebase에서 like 검색이 안됨을 확인. 일단 중지
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   if (req.method !== "GET") {
     res.status(400).json({

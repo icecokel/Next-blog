@@ -1,8 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ApiStatus } from "../../../src/common/constant/Enum";
-import { getMenus, insertItem, updateItem } from "../../../src/common/service/DynamoService";
-import { isIncludesFromTargetByKey } from "../../../src/common/util/ArrayUtil";
+import { getData, updateCollection } from "../../../src/common/service/FireBaseService";
 import { MenuVO } from "../../../store/modules/menu";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
@@ -14,27 +13,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
 
   const updateMenus: MenuVO[] = req.body.menus;
-  const blogId = updateMenus[0].blogId;
-  const menuItem: MenuVO[] = await getMenus(blogId);
-
-  const promises = updateMenus.map(async (item) => {
-    const isIncludes = isIncludesFromTargetByKey(item, menuItem, "id");
-    return isIncludes
-      ? updateItem("MENU", "id", ["name", "index"], item)
-      : insertItem("MENU", item);
-  });
+  const nickname: string = req.body.nickname;
 
   try {
-    const response = await Promise.all(promises);
-
-    res.status(200).json({
-      status: ApiStatus.OK,
-      items: response,
-    });
+    await updateCollection("blog", nickname, { menu: updateMenus });
+    const result = await getData("blog", nickname);
+    if (!result) {
+      res.status(404).json({
+        status: ApiStatus.NG,
+      });
+    } else {
+      res.status(200).json({
+        status: ApiStatus.OK,
+        items: result.menu,
+      });
+    }
   } catch (error) {
     res.status(500).json({
       status: ApiStatus.NG,
-      item: error,
     });
   }
 }

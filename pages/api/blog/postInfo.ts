@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ApiStatus } from "../../../src/common/constant/Enum";
-import { updateItem } from "../../../src/common/service/DynamoService";
+import { getData, updateCollection } from "../../../src/common/service/FireBaseService";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   if (req.method !== "POST") {
@@ -9,24 +9,31 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       status: ApiStatus.NG,
     });
   }
-  const params = req.body;
-  const itemsToChange = params.faviconPath ? ["description", "faviconPath"] : ["description"];
-
+  const params = { ...req.body };
+  if (!params.faviconPath) {
+    delete params.faviconPath;
+  }
   try {
-    const requests = [
-      updateItem("BLOG", "url", itemsToChange, params),
-      updateItem("USERS", "id", ["nickname"], { nickname: params.nickname, id: params.userId }),
-    ];
-    const [blog, user] = await Promise.all(requests);
+    await updateCollection("blog", params.nickname, params);
+    const result = await getData("blog", params.nickname);
 
-    res.status(200).json({
-      status: ApiStatus.OK,
-      item: { nickname: user.nickname, url: blog.url, description: blog.description },
-    });
+    if (!result) {
+      res.status(404).json({
+        status: ApiStatus.NG,
+      });
+    } else {
+      res.status(200).json({
+        status: ApiStatus.OK,
+        item: {
+          nickname: result.user.nickname,
+          url: result.user.nickname,
+          description: result.description,
+        },
+      });
+    }
   } catch (error) {
     res.status(500).json({
       status: ApiStatus.NG,
-      item: error,
     });
   }
 }

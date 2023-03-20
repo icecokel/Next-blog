@@ -20,7 +20,7 @@ export type MenuAction = ReturnType<typeof setMenu>;
 
 // 카테고리 타입
 export type MenuVO = {
-  blogId: string;
+  count: number;
   id: string;
   name: string;
   index: number;
