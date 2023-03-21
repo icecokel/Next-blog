@@ -9,6 +9,7 @@ import {
   deleteDoc,
   query,
   where,
+  updateDoc,
 } from "firebase/firestore/lite";
 import db from "./firebase";
 
@@ -69,12 +70,18 @@ export const getData = async (docName: string, keyword: string) => {
   }
 };
 
-export const insertData = async (docName: string, collectionName: string, params: any) => {
+// collectionName 지정
+export const insertCollection = async (docName: string, collectionName: string, params: any) => {
   await setDoc(doc(db, docName, collectionName), params);
 };
 
+// collectionName 랜덤하게 생성
 export const insertDoc = async (docName: string, params: any) => {
   await addDoc(collection(db, docName), params);
+};
+
+export const updateCollection = async (docName: string, collectionName: string, params: any) => {
+  await updateDoc(doc(db, docName, collectionName), params);
 };
 
 /**
