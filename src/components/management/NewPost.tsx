@@ -33,6 +33,7 @@ const NewPost = () => {
         ...post,
         menuId: selectedMenu,
         registId: user.id,
+        nickname: user.nickname,
       },
     });
 
