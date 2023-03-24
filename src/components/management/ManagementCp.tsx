@@ -16,7 +16,7 @@ const ManagementCp = ({
 }: IProp) => {
   return (
     <div className={styles.wrapper}>
-      <div className={styles.menu}>
+      <section className={styles.menu}>
         <ul>
           {menuList.map((menu, index) => {
             return (
@@ -25,20 +25,16 @@ const ManagementCp = ({
                 onClick={() => {
                   handleClickMenu(index);
                 }}
-                className={"mt-05 mb-05"}
+                className={menu === currentMenu ? styles.currentMenu : ""}
               >
                 {menu}
               </li>
             );
           })}
         </ul>
-      </div>
-      <div className={styles.contentWrapper}>
-        <div className={styles.contentTitle}>
-          <h2>{currentMenu}</h2>
-        </div>
-        <div className={styles.content}>{cureentMenuComponent}</div>
-      </div>
+      </section>
+      <hr />
+      <div className={styles.content}>{cureentMenuComponent}</div>
     </div>
   );
 };
