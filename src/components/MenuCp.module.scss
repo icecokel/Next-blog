@@ -1,0 +1,76 @@
+@import "../../styles/color.scss";
+
+.wrapper {
+  hr {
+    border-top: 1px solid $color-black;
+    border-bottom: 1px solid $color-gray;
+  }
+  padding-left: 1.5em;
+
+  .menus {
+    display: flex;
+    .contents {
+      flex: 1;
+      padding-right: 1em;
+      label {
+        padding-left: 0.5em;
+      }
+
+      ul {
+        padding-left: 0.5em;
+
+        li {
+          background-color: $color-white;
+          padding: 0.5em 0.7em;
+          border-radius: 5px;
+          box-shadow: 2px 2px $color-gray;
+          border: 1px solid $color-black;
+          margin-bottom: 0.5em;
+
+          &:hover {
+            transition-duration: 0.15s;
+            font-size: 1.05em;
+            cursor: pointer;
+            background-color: rgba($color-active, 0.5);
+          }
+          div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .post-no {
+              font-size: 0.9em;
+              margin-right: 3px;
+              width: 8vw;
+              max-width: 40px;
+            }
+
+            .postTitle {
+              font-size: 1.3em;
+              flex: 1;
+            }
+
+            .postHits {
+              text-align: right;
+              font-size: 0.7em;
+              width: 8vw;
+              max-width: 40px;
+
+              &::after {
+                margin-left: 2px;
+                content: "Hits";
+              }
+            }
+          }
+
+          .postRegistDate {
+            font-size: 0.8em;
+          }
+        }
+      }
+      @media (max-width: 640px) {
+        font-size: 0.75em;
+      }
+    }
+  }
+}
