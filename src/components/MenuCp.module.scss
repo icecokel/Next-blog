@@ -21,11 +21,13 @@
 
         li {
           background-color: $color-white;
-          padding: 0.5em 0.7em;
-          border-radius: 5px;
-          box-shadow: 2px 2px $color-gray;
+          border-radius: 3px;
+          box-shadow: 1px 1px $color-gray;
           border: 1px solid $color-black;
-          margin-bottom: 0.5em;
+          width: 300px;
+          height: 300px;
+          padding: 10px;
+          padding-top: 240px;
 
           &:hover {
             transition-duration: 0.15s;
@@ -33,23 +35,14 @@
             cursor: pointer;
             background-color: rgba($color-active, 0.5);
           }
+
+          .postTitle {
+            font-size: 1.3em;
+          }
+
           div {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-
-            .post-no {
-              font-size: 0.9em;
-              margin-right: 3px;
-              width: 8vw;
-              max-width: 40px;
-            }
-
-            .postTitle {
-              font-size: 1.3em;
-              flex: 1;
-            }
-
             .postHits {
               text-align: right;
               font-size: 0.7em;
@@ -61,10 +54,10 @@
                 content: "Hits";
               }
             }
-          }
 
-          .postRegistDate {
-            font-size: 0.8em;
+            .postRegistDate {
+              font-size: 0.8em;
+            }
           }
         }
       }

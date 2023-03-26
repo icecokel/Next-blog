@@ -67,11 +67,11 @@ MenuCp.itemByPost = ({ postId, hits, registDate, title, nickname }: IItemProps) 
   return (
     <Link href={"/blog/" + nickname + "/p/" + postId}>
       <li>
+        <div className={styles.postTitle}>{title}</div>
         <div>
-          <span className={styles.postTitle}>{title}</span>
+          <span className={styles.postRegistDate}>{formatDateToString(new Date(registDate))}</span>
           <span className={styles.postHits}>{hits}</span>
         </div>
-        <span className={styles.postRegistDate}>{formatDateToString(new Date(registDate))}</span>
       </li>
     </Link>
   );
