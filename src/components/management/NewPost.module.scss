@@ -42,9 +42,11 @@
 }
 .menu {
   @extend .time;
+  margin-bottom: 10px;
   select {
     width: 20em;
     text-align: center;
+    margin-left: 0px;
   }
 }
 

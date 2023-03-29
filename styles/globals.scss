@@ -31,85 +31,14 @@ a {
   }
 }
 
-.menu-wrap {
-  hr {
-    border-top: 1px solid $color-black;
-    border-bottom: 1px solid $color-gray;
-  }
-  padding-left: 1.5em;
-
-  .menu-contents-wrap {
-    display: flex;
-    .menu-contents {
-      flex: 1;
-      padding-right: 1em;
-      label {
-        padding-left: 0.5em;
-      }
-
-      ul {
-        padding-left: 0.5em;
-
-        li {
-          background-color: $color-white;
-          padding: 0.5em 0.7em;
-          border-radius: 5px;
-          box-shadow: 2px 2px $color-gray;
-          border: 1px solid $color-black;
-          margin-bottom: 0.5em;
-
-          &:hover {
-            transition-duration: 0.15s;
-            font-size: 1.05em;
-            cursor: pointer;
-            background-color: rgba($color-active, 0.5);
-          }
-          div {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            .post-no {
-              font-size: 0.9em;
-              margin-right: 3px;
-              width: 8vw;
-              max-width: 40px;
-            }
-
-            .post-title {
-              font-size: 1.3em;
-              flex: 1;
-            }
-
-            .post-hits {
-              text-align: right;
-              font-size: 0.7em;
-              width: 8vw;
-              max-width: 40px;
-
-              &::after {
-                margin-left: 2px;
-                content: "Hits";
-              }
-            }
-          }
-
-          .post-registDate {
-            font-size: 0.8em;
-          }
-        }
-      }
-      @media (max-width: 640px) {
-        font-size: 0.75em;
-      }
-    }
-  }
-}
-
 .footer-wrap {
   text-align: center;
   border-top: 1px solid $color-black;
   padding: 16px;
   font-size: 0.8em;
   font-weight: 100;
+}
+
+.material-icons {
+  cursor: pointer;
 }

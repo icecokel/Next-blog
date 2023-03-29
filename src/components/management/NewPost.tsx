@@ -33,6 +33,7 @@ const NewPost = () => {
         ...post,
         menuId: selectedMenu,
         registId: user.id,
+        nickname: user.nickname,
       },
     });
 
@@ -66,19 +67,9 @@ const NewPost = () => {
 
   return (
     <div className={styles.wrapper}>
-      <input
-        type="text"
-        placeholder="제목을 입력해주세요"
-        name="title"
-        className={styles.input}
-        onChange={handleChangeText}
-        value={post.title}
-      />
-      <BaseEditor getEditorHTML={handleChangeContents} />
       <div className={styles.menu}>
-        <p>메뉴 선택</p>
         <select onChange={handleSelectMenu} value={selectedMenu}>
-          <option value={""}>선택 해주세요.</option>
+          <option value={""}>카테고리를 선택 해주세요.</option>
           {menu.map(({ id, name }) => {
             return (
               <option key={id} value={id}>
@@ -88,6 +79,16 @@ const NewPost = () => {
           })}
         </select>
       </div>
+      <input
+        type="text"
+        placeholder="제목을 입력해주세요"
+        name="title"
+        className={styles.input}
+        onChange={handleChangeText}
+        value={post.title}
+      />
+      <BaseEditor getEditorHTML={handleChangeContents} />
+
       <div>
         <p>발행일</p>
         <div className={styles.dateWrapper}>
