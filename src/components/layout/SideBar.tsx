@@ -4,20 +4,18 @@ import { RootState } from "../../../store/modules";
 import { sortByKey } from "../../common/util/ArrayUtil";
 import styles from "./SideBar.module.scss";
 import Link from "next/link";
-import { ApiStatus } from "../../common/constant/Enum";
-import { API_OPTIONS, requestApi } from "../../common/service/ApiService";
-
-const OUT_SIDE_TAG_ID = "outSide";
+import useClickOutSide from "../../common/hooks/useClickOutSide";
 
 interface ISideBarProps {
   handleToggle: () => void;
 }
 
 const SideBar = ({ handleToggle }: ISideBarProps) => {
-  const { nickname, id } = useSelector((state: RootState) => state.user);
+  const { nickname } = useSelector((state: RootState) => state.user);
   const menu = useSelector((state: RootState) => state.menu);
   const sortedMenu = sortByKey(menu, "index");
   const [keyword, setKeyword] = useState<string>("");
+  const sideBarRef = useClickOutSide(handleToggle);
 
   useEffect(() => {
     const handleKeyDownEscape = ({ key }: any) => {
@@ -25,17 +23,10 @@ const SideBar = ({ handleToggle }: ISideBarProps) => {
         handleToggle();
       }
     };
-    const handleClickOutSide = ({ srcElement: { id } }: any) => {
-      if (id === OUT_SIDE_TAG_ID) {
-        handleToggle();
-      }
-    };
     window.addEventListener("keydown", handleKeyDownEscape, false);
-    window.addEventListener("click", handleClickOutSide, false);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDownEscape, false);
-      window.removeEventListener("click", handleClickOutSide, false);
     };
   }, []);
 
@@ -43,25 +34,9 @@ const SideBar = ({ handleToggle }: ISideBarProps) => {
     setKeyword(value);
   };
 
-  const handleSearch = async () => {
-    const { data } = await requestApi({
-      option: API_OPTIONS.searchPost,
-      params: {
-        keyword: keyword,
-        id: id,
-      },
-    });
-
-    if (data.status !== ApiStatus.OK) {
-      return;
-    }
-
-    console.log(data);
-  };
-
   return (
-    <div className={styles.wrapper} id={OUT_SIDE_TAG_ID}>
-      <div className={styles.menuList}>
+    <div className={styles.wrapper}>
+      <div className={styles.menuList} ref={sideBarRef}>
         <div>{nickname}님의 블로그</div>
         <div className={styles.searchBar}>
           <input
@@ -70,9 +45,6 @@ const SideBar = ({ handleToggle }: ISideBarProps) => {
             value={keyword}
             onChange={handleChangeKeyword}
           />
-          <span className="material-icons" onClick={handleSearch}>
-            search
-          </span>
         </div>
         <ul>
           {sortedMenu.map((item) => {
