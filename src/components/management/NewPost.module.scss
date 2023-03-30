@@ -67,3 +67,13 @@
     }
   }
 }
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  button {
+    margin-top: 40px;
+  }
+}
