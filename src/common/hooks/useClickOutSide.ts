@@ -1,6 +1,6 @@
-import { useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef } from "react";
 
-const useClickOutSide = (onClickOutSide: () => void) => {
+const useClickOutSide = (onClickOutSide: () => void): RefObject<any> => {
   const ref = useRef<HTMLElement>(null);
   const handleClickOutSide = (event: MouseEvent) => {
     if (ref.current && !ref.current.contains(event.target as Node)) {
