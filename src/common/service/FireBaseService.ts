@@ -10,6 +10,10 @@ import {
   query,
   where,
   updateDoc,
+  orderBy,
+  startAt,
+  limit,
+  endAt,
 } from "firebase/firestore/lite";
 import db from "./firebase";
 
@@ -24,10 +28,18 @@ type WhereFilterOp =
   | "in"
   | "array-contains-any"
   | "not-in";
-interface Condition {
+interface OrderByCondition {
+  fieldPath: string;
+  direction: "asc" | "desc";
+}
+
+interface SearchCondition {
   fieldPath: string;
   opStr: WhereFilterOp;
-  value: unknown;
+  value: any;
+  orderByCondition: OrderByCondition;
+  page: number;
+  rowCount: number;
 }
 
 // 모든 문서 가져오기
@@ -44,14 +56,30 @@ export const fetchData = async (docName: string) => {
 
   return result;
 };
+// TODO 색인 추가 확인 - 완료
+// startAt page의 수가 아니라, 값을정하는것, ex) startAt(1680194863815)은 1680194863815 이후 부터
+// 다음 페이지를 진행하려면 값을 알고 있어야한다.
+// asc는 가능함확인
+// desc는 왜 불가한지 색인 밑 다른 정보 확인 필요
+export const searchData = async (
+  collectionName: string,
+  { fieldPath, opStr, value, page = 1, rowCount = 10 }: SearchCondition
+) => {
+  const collectionRef = collection(db, collectionName);
+  const startIdx = (page - 1) * rowCount;
 
-export const searchData = async (docName: string, { fieldPath, opStr, value }: Condition) => {
-  const q = query(collection(db, docName), where(fieldPath, opStr, value));
-  const querySnapshot = await getDocs(q);
+  let queryRef = query(
+    collectionRef,
+    where(fieldPath, opStr, value),
+    orderBy("registDate"),
+    startAt(1680194863815),
+    limit(rowCount)
+  );
+
+  const querySnapshot = await getDocs(queryRef);
   const result: any[] = [];
+
   querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    // console.log(doc.id, " => ", doc.data());
     result.push(doc.data());
   });
 
