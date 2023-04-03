@@ -7,6 +7,7 @@ import { setPost } from "../../../store/modules/post";
 import { ApiStatus } from "../../common/constant/Enum";
 import { API_OPTIONS, requestApi } from "../../common/service/ApiService";
 import { HOURS, MINUTES } from "../../common/util/DateUtil";
+import BaseModal from "../common/BaseModal";
 import styles from "./NewPost.module.scss";
 
 const BaseEditor = dynamic(import("../common/BaseEditor"), { ssr: false });
@@ -16,12 +17,36 @@ const NewPost = () => {
   const post = useSelector((state: RootState) => state.post);
   const menu = useSelector((state: RootState) => state.menu);
   const [selectedMenu, setSelectedMenu] = useState<string>("");
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const registDate = new Date(post.registDate);
   const dispatch = useDispatch();
 
-  const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
+  const handleChangeText = ({ target: { value, name } }: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setPost({ ...post, [name]: value }));
+  };
+
+  const handleSelectMenu = ({ target: { value } }: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedMenu(value);
+  };
+
+  const handleChangeContents = (value: string | undefined) => {
+    dispatch(setPost({ ...post, contents: value }));
+  };
+
+  const handleChangeDatePicker = (date: any) => {
+    dispatch(setPost({ ...post, registDate: date }));
+  };
+
+  const handleChangeTime = ({ target: { value, name } }: React.ChangeEvent<HTMLSelectElement>) => {
+    const time = Number.parseInt(value);
+
+    name === "postTimehour" ? registDate.setHours(time) : registDate.setMinutes(time);
+
+    dispatch(setPost({ ...post, registDate: registDate.getTime() }));
+  };
+
+  const handleToggleModalOpen = () => {
+    setIsOpenModal(!isOpenModal);
   };
 
   const handleClickPostButton = async () => {
@@ -41,32 +66,19 @@ const NewPost = () => {
       // TODO 에러처리
       alert("!!");
     }
-  };
-
-  const handleSelectMenu = ({ target: { value } }: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedMenu(value);
-  };
-
-  const handleChangeContents = (value: string | undefined) => {
-    dispatch(setPost({ ...post, contents: value }));
-  };
-  const handleChangeDatePicker = (date: any) => {
-    dispatch(setPost({ ...post, registDate: date }));
-  };
-  const handleChangeTime = ({ target: { value, name } }: React.ChangeEvent<HTMLSelectElement>) => {
-    const time = Number.parseInt(value);
-
-    if (name === "postTimehour") {
-      registDate.setHours(time);
-    } else {
-      registDate.setMinutes(time);
-    }
-
-    dispatch(setPost({ ...post, registDate: registDate.getTime() }));
+    handleToggleModalOpen();
+    dispatch(
+      setPost({
+        contents: "",
+        menuId: "",
+        registDate: new Date().getTime(),
+        title: "",
+      })
+    );
   };
 
   return (
-    <div className={styles.wrapper}>
+    <article className={styles.wrapper}>
       <div className={styles.menu}>
         <select onChange={handleSelectMenu} value={selectedMenu}>
           <option value={""}>카테고리를 선택 해주세요.</option>
@@ -128,7 +140,15 @@ const NewPost = () => {
       <div className={styles.buttonWrapper}>
         <button onClick={handleClickPostButton}>발행</button>
       </div>
-    </div>
+      <div>
+        <BaseModal isOpen={isOpenModal} title="등록완료" setIsOpen={handleToggleModalOpen}>
+          <div className={styles.modal}>
+            <div>포스트가 등록이 완료 되었습니다.</div>
+            <button onClick={handleToggleModalOpen}>닫기</button>
+          </div>
+        </BaseModal>
+      </div>
+    </article>
   );
 };
 
