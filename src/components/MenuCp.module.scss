@@ -9,6 +9,7 @@
 
   .menus {
     display: flex;
+
     .contents {
       flex: 1;
       padding-right: 1em;
@@ -18,16 +19,20 @@
 
       ul {
         padding-left: 0.5em;
-
+        display: flex;
+        width: 940px;
+        flex-flow: wrap;
         li {
           background-color: $color-white;
           border-radius: 3px;
           box-shadow: 1px 1px $color-gray;
           border: 1px solid $color-black;
-          width: 300px;
-          height: 300px;
           padding: 10px;
           padding-top: 240px;
+          flex: 1;
+          min-width: 300px;
+          height: 300px;
+          margin: 5px;
 
           &:hover {
             transition-duration: 0.15s;
