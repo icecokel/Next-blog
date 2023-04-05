@@ -13,7 +13,6 @@ import {
   orderBy,
   startAt,
   limit,
-  endAt,
 } from "firebase/firestore/lite";
 import db from "./firebase";
 
@@ -33,15 +32,6 @@ interface OrderByCondition {
   direction: "asc" | "desc";
 }
 
-interface SearchCondition {
-  fieldPath: string;
-  opStr: WhereFilterOp;
-  value: any;
-  orderByCondition: OrderByCondition;
-  page: number;
-  rowCount: number;
-}
-
 // 모든 문서 가져오기
 export const fetchData = async (docName: string) => {
   const querySnapshot = await getDocs(collection(db, docName));
@@ -56,23 +46,31 @@ export const fetchData = async (docName: string) => {
 
   return result;
 };
+
+interface SearchCondition {
+  fieldPath: string;
+  opStr: WhereFilterOp;
+  value: any;
+  orderByCondition: OrderByCondition;
+  startAtValue: number | string;
+  rowCount: number;
+}
 // TODO 색인 추가 확인 - 완료
 // startAt page의 수가 아니라, 값을정하는것, ex) startAt(1680194863815)은 1680194863815 이후 부터
 // 다음 페이지를 진행하려면 값을 알고 있어야한다.
 // asc는 가능함확인
-// desc는 왜 불가한지 색인 밑 다른 정보 확인 필요
+// desc는 왜 불가한지 색인 및 다른 정보 확인 필요
 export const searchData = async (
   collectionName: string,
-  { fieldPath, opStr, value, page = 1, rowCount = 10 }: SearchCondition
+  { fieldPath, opStr, value, startAtValue, rowCount }: SearchCondition
 ) => {
   const collectionRef = collection(db, collectionName);
-  const startIdx = (page - 1) * rowCount;
 
   let queryRef = query(
     collectionRef,
     where(fieldPath, opStr, value),
     orderBy("registDate"),
-    startAt(1680194863815),
+    startAt(startAtValue),
     limit(rowCount)
   );
 

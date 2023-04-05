@@ -17,8 +17,7 @@ export async function getServerSideProps({
   const data = await getPosts({
     name: name.toString(),
     nickname: nickname.toString(),
-    page: 1,
-    rowCount: 3,
+    startAtValue: 1,
   });
   if (!data) {
     return {

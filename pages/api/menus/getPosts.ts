@@ -7,11 +7,10 @@ import { MenuVO } from "../../../store/modules/menu";
 interface IGetPostsParams {
   nickname: string;
   name: string;
-  page: number;
-  rowCount: number;
+  startAtValue: string | number;
 }
 
-export const getPosts = async ({ name, nickname, page, rowCount }: IGetPostsParams) => {
+export const getPosts = async ({ name, nickname, startAtValue }: IGetPostsParams) => {
   const blog = await getData("blog", nickname.toString());
 
   if (!blog) {
@@ -27,8 +26,8 @@ export const getPosts = async ({ name, nickname, page, rowCount }: IGetPostsPara
     opStr: "==",
     value: currentMenu.id,
     orderByCondition: { fieldPath: "registDate", direction: "desc" },
-    page: page,
-    rowCount: rowCount,
+    startAtValue: startAtValue,
+    rowCount: 3,
   });
 
   return {
@@ -47,7 +46,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     });
   }
 
+  const { name, nickname, startAtValue } = req.query;
+
+  if (!name || !nickname || !startAtValue) {
+    res.status(400).json({
+      status: ApiStatus.NG,
+      message: "Invalid request method",
+    });
+  }
+
+  const respones = await getPosts({
+    name: name?.toString() ?? "",
+    nickname: nickname?.toString() ?? "",
+    startAtValue: Number.parseInt(startAtValue?.toString() ?? "1"),
+  });
+
   res.status(200).json({
     status: ApiStatus.OK,
+    data: respones?.posts,
   });
 }
