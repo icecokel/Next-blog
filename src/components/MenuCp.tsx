@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Loader from "./common/Loader";
 import { PostVO } from "../common/constant/Model";
 import Link from "next/link";
@@ -14,6 +14,8 @@ interface ICatogoryProps {
 }
 
 const MenuCp = ({ menuName, postList, nickname }: ICatogoryProps) => {
+  const lastRef = useRef<HTMLLIElement>(null);
+
   return (
     <div className={styles.wrapper}>
       <h2>{menuName}</h2>
@@ -25,20 +27,17 @@ const MenuCp = ({ menuName, postList, nickname }: ICatogoryProps) => {
             <ul>
               {postList.map((post, index) => {
                 const hits = !post.hits ? 0 : Number.parseInt(post.hits);
-
-                let title = post.title;
-                if (TITLE_MAX_LENGTH < post.title.length) {
-                  title = post.title.substring(20) + " . . .";
-                }
+                const ref = postList.length === index + 1 ? lastRef : null;
 
                 return (
                   <MenuCp.itemByPost
                     postId={post.id}
-                    title={title}
+                    title={post.title}
                     hits={hits}
                     registDate={post.registDate}
                     key={"menu_" + index}
                     nickname={nickname}
+                    ref={ref}
                   />
                 );
               })}
@@ -58,12 +57,13 @@ interface IItemProps {
   title: string;
   hits: number;
   registDate: number;
+  ref: React.RefObject<HTMLLIElement> | null;
 }
 
-MenuCp.itemByPost = ({ postId, hits, registDate, title, nickname }: IItemProps) => {
+MenuCp.itemByPost = ({ postId, hits, registDate, title, nickname, ref }: IItemProps) => {
   return (
     <Link href={"/blog/" + nickname + "/p/" + postId}>
-      <li>
+      <li ref={ref}>
         <div className={styles.postTitle}>{title}</div>
         <div>
           <span className={styles.postRegistDate}>{formatDateToString(new Date(registDate))}</span>
