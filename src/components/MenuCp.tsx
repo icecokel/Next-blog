@@ -1,11 +1,10 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Loader from "./common/Loader";
 import { PostVO } from "../common/constant/Model";
 import Link from "next/link";
 import { formatDateToString } from "../common/util/DateUtil";
 import styles from "./MenuCp.module.scss";
-
-const TITLE_MAX_LENGTH = 20;
+import useIntersectionObserver from "../common/hooks/useIntersectionObserver";
 
 interface ICatogoryProps {
   nickname: string | string[];
@@ -15,6 +14,12 @@ interface ICatogoryProps {
 
 const MenuCp = ({ menuName, postList, nickname }: ICatogoryProps) => {
   const lastRef = useRef<HTMLLIElement>(null);
+  const entry = useIntersectionObserver(lastRef, {});
+  const isVisible = entry?.isIntersecting;
+
+  useEffect(() => {
+    console.log(isVisible);
+  }, [isVisible]);
 
   return (
     <div className={styles.wrapper}>
