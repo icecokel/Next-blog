@@ -1,11 +1,9 @@
-import React, { useRef } from "react";
-import Loader from "./common/Loader";
+import React, { useEffect, useRef, useState } from "react";
 import { PostVO } from "../common/constant/Model";
 import Link from "next/link";
 import { formatDateToString } from "../common/util/DateUtil";
 import styles from "./MenuCp.module.scss";
-
-const TITLE_MAX_LENGTH = 20;
+import Loader from "./common/Loader";
 
 interface ICatogoryProps {
   nickname: string | string[];
@@ -14,7 +12,26 @@ interface ICatogoryProps {
 }
 
 const MenuCp = ({ menuName, postList, nickname }: ICatogoryProps) => {
-  const lastRef = useRef<HTMLLIElement>(null);
+  const [posts, setPosts] = useState<PostVO[]>(postList);
+  const target = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let observer: IntersectionObserver;
+    if (target) {
+      observer = new IntersectionObserver(
+        async ([e], observer) => {
+          if (e.isIntersecting) {
+            observer.unobserve(e.target);
+            console.log("d");
+            observer.observe(e.target);
+          }
+        },
+        { threshold: 1 }
+      );
+      observer.observe(target.current as Element);
+    }
+    return () => observer.disconnect();
+  }, [target]);
 
   return (
     <div className={styles.wrapper}>
@@ -23,26 +40,24 @@ const MenuCp = ({ menuName, postList, nickname }: ICatogoryProps) => {
       <section className={styles.menus}>
         <div className={styles.contents}>
           <label>게시글 리스트</label>
-          <Loader isLoading={postList.length === 0}>
-            <ul>
-              {postList.map((post, index) => {
-                const hits = !post.hits ? 0 : Number.parseInt(post.hits);
-                const ref = postList.length === index + 1 ? lastRef : null;
-
-                return (
-                  <MenuCp.itemByPost
-                    postId={post.id}
-                    title={post.title}
-                    hits={hits}
-                    registDate={post.registDate}
-                    key={"menu_" + index}
-                    nickname={nickname}
-                    ref={ref}
-                  />
-                );
-              })}
-            </ul>
-          </Loader>
+          <ul>
+            {posts.map((post, index) => {
+              const hits = !post.hits ? 0 : Number.parseInt(post.hits);
+              return (
+                <MenuCp.itemByPost
+                  postId={post.id}
+                  title={post.title}
+                  hits={hits}
+                  registDate={post.registDate}
+                  key={"menu_" + index}
+                  nickname={nickname}
+                />
+              );
+            })}
+          </ul>
+          <div ref={target}>
+            <Loader isLoading={true}>loading...</Loader>
+          </div>
         </div>
       </section>
     </div>
@@ -57,13 +72,12 @@ interface IItemProps {
   title: string;
   hits: number;
   registDate: number;
-  ref: React.RefObject<HTMLLIElement> | null;
 }
 
-MenuCp.itemByPost = ({ postId, hits, registDate, title, nickname, ref }: IItemProps) => {
+MenuCp.itemByPost = ({ postId, hits, registDate, title, nickname }: IItemProps) => {
   return (
     <Link href={"/blog/" + nickname + "/p/" + postId}>
-      <li ref={ref}>
+      <li>
         <div className={styles.postTitle}>{title}</div>
         <div>
           <span className={styles.postRegistDate}>{formatDateToString(new Date(registDate))}</span>

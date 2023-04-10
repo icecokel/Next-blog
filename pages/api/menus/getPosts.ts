@@ -1,16 +1,17 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ApiStatus } from "../../../src/common/constant/Enum";
-import { getData, searchData, updateCollection } from "../../../src/common/service/FireBaseService";
+import { getData, searchData } from "../../../src/common/service/FireBaseService";
 import { MenuVO } from "../../../store/modules/menu";
 
 interface IGetPostsParams {
   nickname: string;
   name: string;
   startAtValue: string | number;
+  page?: number;
 }
 
-export const getPosts = async ({ name, nickname, startAtValue }: IGetPostsParams) => {
+export const getPosts = async ({ name, nickname, startAtValue, page = 1 }: IGetPostsParams) => {
   const blog = await getData("blog", nickname.toString());
 
   if (!blog) {
@@ -27,7 +28,7 @@ export const getPosts = async ({ name, nickname, startAtValue }: IGetPostsParams
     value: currentMenu.id,
     orderByCondition: { fieldPath: "registDate", direction: "desc" },
     startAtValue: startAtValue,
-    rowCount: 3,
+    rowCount: 3 * page,
   });
 
   return {
