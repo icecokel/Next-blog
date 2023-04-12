@@ -4,6 +4,9 @@ import Link from "next/link";
 import { formatDateToString } from "../common/util/DateUtil";
 import styles from "./MenuCp.module.scss";
 import Loader from "./common/Loader";
+import { requestApi } from "../common/service/ApiService";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/modules";
 
 interface ICatogoryProps {
   nickname: string | string[];
@@ -13,8 +16,30 @@ interface ICatogoryProps {
 
 const MenuCp = ({ menuName, postList, nickname }: ICatogoryProps) => {
   const [posts, setPosts] = useState<PostVO[]>(postList);
+  const [isPending, setIsPending] = useState<boolean>(false);
   const target = useRef<HTMLDivElement>(null);
 
+  const fetchMoreData = async () => {
+    if (isPending) {
+      return;
+    }
+    setIsPending(true);
+    const { data } = await requestApi({
+      option: {
+        method: "GET",
+        url: "/menus/getPosts",
+      },
+      params: {
+        name: menuName,
+        nickname: nickname,
+        startAtValue: [...posts].pop()?.registDate,
+      },
+    });
+    setIsPending(false);
+    console.log(data);
+  };
+
+  // TODO 로대쉬 추가
   useEffect(() => {
     let observer: IntersectionObserver;
     if (target) {
@@ -22,7 +47,7 @@ const MenuCp = ({ menuName, postList, nickname }: ICatogoryProps) => {
         async ([e], observer) => {
           if (e.isIntersecting) {
             observer.unobserve(e.target);
-            console.log("d");
+            // fetchMoreData();
             observer.observe(e.target);
           }
         },
