@@ -1,8 +1,5 @@
 import type { GetServerSideProps, NextPage } from "next";
 import MainCt from "../../../src/components/containers/MainCt";
-import useDispatchInitialization, {
-  IInitializationProps,
-} from "../../../src/common/hooks/useDispatchInitialization";
 import { getData } from "../../../src/common/service/FireBaseService";
 import { wrapper } from "../../../store";
 import { BlogVO, setBlog } from "../../../store/modules/blog";
@@ -38,7 +35,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     }
 );
 
-const BlogMainPage: NextPage<IInitializationProps> = (props) => {
+const BlogMainPage: NextPage<any> = (props) => {
   return <MainCt />;
 };
 
