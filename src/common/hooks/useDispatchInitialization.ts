@@ -10,16 +10,13 @@ export interface IInitializationProps {
   blog: BlogVO;
   users: UserVO;
   menus: MenuVO[];
-  code?: number | string;
 }
 
-const useDispatchInitialization = ({ blog, menus, users, code }: IInitializationProps) => {
+// TODO 서버 사이트에서 디스 패치 할 것
+const useDispatchInitialization = ({ blog, menus, users }: IInitializationProps) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (code === 404) {
-      window.location.replace(window.location.origin + "/404");
-    }
     setRedux();
   }, []);
 
