@@ -8,7 +8,7 @@ import { setUser, UserVO } from "../../../store/modules/user";
 import { ApiStatus } from "../../../src/common/constant/Enum";
 
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  ({ dispatch }) =>
     async ({ query: { nickname } }) => {
       if (!nickname) {
         return {
@@ -23,9 +23,9 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
         };
       }
 
-      store.dispatch(setBlog(blog as BlogVO));
-      store.dispatch(setMenu(blog.menu as MenuVO[]));
-      store.dispatch(setUser(blog.user as UserVO));
+      dispatch(setBlog(blog as BlogVO));
+      dispatch(setMenu(blog.menu as MenuVO[]));
+      dispatch(setUser(blog.user as UserVO));
 
       return {
         props: {
