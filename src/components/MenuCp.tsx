@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { PostVO } from "../common/constant/Model";
 import Link from "next/link";
 import { formatDateToString } from "../common/util/DateUtil";
@@ -7,6 +7,7 @@ import Loader from "./common/Loader";
 import { requestApi } from "../common/service/ApiService";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/modules";
+import { debounce } from "lodash";
 
 interface ICatogoryProps {
   nickname: string | string[];
@@ -16,14 +17,10 @@ interface ICatogoryProps {
 
 const MenuCp = ({ menuName, postList, nickname }: ICatogoryProps) => {
   const [posts, setPosts] = useState<PostVO[]>(postList);
-  const [isPending, setIsPending] = useState<boolean>(false);
   const target = useRef<HTMLDivElement>(null);
 
-  const fetchMoreData = async () => {
-    if (isPending) {
-      return;
-    }
-    setIsPending(true);
+  const fetchMoreData = debounce(async () => {
+    console.log("D");
     const { data } = await requestApi({
       option: {
         method: "GET",
@@ -35,9 +32,11 @@ const MenuCp = ({ menuName, postList, nickname }: ICatogoryProps) => {
         startAtValue: [...posts].pop()?.registDate,
       },
     });
-    setIsPending(false);
+
+    setPosts([...posts, ...data.data]);
+
     console.log(data);
-  };
+  }, 100);
 
   // TODO 로대쉬 추가
   useEffect(() => {
@@ -47,7 +46,7 @@ const MenuCp = ({ menuName, postList, nickname }: ICatogoryProps) => {
         async ([e], observer) => {
           if (e.isIntersecting) {
             observer.unobserve(e.target);
-            // fetchMoreData();
+            fetchMoreData();
             observer.observe(e.target);
           }
         },
