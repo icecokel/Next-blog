@@ -7,7 +7,7 @@ import Loader from "./common/Loader";
 import { requestApi } from "../common/service/ApiService";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/modules";
-import { debounce } from "lodash";
+import { throttle } from "lodash";
 
 interface ICatogoryProps {
   nickname: string | string[];
@@ -19,8 +19,7 @@ const MenuCp = ({ menuName, postList, nickname }: ICatogoryProps) => {
   const [posts, setPosts] = useState<PostVO[]>(postList);
   const target = useRef<HTMLDivElement>(null);
 
-  const fetchMoreData = debounce(async () => {
-    console.log("D");
+  const fetchMoreData = throttle(async () => {
     const { data } = await requestApi({
       option: {
         method: "GET",
@@ -34,11 +33,8 @@ const MenuCp = ({ menuName, postList, nickname }: ICatogoryProps) => {
     });
 
     setPosts([...posts, ...data.data]);
+  }, 500);
 
-    console.log(data);
-  }, 100);
-
-  // TODO 로대쉬 추가
   useEffect(() => {
     let observer: IntersectionObserver;
     if (target) {
