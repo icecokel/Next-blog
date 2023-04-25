@@ -6,6 +6,7 @@ import { wrapper } from "../../../../store";
 import { setBlog, BlogVO } from "../../../../store/modules/blog";
 import { setMenu, MenuVO } from "../../../../store/modules/menu";
 import { setUser, UserVO } from "../../../../store/modules/user";
+import { PostVO } from "../../../../src/common/constant/Model";
 
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
   ({ dispatch }) =>
@@ -38,8 +39,12 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     }
 );
 
-const PostPage = (props: any) => {
-  return <PostCard post={props.post} user={props.users} />;
+interface IProps {
+  post: PostVO;
+}
+
+const PostPage = ({ post }: IProps) => {
+  return <PostCard post={post} />;
 };
 
 export default PostPage;
