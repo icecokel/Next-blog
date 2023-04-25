@@ -3,13 +3,15 @@ import { PostVO } from "../../common/constant/Model";
 import { fromNow } from "../../common/util/DateUtil";
 import styles from "./PostCard.module.scss";
 import { UserVO } from "../../../store/modules/user";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/modules";
 
 interface IProps {
   post: PostVO;
-  user: UserVO;
 }
 
-const PostCard = ({ post, user }: IProps) => {
+const PostCard = ({ post }: IProps) => {
+  const { nickname, introduction, profileImgPath } = useSelector((state: RootState) => state.user);
   return (
     <article className={styles.wrapper}>
       <div className={styles.titleWarpper}>
@@ -25,10 +27,10 @@ const PostCard = ({ post, user }: IProps) => {
         />
       </div>
       <div className={styles.profile}>
-        <img className={styles.profileImg} src={user.profileImgPath} alt="profileImg" />
+        <img className={styles.profileImg} src={profileImgPath} alt="profileImg" />
         <div>
-          <p>{user.nickname}</p>
-          <p>{user.introduction}</p>
+          <p>{nickname}</p>
+          <p>{introduction}</p>
         </div>
       </div>
     </article>
