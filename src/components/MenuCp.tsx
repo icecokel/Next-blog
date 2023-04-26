@@ -1,13 +1,11 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
-import { PostVO } from "../common/constant/Model";
+import { throttle } from "lodash";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { PostVO } from "../common/constant/Model";
+import { requestApi } from "../common/service/ApiService";
 import { formatDateToString } from "../common/util/DateUtil";
 import styles from "./MenuCp.module.scss";
 import Loader from "./common/Loader";
-import { requestApi } from "../common/service/ApiService";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/modules";
-import { throttle } from "lodash";
 
 interface ICatogoryProps {
   nickname: string | string[];
