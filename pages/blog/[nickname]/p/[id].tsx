@@ -1,12 +1,12 @@
 import { GetServerSideProps } from "next";
 import React from "react";
 import { getData } from "../../../../src/common/service/FireBaseService";
-import PostCard from "../../../../src/components/containers/PostCard";
 import { wrapper } from "../../../../store";
 import { setBlog, BlogVO } from "../../../../store/modules/blog";
 import { setMenu, MenuVO } from "../../../../store/modules/menu";
 import { setUser, UserVO } from "../../../../store/modules/user";
 import { PostVO } from "../../../../src/common/constant/Model";
+import PostCard from "../../../../src/components/PostCard";
 
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
   ({ dispatch }) =>
@@ -28,8 +28,8 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
       }
 
       dispatch(setBlog(blog as BlogVO));
-      dispatch(setMenu(blog.menus as MenuVO[]));
-      dispatch(setUser(blog.users as UserVO));
+      dispatch(setMenu(blog.menu as MenuVO[]));
+      dispatch(setUser(blog.user as UserVO));
 
       return {
         props: {

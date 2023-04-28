@@ -1,9 +1,9 @@
 import React from "react";
 import { NextPage } from "next";
-import MamagementCt from "../../../../src/components/containers/MamagementCt";
+import MamagementScreen from "../../../../src/components/management/Mamagement.screen";
 
 const ManagementPage: NextPage = (props: any) => {
-  return <MamagementCt />;
+  return <MamagementScreen />;
 };
 
 export default ManagementPage;
