@@ -1,4 +1,4 @@
-import styles from "./MainCp.module.scss";
+import styles from "./Main.screen.module.scss";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/modules";
@@ -7,7 +7,7 @@ import LinkIcons from "./LinkIcons";
 
 type tabType = "posts" | "inst";
 
-const MainCp = () => {
+const MainScreen = () => {
   const user = useSelector((state: RootState) => state.user);
   const blog = useSelector((state: RootState) => state.blog);
   const [tab, setTab] = useState<tabType>("posts");
@@ -52,18 +52,18 @@ const MainCp = () => {
           </li>
         </ul>
       </section>
-      {tab === "posts" ? <MainCp.posts blog={blog} /> : <MainCp.inst {...blog} />}
+      {tab === "posts" ? <MainScreen.posts blog={blog} /> : <MainScreen.inst {...blog} />}
     </article>
   );
 };
 
-export default MainCp;
+export default MainScreen;
 
 interface IPostsProps {
   blog: BlogVO;
 }
 
-MainCp.posts = ({ blog }: IPostsProps) => {
+MainScreen.posts = ({ blog }: IPostsProps) => {
   return (
     <section className={styles.recentList}>
       <div>
@@ -73,7 +73,7 @@ MainCp.posts = ({ blog }: IPostsProps) => {
   );
 };
 
-MainCp.inst = ({ description, githubAddress }: BlogVO) => {
+MainScreen.inst = ({ description, githubAddress }: BlogVO) => {
   return (
     <article className={styles.blogInfo}>
       <h3>소개</h3>
