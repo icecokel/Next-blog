@@ -1,11 +1,11 @@
 import type { GetServerSideProps, NextPage } from "next";
-import MainCt from "../../../src/components/containers/MainCt";
 import { getData } from "../../../src/common/service/FireBaseService";
 import { wrapper } from "../../../store";
 import { BlogVO, setBlog } from "../../../store/modules/blog";
 import { MenuVO, setMenu } from "../../../store/modules/menu";
 import { setUser, UserVO } from "../../../store/modules/user";
 import { ApiStatus } from "../../../src/common/constant/Enum";
+import MainScreen from "../../../src/components/Main.screen";
 
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
   ({ dispatch }) =>
@@ -36,7 +36,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
 );
 
 const BlogMainPage: NextPage<any> = (props) => {
-  return <MainCt />;
+  return <MainScreen />;
 };
 
 export default BlogMainPage;

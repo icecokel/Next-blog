@@ -1,6 +1,6 @@
 import type { GetServerSideProps, NextPage } from "next";
 import { PostVO } from "../../../../src/common/constant/Model";
-import MenuCt from "../../../../src/components/containers/MenuCt";
+import MenuScreen from "../../../../src/components/Menu.screen";
 import { getPosts } from "../../../api/menus/getPosts";
 import { wrapper } from "../../../../store";
 import { setBlog, BlogVO } from "../../../../store/modules/blog";
@@ -44,7 +44,7 @@ interface IPageProps {
 }
 
 const MenuPage: NextPage<IPageProps> = ({ posts }) => {
-  return <MenuCt postList={posts} />;
+  return <MenuScreen postList={posts} />;
 };
 
 export default MenuPage;

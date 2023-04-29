@@ -50,7 +50,7 @@ const SideBar = ({ handleToggle }: ISideBarProps) => {
           {sortedMenu.map((item) => {
             const encodedUri = `/blog/${nickname.trim()}/m/${encodeURIComponent(item.name.trim())}`;
             return (
-              <Link href={encodedUri} key={item.id}>
+              <Link href={encodedUri} key={item.id} target="_parent">
                 <li>{item.name}</li>
               </Link>
             );
