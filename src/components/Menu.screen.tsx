@@ -1,55 +1,41 @@
 import { throttle } from "lodash";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import { PostVO } from "../common/constant/Model";
+import useObserver from "../common/hooks/useObserver";
 import { requestApi } from "../common/service/ApiService";
 import { formatDateToString } from "../common/util/DateUtil";
-import styles from "./MenuCp.module.scss";
+import styles from "./Menu.screen.module.scss";
 import Loader from "./common/Loader";
 
 interface ICatogoryProps {
-  nickname: string | string[];
-  menuName: string | string[];
   postList: PostVO[];
 }
 
-const MenuCp = ({ menuName, postList, nickname }: ICatogoryProps) => {
+const MenuScreen = ({ postList }: ICatogoryProps) => {
   const [posts, setPosts] = useState<PostVO[]>(postList);
-  const target = useRef<HTMLDivElement>(null);
+  const { query } = useRouter();
+  const menuName = query.name ?? "";
+  const nickname = query.nickname ?? "";
 
-  const fetchMoreData = throttle(async () => {
-    const { data } = await requestApi({
-      option: {
-        method: "GET",
-        url: "/menus/getPosts",
-      },
-      params: {
-        name: menuName,
-        nickname: nickname,
-        startAtValue: [...posts].pop()?.registDate,
-      },
-    });
-
-    setPosts([...posts, ...data.data]);
-  }, 500);
-
-  useEffect(() => {
-    let observer: IntersectionObserver;
-    if (target) {
-      observer = new IntersectionObserver(
-        async ([e], observer) => {
-          if (e.isIntersecting) {
-            observer.unobserve(e.target);
-            fetchMoreData();
-            observer.observe(e.target);
-          }
+  const target = useObserver(
+    throttle(async () => {
+      const { data } = await requestApi({
+        option: {
+          method: "GET",
+          url: "/menus/getPosts",
         },
-        { threshold: 1 }
-      );
-      observer.observe(target.current as Element);
-    }
-    return () => observer.disconnect();
-  }, [target]);
+        params: {
+          name: menuName,
+          nickname: nickname,
+          startAtValue: [...posts].pop()?.registDate,
+        },
+      });
+
+      setPosts([...posts, ...data.data]);
+    }, 500)
+  );
 
   return (
     <div className={styles.wrapper}>
@@ -62,7 +48,7 @@ const MenuCp = ({ menuName, postList, nickname }: ICatogoryProps) => {
             {posts.map((post, index) => {
               const hits = !post.hits ? 0 : Number.parseInt(post.hits);
               return (
-                <MenuCp.itemByPost
+                <MenuScreen.itemByPost
                   postId={post.id}
                   title={post.title}
                   hits={hits}
@@ -73,8 +59,10 @@ const MenuCp = ({ menuName, postList, nickname }: ICatogoryProps) => {
               );
             })}
           </ul>
-          <div ref={target}>
-            <Loader isLoading={true}>loading...</Loader>
+          <div className={styles.loader} ref={target}>
+            <Loader isLoading={true} size={10}>
+              loading...
+            </Loader>
           </div>
         </div>
       </section>
@@ -82,7 +70,7 @@ const MenuCp = ({ menuName, postList, nickname }: ICatogoryProps) => {
   );
 };
 
-export default MenuCp;
+export default MenuScreen;
 
 interface IItemProps {
   nickname: string | string[];
@@ -92,7 +80,7 @@ interface IItemProps {
   registDate: number;
 }
 
-MenuCp.itemByPost = ({ postId, hits, registDate, title, nickname }: IItemProps) => {
+MenuScreen.itemByPost = ({ postId, hits, registDate, title, nickname }: IItemProps) => {
   return (
     <Link href={"/blog/" + nickname + "/p/" + postId}>
       <li>
