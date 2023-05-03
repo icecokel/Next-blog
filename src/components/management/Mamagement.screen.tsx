@@ -1,14 +1,14 @@
-import React, { useState, useEffect, ReactElement } from "react";
+import React, { useState, useEffect, ReactElement, useMemo } from "react";
 import { useRouter } from "next/router";
-import EditMenu from "../management/EditMenu";
-import EditBlogInfo from "../management/EditBlogInfo";
-import ManagementCp from "../management/ManagementCp";
+import EditMenu from "./EditMenu";
+import EditBlogInfo from "./EditBlogInfo";
+import ManagementCp from "./ManagementCp";
 import useAuth from "../../common/hooks/useAuth";
-import NewPost from "../management/NewPost";
+import NewPost from "./NewPost";
 
 const MENU_LIST = ["글쓰기", "메뉴 관리", "블로그 설정"];
 
-const MamagementCt = () => {
+const MamagementScreen = () => {
   const [currentMenu, setCurrentMenu] = useState<string>(MENU_LIST[0]);
   const { isOwner } = useAuth();
   const router = useRouter();
@@ -26,32 +26,30 @@ const MamagementCt = () => {
 
   const getMenuContent = (): ReactElement => {
     const menuIndex = MENU_LIST.findIndex((menu) => menu === currentMenu);
-    let component = <span></span>;
+
     switch (menuIndex) {
       case 0:
-        component = <NewPost />;
-        break;
+        return <NewPost />;
       case 1:
-        component = <EditMenu />;
-        break;
+        return <EditMenu />;
       case 2:
-        component = <EditBlogInfo />;
-        break;
+        return <EditBlogInfo />;
       default:
-        <span></span>;
+        return <></>;
     }
-
-    return component;
   };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const component = useMemo(() => getMenuContent(), [currentMenu]);
 
   return (
     <ManagementCp
       menuList={MENU_LIST}
       handleClickMenu={handleClickMenu}
       currentMenu={currentMenu}
-      currentMenuComponent={getMenuContent()}
+      currentMenuComponent={component}
     />
   );
 };
 
-export default MamagementCt;
+export default MamagementScreen;
