@@ -5,7 +5,7 @@ import { wrapper } from "../../../../store";
 import { setBlog, BlogVO } from "../../../../store/modules/blog";
 import { setMenu, MenuVO } from "../../../../store/modules/menu";
 import { setUser, UserVO } from "../../../../store/modules/user";
-import { PostVO } from "../../../../src/common/constant/Model";
+import { PostVO } from "../../../../store/modules/post";
 import PostCard from "../../../../src/components/PostCard";
 
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(

@@ -2,12 +2,12 @@ import { throttle } from "lodash";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { PostVO } from "../common/constant/Model";
 import useObserver from "../common/hooks/useObserver";
 import { requestApi } from "../common/service/ApiService";
 import { formatDateToString } from "../common/util/DateUtil";
 import styles from "./Menu.screen.module.scss";
 import Loader from "./common/Loader";
+import { PostVO } from "../../store/modules/post";
 
 interface ICatogoryProps {
   postList: PostVO[];

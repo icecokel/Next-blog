@@ -1,4 +1,3 @@
-import { NewPostVO } from "../../src/common/constant/Model";
 /**
  * post 리덕스 모듈
  *
@@ -18,6 +17,19 @@ export const setPost = (post: NewPostVO) => ({
 
 // 액센 객체들에 대한 타입 선언
 export type PostAction = ReturnType<typeof setPost>;
+
+export interface NewPostVO {
+  title: string;
+  contents: string | undefined;
+  registDate: number;
+  menuId: string;
+}
+
+export interface PostVO extends NewPostVO {
+  id: string;
+  hits: string;
+  registId: string;
+}
 
 // 초기 값 선언
 const initialState: NewPostVO = {
