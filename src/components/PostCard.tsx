@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/modules";
-import { PostVO } from "../common/constant/Model";
 import { fromNow } from "../common/util/DateUtil";
 import styles from "./PostCard.module.scss";
+import { PostVO } from "../../store/modules/post";
 
 interface IProps {
   post: PostVO;
