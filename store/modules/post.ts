@@ -29,8 +29,15 @@ export interface PostVO extends NewPostVO {
   id: string;
   hits: string;
   registId: string;
+  comments: CommentVO[];
 }
 
+interface CommentVO {
+  registDate: number;
+  userId: string;
+  contents: string;
+  comments?: CommentVO[];
+}
 // 초기 값 선언
 const initialState: NewPostVO = {
   title: "",
