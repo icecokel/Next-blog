@@ -2,13 +2,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/modules";
 import { fromNow } from "../common/util/DateUtil";
 import styles from "./PostCard.module.scss";
-import { PostVO } from "../../store/modules/post";
+import { CommentVO, PostVO } from "../../store/modules/post";
 
 interface IProps {
   post: PostVO;
 }
 
 const PostCard = ({ post }: IProps) => {
+  console.log(post.comments);
   const { nickname, introduction, profileImgPath } = useSelector((state: RootState) => state.user);
   return (
     <article className={styles.wrapper}>
@@ -31,8 +32,20 @@ const PostCard = ({ post }: IProps) => {
           <p>{introduction}</p>
         </div>
       </div>
+      <section>
+        <ul>
+          {post.comments.length > 0 &&
+            post.comments.map((comment) => {
+              return <PostCard.comment key={comment.registDate} {...comment} />;
+            })}
+        </ul>
+      </section>
     </article>
   );
 };
 
 export default PostCard;
+
+PostCard.comment = ({ contents, registDate, userId, comments }: CommentVO) => {
+  return <li> {contents}</li>;
+};
