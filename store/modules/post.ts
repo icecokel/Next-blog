@@ -32,7 +32,7 @@ export interface PostVO extends NewPostVO {
   comments: CommentVO[];
 }
 
-interface CommentVO {
+export interface CommentVO {
   registDate: number;
   userId: string;
   contents: string;

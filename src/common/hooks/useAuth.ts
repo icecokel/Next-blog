@@ -6,6 +6,8 @@ const useAuth = () => {
   const user = useSelector((state: RootState) => state.user);
   const { data } = useSession();
   return {
+    id: user.id,
+    nickname: user.nickname,
     isOwner: user.email === data?.user?.email,
   };
 };

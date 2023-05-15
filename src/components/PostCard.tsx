@@ -3,6 +3,7 @@ import { RootState } from "../../store/modules";
 import { fromNow } from "../common/util/DateUtil";
 import styles from "./PostCard.module.scss";
 import { CommentVO, PostVO } from "../../store/modules/post";
+import Comments from "./Comments";
 
 interface IProps {
   post: PostVO;
@@ -32,20 +33,9 @@ const PostCard = ({ post }: IProps) => {
           <p>{introduction}</p>
         </div>
       </div>
-      <section>
-        <ul>
-          {post.comments.length > 0 &&
-            post.comments.map((comment) => {
-              return <PostCard.comment key={comment.registDate} {...comment} />;
-            })}
-        </ul>
-      </section>
+      <Comments comments={post.comments} />
     </article>
   );
 };
 
 export default PostCard;
-
-PostCard.comment = ({ contents, registDate, userId, comments }: CommentVO) => {
-  return <li> {contents}</li>;
-};
