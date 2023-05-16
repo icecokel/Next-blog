@@ -10,7 +10,6 @@ interface IProps {
 }
 
 const PostCard = ({ post }: IProps) => {
-  console.log(post.comments);
   const { nickname, introduction, profileImgPath } = useSelector((state: RootState) => state.user);
   return (
     <article className={styles.wrapper}>
