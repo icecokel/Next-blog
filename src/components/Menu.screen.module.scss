@@ -37,6 +37,8 @@
           min-width: 300px;
           height: 300px;
           margin: 5px;
+          animation-duration: 0.2s;
+          animation-name: slideUp;
 
           &:hover {
             transition-duration: 0.15s;
@@ -75,5 +77,15 @@
         font-size: 0.75em;
       }
     }
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(10%);
+  }
+
+  to {
+    transform: translateY(0%);
   }
 }
