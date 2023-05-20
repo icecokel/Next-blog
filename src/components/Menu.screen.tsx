@@ -8,7 +8,8 @@ import { formatDateToString } from "../common/util/DateUtil";
 import styles from "./Menu.screen.module.scss";
 import Loader from "./common/Loader";
 import { PostVO } from "../../store/modules/post";
-import SlideEffect from "./common/SlideEffect";
+
+import dynamic from "next/dynamic";
 
 interface ICatogoryProps {
   postList: PostVO[];
@@ -85,15 +86,11 @@ MenuScreen.itemByPost = ({ postId, hits, registDate, title, nickname }: IItemPro
   return (
     <Link href={"/blog/" + nickname + "/p/" + postId}>
       <li>
-        <SlideEffect type="slideUp">
-          <div className={styles.postTitle}>{title}</div>
-          <div>
-            <span className={styles.postRegistDate}>
-              {formatDateToString(new Date(registDate))}
-            </span>
-            <span className={styles.postHits}>{hits}</span>
-          </div>
-        </SlideEffect>
+        <div className={styles.postTitle}>{title}</div>
+        <div>
+          <span className={styles.postRegistDate}>{formatDateToString(new Date(registDate))}</span>
+          <span className={styles.postHits}>{hits}</span>
+        </div>
       </li>
     </Link>
   );
