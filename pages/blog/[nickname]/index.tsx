@@ -1,3 +1,4 @@
+import type { GetServerSideProps, NextPage } from "next";
 import { ApiStatus } from "../../../src/common/constant/Enum";
 import { getData } from "../../../src/common/service/FireBaseService";
 import MainScreen from "../../../src/components/Main.screen";
@@ -5,7 +6,6 @@ import { wrapper } from "../../../store";
 import { BlogVO, setBlog } from "../../../store/modules/blog";
 import { MenuVO, setMenu } from "../../../store/modules/menu";
 import { UserVO, setUser } from "../../../store/modules/user";
-import type { GetServerSideProps, NextPage } from "next";
 
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
   ({ dispatch }) =>
