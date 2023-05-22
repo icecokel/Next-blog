@@ -1,4 +1,3 @@
-import React from "react";
 import { NextPage } from "next";
 import MamagementScreen from "../../../../src/components/management/Mamagement.screen";
 

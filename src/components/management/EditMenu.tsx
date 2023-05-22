@@ -2,11 +2,11 @@ import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import { MenuVO, setMenu } from "../../../store/modules/menu";
-import styles from "./EditMenu.module.scss";
-import { generateRandomString } from "../../common/util/StringUtil";
-import { sortByKey } from "../../common/util/ArrayUtil";
 import { ApiStatus } from "../../common/constant/Enum";
 import { API_OPTIONS, requestApi } from "../../common/service/ApiService";
+import { sortByKey } from "../../common/util/ArrayUtil";
+import { generateRandomString } from "../../common/util/StringUtil";
+import styles from "./EditMenu.module.scss";
 
 const EditMenu = () => {
   const menu = useSelector((state: RootState) => state.menu);

@@ -1,12 +1,11 @@
 import { GetServerSideProps } from "next";
-import React from "react";
 import { getData } from "../../../../src/common/service/FireBaseService";
-import { wrapper } from "../../../../store";
-import { setBlog, BlogVO } from "../../../../store/modules/blog";
-import { setMenu, MenuVO } from "../../../../store/modules/menu";
-import { setUser, UserVO } from "../../../../store/modules/user";
-import { PostVO } from "../../../../store/modules/post";
 import PostCard from "../../../../src/components/PostCard";
+import { wrapper } from "../../../../store";
+import { BlogVO, setBlog } from "../../../../store/modules/blog";
+import { MenuVO, setMenu } from "../../../../store/modules/menu";
+import { PostVO } from "../../../../store/modules/post";
+import { UserVO, setUser } from "../../../../store/modules/user";
 
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
   ({ dispatch }) =>
