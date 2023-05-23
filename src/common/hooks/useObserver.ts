@@ -1,4 +1,4 @@
-import { RefObject, useRef, useEffect } from "react";
+import { RefObject, useEffect, useRef } from "react";
 
 const useObserver = (onDetectEvent: () => void): RefObject<any> => {
   const ref = useRef<HTMLElement>(null);

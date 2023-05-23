@@ -1,3 +1,4 @@
+import type { GetServerSideProps, NextPage } from "next";
 import MenuScreen from "../../../../src/components/Menu.screen";
 import { wrapper } from "../../../../store";
 import { BlogVO, setBlog } from "../../../../store/modules/blog";
@@ -5,7 +6,6 @@ import { MenuVO, setMenu } from "../../../../store/modules/menu";
 import { PostVO } from "../../../../store/modules/post";
 import { UserVO, setUser } from "../../../../store/modules/user";
 import { getPosts } from "../../../api/menus/getPosts";
-import type { GetServerSideProps, NextPage } from "next";
 
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
   ({ dispatch }) =>

@@ -1,9 +1,9 @@
-import styles from "./Main.screen.module.scss";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/modules";
 import { BlogVO } from "../../store/modules/blog";
 import LinkIcons from "./LinkIcons";
+import styles from "./Main.screen.module.scss";
 
 type tabType = "posts" | "inst";
 
