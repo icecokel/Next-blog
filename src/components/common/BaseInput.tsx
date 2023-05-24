@@ -1,5 +1,3 @@
-import React from "react";
-
 interface IBaseInputProps {
   type: "text" | "password" | "email";
   value: string;
