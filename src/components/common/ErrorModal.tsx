@@ -1,9 +1,8 @@
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/modules";
-import { setErrorModal } from "../../../store/modules/clientState";
 import BaseModal from "./BaseModal";
 import ErrorLabel from "./ErrorLabel";
+import { RootState } from "../../../store/modules";
+import { setErrorModal } from "../../../store/modules/clientState";
 
 const ErrorModal = () => {
   const {
