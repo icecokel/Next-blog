@@ -1,11 +1,11 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
-import MenuIcon from "./MenuIcon";
+import useAuth from "../../common/hooks/useAuth";
 import styles from "./Header.module.scss";
 import LoginIcon from "./LoginIcon";
-import useAuth from "../../common/hooks/useAuth";
-import Head from "next/head";
+import MenuIcon from "./MenuIcon";
 
 const Header = () => {
   const { nickname } = useSelector((state: RootState) => state.user);

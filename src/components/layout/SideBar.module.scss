@@ -20,8 +20,6 @@
   padding: 30px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
-  animation-duration: 0.4s;
-  animation-name: slidein;
 
   ul {
     li {
@@ -56,19 +54,5 @@
     &:focus {
       border-color: $color-green5;
     }
-  }
-}
-
-@keyframes slidein {
-  0% {
-    width: 39%;
-    min-width: 340px;
-    max-width: 380px;
-  }
-
-  100% {
-    width: 40%;
-    min-width: 360px;
-    max-width: 400px;
   }
 }
