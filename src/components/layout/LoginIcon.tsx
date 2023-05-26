@@ -1,6 +1,8 @@
+import Login from "@mui/icons-material/Login";
+import Logout from "@mui/icons-material/Logout";
+import { signIn, signOut, useSession } from "next-auth/react";
 import React, { useState } from "react";
 import BaseModal from "../common/BaseModal";
-import { signIn, signOut, useSession } from "next-auth/react";
 import styles from "./LoginIcon.module.scss";
 
 const LOGIN_MESSAGE = "authenticated";
@@ -17,9 +19,7 @@ const LoginIcon = () => {
 
   return (
     <div>
-      <label onClick={handleClickModalOpen}>
-        <span className="material-icons"> {isLogined ? "logout" : "account_circle"}</span>
-      </label>
+      <label onClick={handleClickModalOpen}>{isLogined ? <Logout /> : <Login />}</label>
 
       <BaseModal isOpen={isOpenLogInModal} setIsOpen={setIsOpenLogInModal} title="로그인">
         <LoginIcon.loginBox />

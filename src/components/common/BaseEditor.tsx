@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import styles from "./BaseEditor.module.scss";
 import MarkdownView from "react-showdown";
+import styles from "./BaseEditor.module.scss";
 interface IBaseEditorProps {
   getEditorHTML: (html: string | undefined) => void;
 }
