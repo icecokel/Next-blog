@@ -1,34 +1,26 @@
 import Login from "@mui/icons-material/Login";
 import Logout from "@mui/icons-material/Logout";
 import { signIn, signOut, useSession } from "next-auth/react";
-import React, { useState } from "react";
-import BaseModal from "../common/BaseModal";
+import React from "react";
+import useModal from "../common/BaseModal/useModal";
 import styles from "./LoginIcon.module.scss";
 
 const LOGIN_MESSAGE = "authenticated";
 
 const LoginIcon = () => {
-  const [isOpenLogInModal, setIsOpenLogInModal] = useState<boolean>(false);
-  const [isOpenLogOutModel, setIsOpenLogOutModal] = useState<boolean>(false);
   const { status } = useSession();
   const isLogined = status === LOGIN_MESSAGE;
+  const { open: loginOpen } = useModal({ title: "로그인", children: <LoginIcon.loginBox /> });
+  const { open: logoutOpen, close } = useModal({
+    title: "로그아웃",
+    children: <LoginIcon.logoutBox closeModel={() => close()} />,
+  });
 
   const handleClickModalOpen = () => {
-    isLogined ? setIsOpenLogOutModal(!isOpenLogOutModel) : setIsOpenLogInModal(!isOpenLogInModal);
+    isLogined ? logoutOpen() : loginOpen();
   };
 
-  return (
-    <div>
-      <label onClick={handleClickModalOpen}>{isLogined ? <Logout /> : <Login />}</label>
-
-      <BaseModal isOpen={isOpenLogInModal} setIsOpen={setIsOpenLogInModal} title="로그인">
-        <LoginIcon.loginBox />
-      </BaseModal>
-      <BaseModal isOpen={isOpenLogOutModel} setIsOpen={setIsOpenLogOutModal} title="로그아웃">
-        <LoginIcon.logoutBox closeModel={() => setIsOpenLogOutModal(!isOpenLogOutModel)} />
-      </BaseModal>
-    </div>
-  );
+  return <label onClick={handleClickModalOpen}>{isLogined ? <Logout /> : <Login />}</label>;
 };
 LoginIcon.loginBox = () => {
   return (

@@ -6,12 +6,14 @@ import { RootState } from "../../../store/modules";
 import useClickOutSide from "../../common/hooks/useClickOutSide";
 import { sortByKey } from "../../common/util/ArrayUtil";
 import styles from "./SideBar.module.scss";
+import { getCircleEffect } from "../../common/service/CircleEffect";
 
 interface ISideBarProps {
   handleToggle: () => void;
 }
 
 const SideBar = ({ handleToggle }: ISideBarProps) => {
+  const circleEffect = getCircleEffect();
   const { nickname } = useSelector((state: RootState) => state.user);
   const menu = useSelector((state: RootState) => state.menu);
   const sortedMenu = sortByKey(menu, "index");
@@ -54,7 +56,14 @@ const SideBar = ({ handleToggle }: ISideBarProps) => {
                 item.name.trim()
               )}`;
               return (
-                <Link href={encodedUri} key={item.id} target="_parent">
+                <Link
+                  href={encodedUri}
+                  key={item.id}
+                  target="_parent"
+                  onClick={() => {
+                    circleEffect.toggle(true);
+                  }}
+                >
                   <li>{item.name}</li>
                 </Link>
               );

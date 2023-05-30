@@ -4,6 +4,10 @@ import { RootState } from "../../store/modules";
 import { BlogVO } from "../../store/modules/blog";
 import LinkIcons from "./LinkIcons";
 import styles from "./Main.screen.module.scss";
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import Fade from "@mui/material/Fade";
 
 type tabType = "posts" | "inst";
 
@@ -12,9 +16,10 @@ const MainScreen = () => {
   const blog = useSelector((state: RootState) => state.blog);
   const [tab, setTab] = useState<tabType>("posts");
 
-  const handleClickTab: React.MouseEventHandler<HTMLLIElement> = ({ currentTarget: { id } }) => {
-    setTab(id as tabType);
+  const handleChange = (event: React.SyntheticEvent, newValue: tabType) => {
+    setTab(newValue);
   };
+
   return (
     <article className={styles.mainWrap}>
       <div>
@@ -34,24 +39,13 @@ const MainScreen = () => {
           </div>
         </div>
       </div>
-      <section className={styles.tabs}>
-        <ul>
-          <li
-            className={tab === "posts" ? styles.activedTab : ""}
-            id={"posts"}
-            onClick={handleClickTab}
-          >
-            글
-          </li>
-          <li
-            className={tab === "inst" ? styles.activedTab : ""}
-            id={"inst"}
-            onClick={handleClickTab}
-          >
-            소개
-          </li>
-        </ul>
-      </section>
+
+      <Box className={styles.tabs}>
+        <Tabs value={tab} onChange={handleChange}>
+          <Tab value={"posts"} label="글" />
+          <Tab value={"inst"} label="소개" />
+        </Tabs>
+      </Box>
       {tab === "posts" ? <MainScreen.posts blog={blog} /> : <MainScreen.inst {...blog} />}
     </article>
   );
@@ -65,22 +59,26 @@ interface IPostsProps {
 
 MainScreen.posts = ({ blog }: IPostsProps) => {
   return (
-    <section className={styles.recentList}>
-      <div>
-        <h3>전체 게시글 ( {blog.postsCount} )</h3>
-      </div>
-    </section>
+    <Fade in={true}>
+      <section className={styles.recentList}>
+        <div>
+          <h3>전체 게시글 ( {blog.postsCount} )</h3>
+        </div>
+      </section>
+    </Fade>
   );
 };
 
 MainScreen.inst = ({ description, githubAddress }: BlogVO) => {
   return (
-    <article className={styles.blogInfo}>
-      <h3>소개</h3>
-      <div>
-        <p>{description}</p>
-      </div>
-      <LinkIcons githubAddress={githubAddress} />
-    </article>
+    <Fade in={true}>
+      <article className={styles.blogInfo}>
+        <h3>소개</h3>
+        <div>
+          <p>{description}</p>
+        </div>
+        <LinkIcons githubAddress={githubAddress} />
+      </article>
+    </Fade>
   );
 };

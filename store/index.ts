@@ -1,6 +1,6 @@
-import { createStore, applyMiddleware, Middleware, StoreEnhancer } from "redux";
-import rootReducer from "./modules";
 import { MakeStore, createWrapper } from "next-redux-wrapper";
+import { Middleware, StoreEnhancer, applyMiddleware, createStore } from "redux";
+import rootReducer from "./modules";
 
 const bindMiddleware = (middleware: Middleware[]): StoreEnhancer => {
   if (process.env.NODE_ENV !== "production") {
