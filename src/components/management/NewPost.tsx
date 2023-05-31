@@ -7,7 +7,7 @@ import { setPost } from "../../../store/modules/post";
 import { ApiStatus } from "../../common/constant/Enum";
 import { API_OPTIONS, requestApi } from "../../common/service/ApiService";
 import { HOURS, MINUTES } from "../../common/util/DateUtil";
-import BaseModal from "../common/BaseModal";
+import useModal from "../common/BaseModal/useModal";
 import styles from "./NewPost.module.scss";
 
 const BaseEditor = dynamic(import("../common/BaseEditor"), { ssr: false });
@@ -17,7 +17,14 @@ const NewPost = () => {
   const post = useSelector((state: RootState) => state.post);
   const menu = useSelector((state: RootState) => state.menu);
   const [selectedMenu, setSelectedMenu] = useState<string>("");
-  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const { open } = useModal({
+    title: "등록완료",
+    children: (
+      <div className={styles.modal}>
+        <div>포스트가 등록이 완료 되었습니다.</div>
+      </div>
+    ),
+  });
   const registDate = new Date(post.registDate);
   const dispatch = useDispatch();
 
@@ -45,10 +52,6 @@ const NewPost = () => {
     dispatch(setPost({ ...post, registDate: registDate.getTime() }));
   };
 
-  const handleToggleModalOpen = () => {
-    setIsOpenModal(!isOpenModal);
-  };
-
   const handleClickPostButton = async () => {
     const {
       data: { status },
@@ -66,7 +69,7 @@ const NewPost = () => {
       // TODO 에러처리
       alert("!!");
     }
-    handleToggleModalOpen();
+    open();
     dispatch(
       setPost({
         contents: "",
@@ -139,14 +142,6 @@ const NewPost = () => {
       </div>
       <div className={styles.buttonWrapper}>
         <button onClick={handleClickPostButton}>발행</button>
-      </div>
-      <div>
-        <BaseModal isOpen={isOpenModal} title="등록완료" setIsOpen={handleToggleModalOpen}>
-          <div className={styles.modal}>
-            <div>포스트가 등록이 완료 되었습니다.</div>
-            <button onClick={handleToggleModalOpen}>닫기</button>
-          </div>
-        </BaseModal>
       </div>
     </article>
   );
