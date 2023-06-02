@@ -1,4 +1,3 @@
-import React from "react";
 import ErrorLabel from "../src/components/common/ErrorLabel";
 
 const NotFound = () => {

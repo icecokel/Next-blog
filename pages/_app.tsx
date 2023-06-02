@@ -1,25 +1,37 @@
-import type { AppProps } from "next/app";
-import "../styles/globals.scss";
-import "react-datepicker/dist/react-datepicker.css";
-import Header from "../src/components/layout/Header";
-import Footer from "../src/components/layout/Footer";
-import { wrapper } from "../store";
-import React from "react";
-import ErrorModal from "../src/components/common/ErrorModal";
-import CommonModal from "../src/components/common/CommonModal";
 import { SessionProvider } from "next-auth/react";
+import type { AppProps } from "next/app";
+import dynamic from "next/dynamic";
+import "react-datepicker/dist/react-datepicker.css";
+import BaseModalProvider from "../src/components/common/BaseModal/BaseModalProvider";
+import Footer from "../src/components/layout/Footer";
+import Header from "../src/components/layout/Header";
+import { wrapper } from "../store";
 import styles from "../styles/app.module.scss";
+import "../styles/globals.scss";
+import { useState } from "react";
+import { getCircleEffect } from "../src/common/service/CircleEffect";
+
+const CircleEffect = dynamic(import("../src/components/common/CircleEffect"), { ssr: false });
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+  const circleEffect = getCircleEffect();
+  const [isOpenCircleEffet, setIsOpenCircleEffet] = useState<boolean>(circleEffect.isShowing);
+  circleEffect.toggle = (isOpen: boolean) => {
+    setIsOpenCircleEffet(isOpen);
+  };
+
   return (
     <SessionProvider session={session}>
-      <Header />
-      <div className={styles.mainWrap}>
-        <Component {...pageProps} />
-      </div>
-      <Footer />
-      <ErrorModal />
-      <CommonModal />
+      <BaseModalProvider>
+        <>
+          <Header />
+          <div className={styles.mainWrap}>
+            <Component {...pageProps} />
+          </div>
+          <Footer />
+          <CircleEffect isOpen={isOpenCircleEffet} />
+        </>
+      </BaseModalProvider>
     </SessionProvider>
   );
 }

@@ -4,15 +4,14 @@ import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/modules";
 import { setBlog } from "../../../store/modules/blog";
-import { setCommonModal } from "../../../store/modules/clientState";
 import { setUser } from "../../../store/modules/user";
 import { ApiStatus } from "../../common/constant/Enum";
 import { API_OPTIONS, requestApi } from "../../common/service/ApiService";
-import BaseModal from "../common/BaseModal";
-import ErrorLabel from "../common/ErrorLabel";
 import Loader from "../common/Loader";
 import RequireLabel from "../common/RequireLabel";
 import styles from "./EditBlogInfo.module.scss";
+import useModal from "../common/BaseModal/useModal";
+import ErrorLabel from "../common/ErrorLabel";
 
 const DEFAULT_IMAGE_SRC = "/resources/images/dafault.png";
 
@@ -33,10 +32,14 @@ const EditBlogInfo = () => {
     imageSrc: DEFAULT_IMAGE_SRC,
   });
   const [isUploading, setIsUploading] = useState<boolean>(false);
-  const [isInvaildParams, setIsInvalidParams] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const textRef = useRef<HTMLInputElement>(null);
   const faviconFileRef = useRef<HTMLInputElement>(null);
+
+  const { open } = useModal({
+    title: "확인 해주세요",
+    children: <ErrorLabel text="입력 내용을 확인해주세요" />,
+  });
 
   const { uploadToS3 } = useS3Upload();
   const dispatch = useDispatch();
@@ -85,12 +88,12 @@ const EditBlogInfo = () => {
   const getValidParams = async () => {
     if (formData.nickname.length > 15 || formData.nickname.length < 1) {
       textRef.current?.focus();
-      setIsInvalidParams(true);
+      open();
       return;
     }
     if (formData.description.length > 100) {
       textareaRef.current?.focus();
-      setIsInvalidParams(true);
+      open();
       return;
     }
 
@@ -119,7 +122,6 @@ const EditBlogInfo = () => {
     if (status !== ApiStatus.OK) {
       return;
     }
-    dispatch(setCommonModal({ isShowing: true, text: "등록 했습니다", title: "블로그 정보" }));
     dispatch(setBlog({ ...blog, description: item.description, faviconPath: item.faviconPath }));
     dispatch(setUser({ ...user, nickname: item.nickname }));
   };
@@ -201,11 +203,6 @@ const EditBlogInfo = () => {
           저장
         </button>
       </div>
-      <article>
-        <BaseModal isOpen={isInvaildParams} setIsOpen={setIsInvalidParams} title="확인 해주세요">
-          <ErrorLabel text="입력 내용을 확인해주세요" />
-        </BaseModal>
-      </article>
     </article>
   );
 };
