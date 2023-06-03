@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getCircleEffect } from "./CircleEffect";
 
 const BASE_URL = "/api";
 
@@ -21,18 +22,28 @@ export const API_OPTIONS: IApiOptions = {
   editMenu: { method: "PUT", url: "/menus/put" },
   registPost: { method: "POST", url: "/post/regist" },
   searchPost: { method: "GET", url: "/post/search" },
+  registComment: { method: "POST", url: "/comment/regist" },
 };
 
 export const requestApi = async ({ option: { method, url }, params }: IRequestProps) => {
+  const circleEffect = getCircleEffect();
+  circleEffect.toggle(true);
   const requestUrl = BASE_URL + url;
+  let response;
   switch (method) {
     case "GET":
-      return await axios.get(requestUrl, { params: params });
+      response = await axios.get(requestUrl, { params: params });
+      break;
     case "POST":
-      return await axios.post(requestUrl, params);
+      response = await axios.post(requestUrl, params);
+      break;
     case "PUT":
-      return await axios.put(requestUrl, params);
+      response = await axios.put(requestUrl, params);
+      break;
     case "DELETE":
-      return await axios.delete(requestUrl, params);
+      response = await axios.delete(requestUrl, params);
+      break;
   }
+  circleEffect.toggle(false);
+  return response;
 };
