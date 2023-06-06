@@ -1,7 +1,8 @@
+import Slide from "@mui/material/Slide";
 import { throttle } from "lodash";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { PostVO } from "../../store/modules/post";
 import useObserver from "../common/hooks/useObserver";
 import { requestApi } from "../common/service/ApiService";
@@ -33,8 +34,10 @@ const MenuScreen = ({ postList }: ICatogoryProps) => {
         },
       });
 
+      if (data.data.flat().length < 3) {
+      }
       setPosts([...posts, ...data.data]);
-    }, 1000)
+    }, 3000)
   );
 
   return (
@@ -83,13 +86,17 @@ interface IItemProps {
 MenuScreen.itemByPost = ({ postId, hits, registDate, title, nickname }: IItemProps) => {
   return (
     <Link href={"/blog/" + nickname + "/p/" + postId}>
-      <li>
-        <div className={styles.postTitle}>{title}</div>
-        <div>
-          <span className={styles.postRegistDate}>{formatDateToString(new Date(registDate))}</span>
-          <span className={styles.postHits}>{hits}</span>
-        </div>
-      </li>
+      <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+        <li>
+          <div className={styles.postTitle}>{title}</div>
+          <div>
+            <span className={styles.postRegistDate}>
+              {formatDateToString(new Date(registDate))}
+            </span>
+            <span className={styles.postHits}>{hits}</span>
+          </div>
+        </li>
+      </Slide>
     </Link>
   );
 };

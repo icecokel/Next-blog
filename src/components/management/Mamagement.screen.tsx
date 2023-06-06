@@ -1,9 +1,11 @@
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
 import { useRouter } from "next/router";
 import { ReactElement, useEffect, useMemo, useState } from "react";
 import useAuth from "../../common/hooks/useAuth";
 import EditBlogInfo from "./EditBlogInfo";
 import EditMenu from "./EditMenu";
-import ManagementCp from "./ManagementCp";
 import NewPost from "./NewPost";
 
 const MENU_LIST = ["글쓰기", "메뉴 관리", "블로그 설정"];
@@ -19,10 +21,6 @@ const MamagementScreen = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOwner]);
-
-  const handleClickMenu = (no: number) => {
-    setCurrentMenu(MENU_LIST[no]);
-  };
 
   const getMenuContent = (): ReactElement => {
     const menuIndex = MENU_LIST.findIndex((menu) => menu === currentMenu);
@@ -42,13 +40,21 @@ const MamagementScreen = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const component = useMemo(() => getMenuContent(), [currentMenu]);
 
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setCurrentMenu(newValue);
+  };
+
   return (
-    <ManagementCp
-      menuList={MENU_LIST}
-      handleClickMenu={handleClickMenu}
-      currentMenu={currentMenu}
-      currentMenuComponent={component}
-    />
+    <div>
+      <Box sx={{ borderBottom: "1px solid #e6f0ef", marginBottom: "20px" }}>
+        <Tabs value={currentMenu} onChange={handleChange}>
+          {MENU_LIST.map((menu, index) => {
+            return <Tab label={menu} key={"memu_" + index} value={menu} />;
+          })}
+        </Tabs>
+      </Box>
+      <div>{component}</div>
+    </div>
   );
 };
 
