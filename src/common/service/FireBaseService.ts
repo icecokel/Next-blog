@@ -41,7 +41,6 @@ export const fetchData = async (docName: string) => {
     let temp = doc.data();
     temp.id = doc.id;
     result.push(temp);
-    // console.log(`${doc.id} => ${doc.data()}`);
   });
 
   return result;
@@ -91,7 +90,6 @@ export const getData = async (docName: string, keyword: string) => {
   if (docSnap.exists()) {
     return docSnap.data();
   } else {
-    console.log("No such document!");
     return undefined;
   }
 };

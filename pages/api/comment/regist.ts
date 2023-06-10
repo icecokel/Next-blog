@@ -22,7 +22,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     });
   } else {
     const commentsToUpdate = [...(post.comments ?? []), param.comment];
-    console.log(commentsToUpdate);
     const postToUpdate = { ...post, comments: commentsToUpdate };
 
     try {
