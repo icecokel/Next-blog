@@ -15,6 +15,7 @@ interface IApiOptions {
 interface IRequestProps {
   option: IApiOption;
   params?: any;
+  disabledCircle?: boolean;
 }
 
 export const API_OPTIONS: IApiOptions = {
@@ -25,9 +26,13 @@ export const API_OPTIONS: IApiOptions = {
   registComment: { method: "POST", url: "/comment/regist" },
 };
 
-export const requestApi = async ({ option: { method, url }, params }: IRequestProps) => {
+export const requestApi = async ({
+  option: { method, url },
+  params,
+  disabledCircle,
+}: IRequestProps) => {
   const circleEffect = getCircleEffect();
-  circleEffect.toggle(true);
+  if (!disabledCircle) circleEffect.toggle(true);
   const requestUrl = BASE_URL + url;
   let response;
   switch (method) {
