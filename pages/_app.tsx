@@ -8,17 +8,31 @@ import Header from "../src/components/layout/Header";
 import { wrapper } from "../store";
 import styles from "../styles/app.module.scss";
 import "../styles/globals.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getCircleEffect } from "../src/common/service/CircleEffect";
+import { useRouter } from "next/router";
 
 const CircleEffect = dynamic(import("../src/components/common/CircleEffect"), { ssr: false });
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const circleEffect = getCircleEffect();
+  const router = useRouter();
   const [isOpenCircleEffet, setIsOpenCircleEffet] = useState<boolean>(circleEffect.isShowing);
   circleEffect.toggle = (isOpen: boolean) => {
     setIsOpenCircleEffet(isOpen);
   };
+
+  useEffect(() => {
+    const onChangePage = () => {
+      setIsOpenCircleEffet(true);
+    };
+
+    router.events.on("routeChangeStart", onChangePage);
+
+    return () => {
+      router.events.off("routeChangeStart", onChangePage);
+    };
+  }, [router]);
 
   return (
     <SessionProvider session={session}>

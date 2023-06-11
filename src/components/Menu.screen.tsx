@@ -32,6 +32,7 @@ const MenuScreen = ({ postList }: ICatogoryProps) => {
           nickname: nickname,
           startAtValue: [...posts].pop()?.registDate,
         },
+        disabledCircle: true,
       });
 
       if (data.data.flat().length < 3) {
