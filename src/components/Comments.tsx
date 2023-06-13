@@ -4,15 +4,13 @@ import useAuth from "../common/hooks/useAuth";
 import { useRouter } from "next/router";
 import { API_OPTIONS, requestApi } from "../common/service/ApiService";
 import { formatDateToString } from "../common/util/DateUtil";
+import style from "./Comments.module.scss";
+import Alert from "@mui/material/Alert";
 
 interface ICommentsProps {
   comments: CommentVO[];
 }
-/**
- * TODO
- * 로그인 했으면, 댓글 쓰기 기능
- * 댓글 화면 추가
- */
+
 const Comments = ({ comments }: ICommentsProps) => {
   return (
     <section>
@@ -77,12 +75,17 @@ Comments.write = () => {
 Comments.comment = ({ contents, registDate, userId, comments }: CommentVO) => {
   return (
     <li>
-      <div>
+      <Alert color="info" icon={false} className={style.commentWrapper}>
         <div>
-          {userId}( {formatDateToString(new Date(registDate))})
+          <div>
+            <span>{userId}님</span>
+            <span className={style.date}>
+              ({formatDateToString(new Date(registDate), "yy년LL월dd일")})
+            </span>
+          </div>
         </div>
-      </div>
-      <div>{contents}</div>
+        <div className={style.comment}>{contents}</div>
+      </Alert>
     </li>
   );
 };
