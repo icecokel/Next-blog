@@ -1,0 +1,12 @@
+@import "/styles/color.scss";
+
+.date {
+  margin-left: 1em;
+  font-size: 0.8em;
+  font-weight: bold;
+  color: rbga($color-gray, 0.5);
+}
+
+.commentWrapper {
+  margin-top: 5px;
+}
