@@ -2,7 +2,7 @@ import Slide from "@mui/material/Slide";
 import { throttle } from "lodash";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { PostVO } from "../../store/modules/post";
 import useObserver from "../common/hooks/useObserver";
 import { requestApi } from "../common/service/ApiService";
