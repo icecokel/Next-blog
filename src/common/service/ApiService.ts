@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getCircleEffect } from "./CircleEffect";
+import { getCircleEffect } from "../../components/common/Loader/LoaderProvider";
 
 const BASE_URL = "/api";
 
@@ -32,7 +32,7 @@ export const requestApi = async ({
   disabledCircle,
 }: IRequestProps) => {
   const circleEffect = getCircleEffect();
-  if (!disabledCircle) circleEffect.toggle(true);
+  if (!disabledCircle) circleEffect.setShowing(true);
   const requestUrl = BASE_URL + url;
   let response;
   switch (method) {
@@ -49,6 +49,6 @@ export const requestApi = async ({
       response = await axios.delete(requestUrl, params);
       break;
   }
-  circleEffect.toggle(false);
+  circleEffect.setShowing(false);
   return response;
 };
